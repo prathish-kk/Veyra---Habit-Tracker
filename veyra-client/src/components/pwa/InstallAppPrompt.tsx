@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Download, X, Smartphone, Sparkles } from 'lucide-react';
 import { GlassButton } from '@/components/glass/GlassButton';
 import { usePwa } from '@/lib/pwa';
+import { BrandLogo } from '@/components/common/BrandLogo';
 
 export const InstallAppPrompt: React.FC = () => {
   const { isStandalone, isIos, hasPrompt, promptInstall } = usePwa();
@@ -55,11 +56,7 @@ export const InstallAppPrompt: React.FC = () => {
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="flex items-center gap-2">
-          <div
-            className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs text-white shadow-sm bg-primary"
-          >
-            V
-          </div>
+          <BrandLogo size="xs" />
           <span className="text-fluid-xs font-bold text-primary flex items-center gap-1">
             <Sparkles size={13} className="text-amber-500 dark:text-yellow-400" />
             Install Veyra App

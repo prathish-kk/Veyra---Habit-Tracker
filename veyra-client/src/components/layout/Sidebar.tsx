@@ -2,6 +2,8 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/features/auth/hooks/useAuth';
+import { BrandLogo } from '@/components/common/BrandLogo';
+import { UserAvatar } from '@/components/common/UserAvatar';
 import {
   LayoutDashboard,
   CalendarCheck,
@@ -50,20 +52,7 @@ export const Sidebar: React.FC = () => {
     >
       {/* Brand Header */}
       <div className="p-6 flex items-center gap-3 border-b" style={{ borderColor: 'var(--color-border)' }}>
-        <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xl shadow-md"
-          style={{ background: 'var(--color-text)', color: 'var(--color-text-on-dark)' }}
-        >
-          V
-        </div>
-        <div>
-          <span className="text-xl font-bold tracking-tight block" style={{ color: 'var(--color-text)' }}>
-            Veyra
-          </span>
-          <span className="text-[11px] block font-medium" style={{ color: 'var(--color-primary)' }}>
-            Build & Track
-          </span>
-        </div>
+        <BrandLogo size="lg" showWordmark subtitle="Build & Track" />
       </div>
 
       {/* Nav List */}
@@ -98,12 +87,11 @@ export const Sidebar: React.FC = () => {
         <div className="p-4 border-t" style={{ borderColor: 'var(--color-border)' }}>
           <div className="flex items-center justify-between gap-3">
             <NavLink to="/profile" className="flex items-center gap-3 min-w-0 hover:opacity-80 transition-opacity">
-              <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold shrink-0"
-                style={{ background: 'var(--color-text)', color: 'var(--color-text-on-dark)' }}
-              >
-                {(user.name || user.email || 'U').charAt(0).toUpperCase()}
-              </div>
+              <UserAvatar
+                src={user.avatarUrl}
+                name={user.name || user.email || 'User'}
+                size="md"
+              />
               <div className="min-w-0">
                 <div className="text-fluid-xs font-semibold truncate" style={{ color: 'var(--color-text)' }}>
                   {user.name || 'User'}

@@ -1,11 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" fill="none">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#7c3aed"/>
-      <stop offset="100%" stop-color="#2dd4bf"/>
-    </linearGradient>
-  </defs>
-  <rect width="32" height="32" rx="8" fill="url(#g)"/>
-  <text x="16" y="22" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="18" fill="white">V</text>
-  <text x="42" y="23" font-family="Inter,sans-serif" font-weight="700" font-size="20" fill="currentColor">veyra</text>
+  <style>
+    .bg { fill: #1A1A1A; stroke: #E8E8E4; stroke-width: 1; }
+    .mark { fill: #FFFFFF; }
+    .word { fill: #1A1A1A; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #A3B18A; stroke: #8B9A7B; stroke-width: 1; }
+      .mark { fill: #121210; }
+      .word { fill: #F5F5F3; }
+    }
+  </style>
+  <rect class="bg" width="32" height="32" rx="8"/>
+  <text class="mark" x="16" y="22" text-anchor="middle" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="18">V</text>
+  <text class="word" x="42" y="23" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="20" letter-spacing="-0.5px">veyra</text>
 </svg>

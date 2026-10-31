@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { GlassButton } from '@/components/glass/GlassButton';
 import { GlassInput } from '@/components/glass/GlassInput';
+import { BrandLogo } from '@/components/common/BrandLogo';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { LogIn, Sparkles, AlertCircle, ArrowRight, Phone, Mail, CheckCircle2, RotateCcw } from 'lucide-react';
 
@@ -98,10 +99,8 @@ export const LoginPage: React.FC = () => {
           />
 
           <div className="text-center mb-6">
-            <div
-              className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 shadow-sm text-white bg-[var(--color-primary)]"
-            >
-              <span className="text-2xl font-bold">V</span>
+            <div className="mb-3 flex justify-center">
+              <BrandLogo size="xl" />
             </div>
             <h1 className="text-fluid-2xl font-bold mb-1" style={{ color: 'var(--color-text)' }}>
               Welcome back

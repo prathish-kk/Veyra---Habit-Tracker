@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Shield, Flame, Zap, Eye, UserMinus } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import { UserAvatar } from '@/components/common/UserAvatar';
 import type { Friendship, PrivacyLevel } from '../types';
 
 interface FriendCardProps {
@@ -50,9 +51,11 @@ export const FriendCard: React.FC<FriendCardProps> = ({
         {/* Top Header: Avatar + User Info + Options */}
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-[var(--color-primary)] text-white font-bold text-fluid-lg shadow-sm flex items-center justify-center">
-              {friend.name ? friend.name.charAt(0).toUpperCase() : friend.username?.charAt(0).toUpperCase() || 'F'}
-            </div>
+            <UserAvatar
+              src={friend.avatarUrl}
+              name={friend.name || friend.username}
+              size="lg"
+            />
             <div>
               <h3 className="text-fluid-base font-bold leading-tight" style={{ color: 'var(--color-text)' }}>
                 {friend.name || friend.username}

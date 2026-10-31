@@ -28,6 +28,8 @@ import {
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useStreaks, useGamification } from '@/features/gamification';
 import { useNotifications } from '@/features/notifications';
+import { BrandLogo } from '@/components/common/BrandLogo';
+import { UserAvatar } from '@/components/common/UserAvatar';
 
 interface MobileNavDrawerProps {
   isOpen: boolean;
@@ -196,12 +198,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
         {/* Header Section */}
         <div className="p-4 sm:p-5 border-b flex items-center justify-between relative z-10" style={{ borderColor: 'var(--color-border)' }}>
           <div className="flex items-center gap-3">
-            <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-lg"
-              style={{ background: 'var(--color-text)', color: 'var(--color-text-on-dark)' }}
-            >
-              V
-            </div>
+            <BrandLogo size="md" />
             <div>
               <div className="flex items-center gap-1.5">
                 <span className="font-bold text-fluid-base tracking-tight" style={{ color: 'var(--color-text)' }}>Veyra</span>
@@ -249,12 +246,11 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
                 onClick={onClose}
                 className="flex items-center gap-2.5 min-w-0 hover:opacity-85 transition-opacity"
               >
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 shadow-md"
-                  style={{ background: 'var(--color-text)', color: 'var(--color-text-on-dark)' }}
-                >
-                  {(user.name || user.email || 'U').charAt(0).toUpperCase()}
-                </div>
+                <UserAvatar
+                  src={user.avatarUrl}
+                  name={user.name || user.username || 'Adventurer'}
+                  size="md"
+                />
                 <div className="min-w-0">
                   <div className="text-fluid-xs font-semibold truncate" style={{ color: 'var(--color-text)' }}>
                     {user.name || user.username || 'Adventurer'}

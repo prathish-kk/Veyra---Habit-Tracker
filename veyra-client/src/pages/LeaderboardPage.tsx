@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
 import { PageHeader } from '@/components/layout/PageHeader';
+import { UserAvatar } from '@/components/common/UserAvatar';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useLeaderboard, type LeaderboardSortMetric } from '@/features/leaderboard';
 import { useGamification, useStreaks } from '@/features/gamification';
@@ -222,13 +223,12 @@ export const LeaderboardPage: React.FC = () => {
 
                     <div className="flex justify-center mb-3">{getRankBadge(rank)}</div>
 
-                    <div className="w-14 h-14 rounded-2xl mx-auto mb-3 bg-[var(--color-primary)] text-white font-black text-fluid-lg flex items-center justify-center shadow-md overflow-hidden">
-                      {item.avatarUrl ? (
-                        <img src={item.avatarUrl} alt={item.name} className="w-full h-full object-cover" />
-                      ) : (
-                        item.name.charAt(0).toUpperCase()
-                      )}
-                    </div>
+                    <UserAvatar
+                      src={item.avatarUrl}
+                      name={item.name}
+                      size="xl"
+                      className="mx-auto mb-3"
+                    />
 
                     <h3 className="text-fluid-base font-bold truncate" style={{ color: 'var(--color-text)' }}>
                       {item.name} {item.isMe && <span className="text-[var(--color-primary)]">(You)</span>}
@@ -281,13 +281,11 @@ export const LeaderboardPage: React.FC = () => {
                         {rank <= 3 ? getRankBadge(rank) : `#${rank}`}
                       </div>
 
-                      <div className="w-10 h-10 rounded-xl bg-[var(--color-primary-soft)] border border-[var(--color-primary)]/30 flex items-center justify-center font-bold text-[var(--color-primary)] shrink-0 overflow-hidden">
-                        {item.avatarUrl ? (
-                          <img src={item.avatarUrl} alt={item.name} className="w-full h-full object-cover" />
-                        ) : (
-                          item.name.charAt(0).toUpperCase()
-                        )}
-                      </div>
+                      <UserAvatar
+                        src={item.avatarUrl}
+                        name={item.name}
+                        size="md"
+                      />
 
                       <div className="min-w-0">
                         <div className="text-fluid-sm font-bold truncate flex items-center gap-2" style={{ color: 'var(--color-text)' }}>

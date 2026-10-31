@@ -23,6 +23,14 @@
   --color-border: #E8E8E4;
   --color-border-strong: #D0D0CC;
 
+  /* Brand Logo & Avatar Tokens */
+  --color-logo-bg: #1A1A1A;
+  --color-logo-text: #FFFFFF;
+  --color-logo-border: #E8E8E4;
+  --color-avatar-bg: #E8EDE4;
+  --color-avatar-text: #4F5E44;
+  --color-avatar-border: #D8E0D2;
+
   /* Surfaces */
   --surface-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
   --surface-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.03);
@@ -88,6 +96,14 @@
   --color-text-on-primary: #1A1A1A;
   --color-border: #2E2E2C;
   --color-border-strong: #3E3E3A;
+
+  /* Brand Logo & Avatar Tokens */
+  --color-logo-bg: #A3B18A;
+  --color-logo-text: #121210;
+  --color-logo-border: #3E3E3A;
+  --color-avatar-bg: #2A3024;
+  --color-avatar-text: #A3B18A;
+  --color-avatar-border: #3A4532;
 
   /* Surfaces */
   --surface-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.12);

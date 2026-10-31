@@ -2,6 +2,7 @@
 import React from 'react';
 import { Medal, Trophy, CheckCircle2, Zap } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import { UserAvatar } from '@/components/common/UserAvatar';
 import type { ChallengeParticipant } from '../types';
 
 interface ChallengeLeaderboardProps {
@@ -74,9 +75,11 @@ export const ChallengeLeaderboard: React.FC<ChallengeLeaderboardProps> = ({
             <div className="flex items-center gap-3">
               {getRankBadge(rank)}
 
-              <div className="w-9 h-9 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary font-bold text-fluid-xs">
-                {p.userName.charAt(0).toUpperCase()}
-              </div>
+              <UserAvatar
+                src={(p as unknown as { avatarUrl?: string }).avatarUrl}
+                name={p.userName}
+                size="sm"
+              />
 
               <div>
                 <div className="font-bold text-gray-900 dark:text-white text-fluid-xs flex items-center gap-1.5">

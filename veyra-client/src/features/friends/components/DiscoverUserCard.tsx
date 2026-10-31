@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { UserPlus, Check, Clock, Flame, Sparkles, Loader2, UserCheck } from 'lucide-react';
 import { GlassButton } from '@/components/glass/GlassButton';
+import { UserAvatar } from '@/components/common/UserAvatar';
 import type { DiscoverUser } from '../types';
 
 interface DiscoverUserCardProps {
@@ -56,17 +57,11 @@ export const DiscoverUserCard: React.FC<DiscoverUserCardProps> = ({
 
       {/* User Info Left Section */}
       <div className="flex items-center gap-3 min-w-0 relative z-10">
-        {user.avatarUrl ? (
-          <img
-            src={user.avatarUrl}
-            alt={user.name || user.username || 'User'}
-            className="w-12 h-12 rounded-2xl object-cover border border-[var(--glass-border)] shadow-sm shrink-0"
-          />
-        ) : (
-          <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary font-bold text-fluid-base shadow-sm shrink-0">
-            {user.name ? user.name.charAt(0).toUpperCase() : user.username?.charAt(0).toUpperCase() || 'U'}
-          </div>
-        )}
+        <UserAvatar
+          src={user.avatarUrl}
+          name={user.name || user.username}
+          size="lg"
+        />
 
         <div className="min-w-0">
           <div className="flex items-center gap-2">

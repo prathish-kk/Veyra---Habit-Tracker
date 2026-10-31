@@ -4,8 +4,8 @@
   "description": "Build your day. Track your growth.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f0f17",
-  "theme_color": "#7c3aed",
+  "background_color": "#F7F7F5",
+  "theme_color": "#7C8C6E",
   "icons": [
     {
       "src": "/favicon.svg",

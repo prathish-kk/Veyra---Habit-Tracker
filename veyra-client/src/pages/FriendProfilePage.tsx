@@ -6,6 +6,7 @@ import { useParams, Link } from 'react-router-dom';
 import { AppShell } from '@/components/layout/AppShell';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { GlassButton } from '@/components/glass/GlassButton';
+import { UserAvatar } from '@/components/common/UserAvatar';
 import { useFriendProgress } from '@/features/friends/hooks/useFriends';
 import { Shield, CheckCircle2, Clock, Flame, Zap, Award, ArrowLeft, Lock } from 'lucide-react';
 import type { PrivacyLevel } from '@/features/friends/types';
@@ -76,9 +77,11 @@ export const FriendProfilePage: React.FC = () => {
             {/* Header Card */}
             <div className="glass p-6 sm:p-8 rounded-3xl border border-[var(--glass-border)] flex flex-col sm:flex-row sm:items-center justify-between gap-6">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary font-bold text-2xl shadow-sm">
-                  {progress.name ? progress.name.charAt(0).toUpperCase() : 'F'}
-                </div>
+                <UserAvatar
+                  src={(progress as unknown as { avatarUrl?: string })?.avatarUrl}
+                  name={progress.name || progress.username}
+                  size="xl"
+                />
                 <div>
                   <h1 className="text-fluid-xl font-bold text-gray-900 dark:text-white">{progress.name}</h1>
                   <p className="text-fluid-xs text-gray-600 dark:text-zinc-400">@{progress.username}</p>

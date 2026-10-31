@@ -4,6 +4,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { ROUTES } from '@/config/routes';
 import { useAuthStore } from '@/features/auth/store/authStore';
 import { PublicLayout } from '@/components/layout/PublicLayout';
+import { BrandLogo } from '@/components/common/BrandLogo';
 
 export const LandingPage: React.FC = () => {
   const { isAuthenticated } = useAuthStore();
@@ -16,9 +17,8 @@ export const LandingPage: React.FC = () => {
     <PublicLayout>
       <section className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl mb-6 sm:mb-8"
-               style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}>
-            <span className="text-3xl sm:text-4xl font-bold text-white">V</span>
+          <div className="mb-6 sm:mb-8 flex justify-center">
+            <BrandLogo size="2xl" />
           </div>
           <h1 className="text-fluid-5xl font-bold mb-4 sm:mb-6">
             <span style={{

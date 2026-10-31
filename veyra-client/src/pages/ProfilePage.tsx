@@ -6,6 +6,7 @@ import { GlassButton } from '@/components/glass/GlassButton';
 import { GlassModal } from '@/components/glass/GlassModal';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { usePwa } from '@/lib/pwa';
+import { UserAvatar } from '@/components/common/UserAvatar';
 import {
   User as UserIcon,
   Shield,
@@ -61,15 +62,11 @@ export const ProfilePage: React.FC = () => {
           />
 
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-            <div
-              className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center text-3xl font-bold shrink-0 shadow-sm text-white bg-[var(--color-primary)]"
-            >
-              {user?.avatarUrl ? (
-                <img src={user.avatarUrl} alt="Avatar" className="w-full h-full object-cover rounded-2xl" />
-              ) : (
-                (user?.name || user?.email || 'V').charAt(0).toUpperCase()
-              )}
-            </div>
+            <UserAvatar
+              src={user?.avatarUrl}
+              name={user?.name || user?.email || 'Veyra Adventurer'}
+              size="2xl"
+            />
 
             <div className="flex-1 text-center sm:text-left space-y-2">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2">

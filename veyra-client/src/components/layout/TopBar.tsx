@@ -6,6 +6,8 @@ import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useStreaks } from '@/features/gamification';
 import { useNotifications, NotificationDrawer } from '@/features/notifications';
 import { cn } from '@/lib/cn';
+import { BrandLogo } from '@/components/common/BrandLogo';
+import { UserAvatar } from '@/components/common/UserAvatar';
 
 interface TopBarProps {
   onOpenMobileNav?: () => void;
@@ -44,13 +46,7 @@ export const TopBar: React.FC<TopBarProps> = ({ onOpenMobileNav }) => {
           </button>
 
           <Link to="/dashboard" className="flex items-center gap-2 lg:hidden">
-            <div
-              className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shadow-sm"
-              style={{ background: 'var(--color-text)', color: 'var(--color-text-on-dark)' }}
-            >
-              V
-            </div>
-            <span className="font-bold text-fluid-sm tracking-tight" style={{ color: 'var(--color-text)' }}>Veyra</span>
+            <BrandLogo size="xs" showWordmark />
           </Link>
           <div className="hidden lg:block text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
             Welcome to <span className="font-semibold" style={{ color: 'var(--color-primary)' }}>Veyra Productivity</span>
@@ -108,12 +104,11 @@ export const TopBar: React.FC<TopBarProps> = ({ onOpenMobileNav }) => {
               <span className="font-medium hidden sm:inline max-w-[120px] truncate" style={{ color: 'var(--color-text)' }}>
                 {user.name || user.username || 'Adventurer'}
               </span>
-              <div
-                className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs"
-                style={{ background: 'var(--color-text)', color: 'var(--color-text-on-dark)' }}
-              >
-                {(user.name || user.email || 'U').charAt(0).toUpperCase()}
-              </div>
+              <UserAvatar
+                src={user.avatarUrl}
+                name={user.name || user.username || 'Adventurer'}
+                size="xs"
+              />
             </Link>
           )}
         </div>

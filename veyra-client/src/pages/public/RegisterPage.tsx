@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { GlassButton } from '@/components/glass/GlassButton';
 import { GlassInput } from '@/components/glass/GlassInput';
+import { BrandLogo } from '@/components/common/BrandLogo';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { apiClient } from '@/lib/apiClient';
 import { UserPlus, AlertCircle, CheckCircle2, Loader2, ArrowLeft } from 'lucide-react';
@@ -101,6 +102,9 @@ export const RegisterPage: React.FC = () => {
           />
 
           <div className="text-center mb-6">
+            <div className="mb-3 flex justify-center">
+              <BrandLogo size="xl" />
+            </div>
             <h1 className="text-fluid-2xl font-bold mb-1" style={{ color: 'var(--color-text)' }}>
               Create your account
             </h1>

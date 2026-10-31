@@ -1,6 +1,7 @@
 /** List of pending incoming friend requests with Accept & Decline buttons. */
 import React, { useState } from 'react';
 import { GlassButton } from '@/components/glass/GlassButton';
+import { UserAvatar } from '@/components/common/UserAvatar';
 import { Check, X, UserCheck, Flame, Zap } from 'lucide-react';
 import type { FriendRequest } from '../types';
 
@@ -39,9 +40,11 @@ export const FriendRequestsList: React.FC<FriendRequestsListProps> = ({ requests
           className="glass p-4 rounded-2xl border border-[var(--glass-border)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 select-none"
         >
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary font-bold text-fluid-base">
-              {req.sender.name ? req.sender.name.charAt(0).toUpperCase() : 'U'}
-            </div>
+            <UserAvatar
+              src={req.sender.avatarUrl}
+              name={req.sender.name || req.sender.username}
+              size="md"
+            />
             <div>
               <div className="font-bold text-gray-900 dark:text-white text-fluid-sm">{req.sender.name || req.sender.username}</div>
               <div className="text-fluid-xs text-gray-600 dark:text-zinc-400">@{req.sender.username || 'user'}</div>

@@ -2,6 +2,7 @@
 import React from 'react';
 import { GlassButton } from '@/components/glass/GlassButton';
 import { useFriendProgress } from '../hooks/useFriends';
+import { UserAvatar } from '@/components/common/UserAvatar';
 import { Shield, CheckCircle2, Clock, Flame, Zap, Award, X, Lock } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import type { PrivacyLevel } from '../types';
@@ -55,9 +56,11 @@ export const FriendProgressModal: React.FC<FriendProgressModalProps> = ({ friend
         {/* Top Header */}
         <div className="flex items-start justify-between gap-3 mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary font-bold text-fluid-lg shadow-sm">
-              {progress?.name ? progress.name.charAt(0).toUpperCase() : 'F'}
-            </div>
+            <UserAvatar
+              src={(progress as unknown as { avatarUrl?: string })?.avatarUrl}
+              name={progress?.name || progress?.username || 'Friend'}
+              size="lg"
+            />
             <div>
               <h2 className="text-fluid-lg font-bold text-gray-900 dark:text-white">
                 {progress?.name || progress?.username || 'Friend'}'s Accountability
