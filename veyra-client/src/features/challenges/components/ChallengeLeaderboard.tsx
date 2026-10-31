@@ -67,28 +67,28 @@ export const ChallengeLeaderboard: React.FC<ChallengeLeaderboardProps> = ({
                 ? 'border-emerald-500/30 bg-emerald-500/5'
                 : rank === 1
                 ? 'border-amber-500/30 bg-amber-500/5'
-                : 'border-white/5 hover:border-white/10'
+                : 'border-[var(--glass-border)] hover:border-primary/40'
             )}
           >
             {/* Rank + User Info */}
             <div className="flex items-center gap-3">
               {getRankBadge(rank)}
 
-              <div className="w-9 h-9 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold text-fluid-xs">
+              <div className="w-9 h-9 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary font-bold text-fluid-xs">
                 {p.userName.charAt(0).toUpperCase()}
               </div>
 
               <div>
-                <div className="font-bold text-white text-fluid-xs flex items-center gap-1.5">
+                <div className="font-bold text-gray-900 dark:text-white text-fluid-xs flex items-center gap-1.5">
                   <span>{p.userName}</span>
                   {p.completed && (
-                    <span className="text-emerald-400 flex items-center gap-0.5 text-[10px] font-semibold">
+                    <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5 text-[10px] font-semibold">
                       <CheckCircle2 size={11} /> Finished
                     </span>
                   )}
                 </div>
-                <div className="text-[11px] text-zinc-400 flex items-center gap-1.5">
-                  <span className="text-blue-400 flex items-center gap-0.5">
+                <div className="text-[11px] text-gray-500 dark:text-zinc-400 flex items-center gap-1.5">
+                  <span className="text-primary flex items-center gap-0.5">
                     <Zap size={10} /> Lv. {p.userLevel}
                   </span>
                 </div>
@@ -98,11 +98,11 @@ export const ChallengeLeaderboard: React.FC<ChallengeLeaderboardProps> = ({
             {/* Progress Bar & Value */}
             <div className="flex items-center gap-3 text-right">
               <div className="w-24 sm:w-32 hidden sm:block">
-                <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+                <div className="w-full h-1.5 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden">
                   <div
                     className={cn(
                       'h-full rounded-full transition-all duration-500',
-                      p.completed ? 'bg-emerald-400' : 'bg-blue-500'
+                      p.completed ? 'bg-emerald-500' : 'bg-primary'
                     )}
                     style={{ width: `${pct}%` }}
                   />
@@ -110,10 +110,10 @@ export const ChallengeLeaderboard: React.FC<ChallengeLeaderboardProps> = ({
               </div>
 
               <div>
-                <div className="font-bold text-white text-fluid-xs">
+                <div className="font-bold text-gray-900 dark:text-white text-fluid-xs">
                   {p.progress} / {targetValue}
                 </div>
-                <div className="text-[10px] text-zinc-400 font-semibold">{pct}%</div>
+                <div className="text-[10px] text-gray-500 dark:text-zinc-400 font-semibold">{pct}%</div>
               </div>
             </div>
           </div>

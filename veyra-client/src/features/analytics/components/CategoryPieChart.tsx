@@ -1,4 +1,4 @@
-/** Donut pie chart showing habit category distributions. */
+/** Donut pie chart showing habit category distributions (Corbel theme). */
 import React from 'react';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 import type { CategoryStat } from '../types';
@@ -9,7 +9,11 @@ interface CategoryPieChartProps {
 
 export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
   if (data.length === 0) {
-    return <div className="h-64 flex items-center justify-center text-zinc-500">No category data</div>;
+    return (
+      <div className="h-64 flex items-center justify-center text-[var(--color-text-muted)]">
+        No category data
+      </div>
+    );
   }
 
   return (
@@ -22,9 +26,9 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
                 if (active && payload && payload.length) {
                   const item = payload[0].payload as CategoryStat;
                   return (
-                    <div className="glass-heavy p-2.5 rounded-xl border border-white/20 shadow-xl text-fluid-xs">
-                      <div className="font-bold text-white mb-0.5">{item.category}</div>
-                      <div className="text-zinc-300">
+                    <div className="glass-heavy p-2.5 rounded-xl border border-[var(--color-border)] shadow-lg text-fluid-xs bg-[var(--color-surface)]">
+                      <div className="font-bold mb-0.5" style={{ color: 'var(--color-text)' }}>{item.category}</div>
+                      <div style={{ color: 'var(--color-text-muted)' }}>
                         {item.percentage}% ({item.count} habits)
                       </div>
                     </div>
@@ -59,11 +63,11 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ data }) => {
                 className="w-3 h-3 rounded-full shrink-0"
                 style={{ backgroundColor: cat.color }}
               />
-              <span className="text-zinc-300 font-medium truncate max-w-[140px]">
+              <span className="font-medium truncate max-w-[140px]" style={{ color: 'var(--color-text-muted)' }}>
                 {cat.category}
               </span>
             </div>
-            <span className="font-bold text-white shrink-0">{cat.percentage}%</span>
+            <span className="font-bold shrink-0" style={{ color: 'var(--color-text)' }}>{cat.percentage}%</span>
           </div>
         ))}
       </div>

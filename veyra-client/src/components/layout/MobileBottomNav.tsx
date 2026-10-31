@@ -20,7 +20,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenMobileNa
       style={{
         height: 'calc(var(--bottom-nav-height, 64px) + env(safe-area-inset-bottom, 0px))',
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
-        borderColor: 'var(--glass-border)',
+        borderColor: 'var(--color-border)',
         transform: 'translateZ(0)',
         WebkitTransform: 'translateZ(0)',
       }}
@@ -32,11 +32,11 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenMobileNa
             <NavLink
               key={tab.to}
               to={tab.to}
-              className={({ isActive }) =>
-                `flex flex-col items-center justify-center flex-1 h-full min-h-[44px] text-[10.5px] font-medium transition-colors touch-manipulation ${
-                  isActive ? 'text-blue-500 font-semibold' : 'text-gray-400 hover:text-gray-900 dark:hover:text-white'
-                }`
-              }
+              className="flex flex-col items-center justify-center flex-1 h-full min-h-[44px] text-[10.5px] font-medium transition-colors touch-manipulation"
+              style={({ isActive }) => ({
+                color: isActive ? 'var(--color-primary)' : 'var(--color-text-muted)',
+                fontWeight: isActive ? 600 : 500,
+              })}
             >
               <Icon size={19} className="mb-0.5 shrink-0" />
               <span className="truncate">{tab.label}</span>
@@ -48,14 +48,14 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onOpenMobileNa
         <button
           type="button"
           onClick={onOpenMobileNav}
-          className="flex flex-col items-center justify-center flex-1 h-full min-h-[44px] text-[10.5px] font-medium text-gray-400 hover:text-white transition-colors active:scale-95 group touch-manipulation"
+          className="flex flex-col items-center justify-center flex-1 h-full min-h-[44px] text-[10.5px] font-medium transition-colors active:scale-95 group touch-manipulation"
           aria-label="Open all tabs menu"
+          style={{ color: 'var(--color-text-muted)' }}
         >
-          <Compass size={19} className="mb-0.5 text-gray-400 group-hover:text-blue-400 group-active:text-blue-400 transition-colors shrink-0" />
-          <span className="group-hover:text-blue-400 group-active:text-blue-400 transition-colors truncate">More</span>
+          <Compass size={19} className="mb-0.5 shrink-0" />
+          <span className="truncate">More</span>
         </button>
       </div>
     </nav>
   );
 };
-

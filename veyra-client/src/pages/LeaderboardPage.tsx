@@ -1,4 +1,4 @@
-/** Leaderboard rankings page — Global platform rankings by XP, Level, and Streaks across all verified users. */
+/** Leaderboard rankings page — Global platform rankings by XP, Level, and Streaks (Corbel theme). */
 import React, { useState } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -118,25 +118,25 @@ export const LeaderboardPage: React.FC = () => {
     switch (rank) {
       case 1:
         return (
-          <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-400/40 flex items-center justify-center font-bold">
+          <div className="w-8 h-8 rounded-xl bg-[var(--color-warning)]/20 text-[var(--color-warning)] border border-[var(--color-warning)]/40 flex items-center justify-center font-bold">
             <Crown size={16} />
           </div>
         );
       case 2:
         return (
-          <div className="w-8 h-8 rounded-xl bg-slate-400/20 text-slate-300 border border-slate-400/40 flex items-center justify-center font-bold">
+          <div className="w-8 h-8 rounded-xl bg-[var(--color-surface-hover)] text-[var(--color-text-muted)] border border-[var(--color-border)] flex items-center justify-center font-bold">
             <Medal size={16} />
           </div>
         );
       case 3:
         return (
-          <div className="w-8 h-8 rounded-xl bg-amber-700/20 text-amber-600 border border-amber-700/40 flex items-center justify-center font-bold">
+          <div className="w-8 h-8 rounded-xl bg-[var(--color-warning)]/10 text-[var(--color-warning)] border border-[var(--color-warning)]/20 flex items-center justify-center font-bold">
             <Medal size={16} />
           </div>
         );
       default:
         return (
-          <div className="w-8 h-8 rounded-xl bg-white/5 text-zinc-400 border border-white/5 flex items-center justify-center text-fluid-xs font-bold">
+          <div className="w-8 h-8 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] flex items-center justify-center text-fluid-xs font-bold" style={{ color: 'var(--color-text-muted)' }}>
             #{rank}
           </div>
         );
@@ -151,15 +151,16 @@ export const LeaderboardPage: React.FC = () => {
       />
 
       {/* Metric Selector Tabs */}
-      <div className="flex items-center gap-2 mb-6 border-b border-white/10 pb-3">
+      <div className="flex items-center gap-2 mb-6 border-b border-[var(--color-border)] pb-3">
         <button
           onClick={() => setActiveTab('xp')}
           className={cn(
             'px-4 py-2 rounded-xl text-fluid-xs font-bold transition-all flex items-center gap-2 border',
             activeTab === 'xp'
-              ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 shadow-sm'
-              : 'text-zinc-400 border-transparent hover:text-gray-900 dark:hover:text-white hover:bg-white/5'
+              ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-sm'
+              : 'border-transparent hover:bg-[var(--color-surface-hover)]'
           )}
+          style={activeTab === 'xp' ? {} : { color: 'var(--color-text-muted)' }}
         >
           <Award size={15} /> Top by Experience (XP)
         </button>
@@ -168,9 +169,10 @@ export const LeaderboardPage: React.FC = () => {
           className={cn(
             'px-4 py-2 rounded-xl text-fluid-xs font-bold transition-all flex items-center gap-2 border',
             activeTab === 'streak'
-              ? 'bg-orange-500/20 text-orange-200 border-orange-400/40 shadow-sm'
-              : 'text-zinc-400 border-transparent hover:text-gray-900 dark:hover:text-white hover:bg-white/5'
+              ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-sm'
+              : 'border-transparent hover:bg-[var(--color-surface-hover)]'
           )}
+          style={activeTab === 'streak' ? {} : { color: 'var(--color-text-muted)' }}
         >
           <Flame size={15} /> Longest Active Streaks
         </button>
@@ -180,16 +182,16 @@ export const LeaderboardPage: React.FC = () => {
         <div className="space-y-6 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="glass p-6 rounded-3xl border border-white/5 h-56 animate-pulse" />
+              <div key={i} className="glass p-6 rounded-3xl border border-[var(--color-border)] h-56 animate-pulse" />
             ))}
           </div>
-          <div className="glass p-6 rounded-3xl border border-white/5 h-64 animate-pulse" />
+          <div className="glass p-6 rounded-3xl border border-[var(--color-border)] h-64 animate-pulse" />
         </div>
       ) : sortedEntries.length === 0 ? (
-        <div className="glass p-12 rounded-3xl border border-white/5 text-center mb-8">
-          <Globe size={40} className="mx-auto text-zinc-600 mb-2" />
-          <h4 className="text-fluid-base font-bold text-white">No active rankings yet</h4>
-          <p className="text-fluid-xs text-zinc-400 mt-1">
+        <div className="glass p-12 rounded-3xl border border-[var(--color-border)] text-center mb-8">
+          <Globe size={40} className="mx-auto mb-2" style={{ color: 'var(--color-text-muted)' }} />
+          <h4 className="text-fluid-base font-bold" style={{ color: 'var(--color-text)' }}>No active rankings yet</h4>
+          <p className="text-fluid-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>
             Complete daily habits to earn XP and be the first on the global leaderboard!
           </p>
         </div>
@@ -206,21 +208,21 @@ export const LeaderboardPage: React.FC = () => {
                     key={item.id}
                     className={cn(
                       'glass p-5 rounded-3xl border transition-all text-center relative overflow-hidden',
-                      item.isMe ? 'ring-2 ring-blue-500/50' : '',
+                      item.isMe ? 'ring-2 ring-[var(--color-primary)]' : '',
                       isFirst
-                        ? 'border-amber-500/30 bg-amber-500/5 md:-translate-y-2'
-                        : 'border-white/10'
+                        ? 'border-[var(--color-primary)]/40 bg-[var(--color-primary-soft)]/20 md:-translate-y-2'
+                        : 'border-[var(--color-border)]'
                     )}
                   >
                     {isFirst && (
-                      <div className="absolute top-3 right-3 text-amber-400 animate-pulse">
+                      <div className="absolute top-3 right-3 text-[var(--color-warning)] animate-pulse">
                         <Sparkles size={18} />
                       </div>
                     )}
 
                     <div className="flex justify-center mb-3">{getRankBadge(rank)}</div>
 
-                    <div className="w-14 h-14 rounded-2xl mx-auto mb-3 bg-gradient-to-tr from-blue-700 to-blue-600 text-white font-black text-fluid-lg flex items-center justify-center shadow-lg overflow-hidden">
+                    <div className="w-14 h-14 rounded-2xl mx-auto mb-3 bg-[var(--color-primary)] text-white font-black text-fluid-lg flex items-center justify-center shadow-md overflow-hidden">
                       {item.avatarUrl ? (
                         <img src={item.avatarUrl} alt={item.name} className="w-full h-full object-cover" />
                       ) : (
@@ -228,21 +230,21 @@ export const LeaderboardPage: React.FC = () => {
                       )}
                     </div>
 
-                    <h3 className="text-fluid-base font-bold text-white truncate">
-                      {item.name} {item.isMe && <span className="text-blue-500">(You)</span>}
+                    <h3 className="text-fluid-base font-bold truncate" style={{ color: 'var(--color-text)' }}>
+                      {item.name} {item.isMe && <span className="text-[var(--color-primary)]">(You)</span>}
                     </h3>
-                    <p className="text-[11px] text-zinc-400 mb-3">@{item.username}</p>
+                    <p className="text-[11px] mb-3" style={{ color: 'var(--color-text-muted)' }}>@{item.username}</p>
 
-                    <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-around">
+                    <div className="p-3 rounded-2xl bg-[var(--color-surface-hover)] border border-[var(--color-border)] flex items-center justify-around">
                       <div>
-                        <div className="text-[10px] uppercase font-bold text-zinc-400">Level</div>
-                        <div className="text-fluid-sm font-black text-blue-400">{item.level}</div>
+                        <div className="text-[10px] uppercase font-bold" style={{ color: 'var(--color-text-muted)' }}>Level</div>
+                        <div className="text-fluid-sm font-black text-[var(--color-primary)]">{item.level}</div>
                       </div>
                       <div>
-                        <div className="text-[10px] uppercase font-bold text-zinc-400">
+                        <div className="text-[10px] uppercase font-bold" style={{ color: 'var(--color-text-muted)' }}>
                           {activeTab === 'xp' ? 'Total XP' : 'Streak'}
                         </div>
-                        <div className="text-fluid-sm font-black text-amber-300">
+                        <div className="text-fluid-sm font-black text-[var(--color-warning)]">
                           {activeTab === 'xp' ? `${item.xp.toLocaleString()} XP` : `${item.streak} days`}
                         </div>
                       </div>
@@ -254,16 +256,16 @@ export const LeaderboardPage: React.FC = () => {
           )}
 
           {/* Full Standings Table */}
-          <div className="glass rounded-3xl border border-white/10 overflow-hidden mb-6">
-            <div className="p-4 border-b border-white/10 flex items-center justify-between">
-              <h2 className="text-fluid-base font-bold text-white flex items-center gap-2">
-                <Users size={16} className="text-blue-500" />
+          <div className="glass rounded-3xl border border-[var(--color-border)] overflow-hidden mb-6">
+            <div className="p-4 border-b border-[var(--color-border)] flex items-center justify-between">
+              <h2 className="text-fluid-base font-bold flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
+                <Users size={16} className="text-[var(--color-primary)]" />
                 Global Standings
               </h2>
-              <span className="text-fluid-xs text-zinc-400">{sortedEntries.length} Adventurers</span>
+              <span className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>{sortedEntries.length} Adventurers</span>
             </div>
 
-            <div className="divide-y divide-white/5">
+            <div className="divide-y divide-[var(--color-border)]">
               {sortedEntries.map((item, index) => {
                 const rank = index + 1;
                 return (
@@ -271,15 +273,15 @@ export const LeaderboardPage: React.FC = () => {
                     key={item.id}
                     className={cn(
                       'p-4 flex items-center justify-between gap-4 transition-colors',
-                      item.isMe ? 'bg-blue-500/10' : 'hover:bg-white/[0.02]'
+                      item.isMe ? 'bg-[var(--color-primary-soft)]/30' : 'hover:bg-[var(--color-surface-hover)]'
                     )}
                   >
                     <div className="flex items-center gap-3.5 min-w-0">
-                      <div className="w-8 text-center text-fluid-sm font-bold text-zinc-400">
+                      <div className="w-8 text-center text-fluid-sm font-bold" style={{ color: 'var(--color-text-muted)' }}>
                         {rank <= 3 ? getRankBadge(rank) : `#${rank}`}
                       </div>
 
-                      <div className="w-10 h-10 rounded-xl bg-blue-700/30 border border-blue-500/30 flex items-center justify-center font-bold text-white shrink-0 overflow-hidden">
+                      <div className="w-10 h-10 rounded-xl bg-[var(--color-primary-soft)] border border-[var(--color-primary)]/30 flex items-center justify-center font-bold text-[var(--color-primary)] shrink-0 overflow-hidden">
                         {item.avatarUrl ? (
                           <img src={item.avatarUrl} alt={item.name} className="w-full h-full object-cover" />
                         ) : (
@@ -288,32 +290,32 @@ export const LeaderboardPage: React.FC = () => {
                       </div>
 
                       <div className="min-w-0">
-                        <div className="text-fluid-sm font-bold text-white truncate flex items-center gap-2">
+                        <div className="text-fluid-sm font-bold truncate flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
                           <span>{item.name}</span>
                           {item.isMe && (
-                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold">
+                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-primary-soft)] text-[var(--color-primary)] border border-[var(--color-primary)]/30 font-semibold">
                               You
                             </span>
                           )}
                         </div>
-                        <div className="text-[11px] text-zinc-400">@{item.username}</div>
+                        <div className="text-[11px]" style={{ color: 'var(--color-text-muted)' }}>@{item.username}</div>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-6 shrink-0 text-right">
                       <div>
-                        <div className="text-[10px] text-zinc-400 uppercase font-semibold">Level</div>
-                        <div className="text-fluid-xs font-bold text-white">{item.level}</div>
+                        <div className="text-[10px] uppercase font-semibold" style={{ color: 'var(--color-text-muted)' }}>Level</div>
+                        <div className="text-fluid-xs font-bold" style={{ color: 'var(--color-text)' }}>{item.level}</div>
                       </div>
                       <div>
-                        <div className="text-[10px] text-zinc-400 uppercase font-semibold">Streak</div>
-                        <div className="text-fluid-xs font-bold text-orange-400 flex items-center justify-end gap-1">
+                        <div className="text-[10px] uppercase font-semibold" style={{ color: 'var(--color-text-muted)' }}>Streak</div>
+                        <div className="text-fluid-xs font-bold text-[var(--color-warning)] flex items-center justify-end gap-1">
                           <Flame size={12} /> {item.streak}d
                         </div>
                       </div>
                       <div className="min-w-[70px]">
-                        <div className="text-[10px] text-zinc-400 uppercase font-semibold">XP</div>
-                        <div className="text-fluid-xs font-bold text-amber-300">
+                        <div className="text-[10px] uppercase font-semibold" style={{ color: 'var(--color-text-muted)' }}>XP</div>
+                        <div className="text-fluid-xs font-bold text-[var(--color-primary)]">
                           {item.xp.toLocaleString()}
                         </div>
                       </div>

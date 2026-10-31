@@ -68,13 +68,13 @@ export const AiReflectionModal: React.FC<AiReflectionModalProps> = ({
         );
       case 'improving':
         return (
-          <span className="px-3 py-1 rounded-full text-fluid-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center gap-1.5 shadow-sm">
+          <span className="px-3 py-1 rounded-full text-fluid-xs font-bold bg-primary/15 text-primary border border-primary/30 flex items-center gap-1.5 shadow-sm">
             <TrendingUp size={14} /> Building Momentum
           </span>
         );
       default:
         return (
-          <span className="px-3 py-1 rounded-full text-fluid-xs font-bold bg-zinc-500/20 text-zinc-300 border border-zinc-500/30 flex items-center gap-1.5 shadow-sm">
+          <span className="px-3 py-1 rounded-full text-fluid-xs font-bold bg-zinc-500/10 text-zinc-600 dark:text-zinc-300 border border-zinc-500/20 flex items-center gap-1.5 shadow-sm">
             <Target size={14} /> Reset & Refocus
           </span>
         );
@@ -84,34 +84,34 @@ export const AiReflectionModal: React.FC<AiReflectionModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/75 backdrop-blur-md" onClick={handleModalClose} />
+      <div className="fixed inset-0 bg-black/75" onClick={handleModalClose} />
 
       {/* Modal Dialog */}
       <div
-        className="glass-heavy relative z-10 w-full max-w-xl max-h-[90vh] flex flex-col p-6 rounded-3xl border border-blue-500/30 shadow-[0_0_50px_rgba(0,136,221,0.2)] animate-in fade-in zoom-in-95 duration-200 overflow-hidden"
+        className="glass-heavy relative z-10 w-full max-w-xl max-h-[90vh] flex flex-col p-6 rounded-3xl border border-[var(--glass-border)] shadow-2xl animate-in fade-in zoom-in-95 duration-200 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-white/10 shrink-0">
+        <div className="flex items-center justify-between pb-4 border-b border-[var(--glass-border)] shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30">
+            <div className="p-2 rounded-xl bg-primary/15 text-primary border border-primary/30">
               <Sparkles size={18} />
             </div>
             <div>
-              <h2 className="text-fluid-base font-bold text-white flex items-center gap-2">
+              <h2 className="text-fluid-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
                 <span>AI Monthly Reflection</span>
-                <span className="text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full bg-blue-500/30 text-blue-300 border border-blue-500/40">
+                <span className="text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full bg-primary/15 text-primary border border-primary/30">
                   Gemini
                 </span>
               </h2>
-              <p className="text-[11px] text-zinc-400">
+              <p className="text-[11px] text-gray-600 dark:text-zinc-400">
                 {monthName} {year} Productivity Synthesis
               </p>
             </div>
           </div>
           <button
             onClick={handleModalClose}
-            className="p-1.5 rounded-xl text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/10 transition-colors"
+            className="p-1.5 rounded-xl text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
           >
             <X size={18} />
           </button>
@@ -121,12 +121,12 @@ export const AiReflectionModal: React.FC<AiReflectionModalProps> = ({
         <div className="flex-1 overflow-y-auto py-4 space-y-4 pr-1">
           {!reflectionData ? (
             <div className="space-y-4">
-              <p className="text-fluid-xs text-zinc-300 leading-relaxed">
+              <p className="text-fluid-xs text-gray-600 dark:text-zinc-300 leading-relaxed">
                 Veyra's AI engine analyzes your completion rates, streak endurance, and daily check-ins to synthesize your personal growth story for {monthName}.
               </p>
 
               <div>
-                <label className="block text-fluid-xs font-semibold text-zinc-300 mb-1.5">
+                <label className="block text-fluid-xs font-semibold text-gray-700 dark:text-zinc-300 mb-1.5">
                   Optional: Focus notes or highlights to include
                 </label>
                 <textarea
@@ -134,13 +134,13 @@ export const AiReflectionModal: React.FC<AiReflectionModalProps> = ({
                   onChange={(e) => setCustomPrompt(e.target.value)}
                   placeholder="e.g. Focus on morning workout consistency, or note that finals week was especially busy..."
                   rows={3}
-                  className="w-full p-3 rounded-2xl glass border border-white/10 focus:border-blue-500/50 text-fluid-xs text-white placeholder-zinc-500 outline-none transition-all resize-none"
+                  className="w-full p-3 rounded-2xl glass border border-[var(--glass-border)] focus:border-primary text-fluid-xs text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder-zinc-500 outline-none transition-all resize-none"
                 />
               </div>
 
-              <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-start gap-3">
-                <Brain size={18} className="text-blue-400 shrink-0 mt-0.5" />
-                <div className="text-[11px] text-zinc-300 leading-relaxed">
+              <div className="p-4 rounded-2xl bg-primary/10 border border-primary/20 flex items-start gap-3">
+                <Brain size={18} className="text-primary shrink-0 mt-0.5" />
+                <div className="text-[11px] text-gray-700 dark:text-zinc-300 leading-relaxed">
                   The reflection synthesizes your authentic logged data. If Gemini API is configured, advanced narrative intelligence is applied; otherwise, high-fidelity analytical modeling generates your report.
                 </div>
               </div>
@@ -149,32 +149,32 @@ export const AiReflectionModal: React.FC<AiReflectionModalProps> = ({
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 {getSentimentBadge(reflectionData.sentiment)}
-                <span className="text-[10px] text-zinc-400 uppercase font-semibold">
+                <span className="text-[10px] text-gray-500 dark:text-zinc-400 uppercase font-semibold">
                   Source: {reflectionData.source}
                 </span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10">
-                <h4 className="text-[11px] uppercase tracking-wider font-bold text-blue-400 mb-2">
+              <div className="p-4 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-[var(--glass-border)]">
+                <h4 className="text-[11px] uppercase tracking-wider font-bold text-primary mb-2">
                   Growth Synthesis
                 </h4>
-                <p className="text-fluid-xs text-zinc-200 leading-relaxed whitespace-pre-line italic">
+                <p className="text-fluid-xs text-gray-800 dark:text-zinc-200 leading-relaxed whitespace-pre-line italic">
                   "{reflectionData.reflection}"
                 </p>
               </div>
 
               {reflectionData.keyHighlights.length > 0 && (
                 <div>
-                  <h4 className="text-fluid-xs font-bold text-white mb-2 flex items-center gap-1.5">
-                    <CheckCircle2 size={14} className="text-emerald-400" /> Key Highlights
+                  <h4 className="text-fluid-xs font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-1.5">
+                    <CheckCircle2 size={14} className="text-emerald-500" /> Key Highlights
                   </h4>
                   <ul className="space-y-1.5">
                     {reflectionData.keyHighlights.map((hl, i) => (
                       <li
                         key={i}
-                        className="text-[12px] text-zinc-300 bg-white/5 p-2 rounded-xl border border-white/5 flex items-center gap-2"
+                        className="text-[12px] text-gray-800 dark:text-zinc-300 bg-black/[0.02] dark:bg-white/5 p-2 rounded-xl border border-[var(--glass-border)] flex items-center gap-2"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                         <span>{hl}</span>
                       </li>
                     ))}
@@ -184,16 +184,16 @@ export const AiReflectionModal: React.FC<AiReflectionModalProps> = ({
 
               {reflectionData.focusAreasNextMonth.length > 0 && (
                 <div>
-                  <h4 className="text-fluid-xs font-bold text-white mb-2 flex items-center gap-1.5">
-                    <Target size={14} className="text-blue-500" /> Recommended Next Month Focus
+                  <h4 className="text-fluid-xs font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-1.5">
+                    <Target size={14} className="text-primary" /> Recommended Next Month Focus
                   </h4>
                   <ul className="space-y-1.5">
                     {reflectionData.focusAreasNextMonth.map((fa, i) => (
                       <li
                         key={i}
-                        className="text-[12px] text-zinc-300 bg-blue-500/10 p-2 rounded-xl border border-blue-500/20 flex items-center gap-2"
+                        className="text-[12px] text-gray-800 dark:text-zinc-300 bg-primary/10 p-2 rounded-xl border border-primary/20 flex items-center gap-2"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
                         <span>{fa}</span>
                       </li>
                     ))}

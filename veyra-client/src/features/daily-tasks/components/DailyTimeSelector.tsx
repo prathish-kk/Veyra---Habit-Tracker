@@ -1,7 +1,7 @@
 /**
- * DailyTimeSelector — Premium, interactive time adder for daily tasks and habits.
- * Features atmospheric time-of-day cards, LED digital tuner, quick stepping,
- * per-day schedule matrix, and gamified deadline impact preview.
+ * DailyTimeSelector — Interactive time adder for daily tasks and habits (Corbel theme).
+ * Features atmospheric time-of-day presets, digital tuner, quick stepping,
+ * per-day schedule matrix, and deadline rule preview.
  */
 import React, { useState, useMemo, useCallback } from 'react';
 import {
@@ -51,10 +51,6 @@ interface PresetTime {
   time12: string;
   tagline: string;
   icon: LucideIcon;
-  accent: string;
-  selectedBorder: string;
-  selectedGlow: string;
-  selectedBg: string;
 }
 
 const PRESETS: PresetTime[] = [
@@ -65,10 +61,6 @@ const PRESETS: PresetTime[] = [
     time12: '9:00 AM',
     tagline: 'Start early',
     icon: Sunrise,
-    accent: 'text-amber-400',
-    selectedBorder: 'border-amber-400/80',
-    selectedGlow: 'shadow-amber-500/20',
-    selectedBg: 'from-amber-500/20 via-orange-500/10 to-transparent',
   },
   {
     id: 'midday',
@@ -77,10 +69,6 @@ const PRESETS: PresetTime[] = [
     time12: '1:00 PM',
     tagline: 'Lunch reset',
     icon: Sun,
-    accent: 'text-sky-400',
-    selectedBorder: 'border-sky-400/80',
-    selectedGlow: 'shadow-sky-500/20',
-    selectedBg: 'from-sky-500/20 via-blue-500/10 to-transparent',
   },
   {
     id: 'evening',
@@ -89,10 +77,6 @@ const PRESETS: PresetTime[] = [
     time12: '6:00 PM',
     tagline: 'Post workday',
     icon: Sunset,
-    accent: 'text-purple-400',
-    selectedBorder: 'border-purple-400/80',
-    selectedGlow: 'shadow-purple-500/20',
-    selectedBg: 'from-purple-500/20 via-pink-500/10 to-transparent',
   },
   {
     id: 'night',
@@ -101,10 +85,6 @@ const PRESETS: PresetTime[] = [
     time12: '9:00 PM',
     tagline: 'Evening routine',
     icon: Moon,
-    accent: 'text-blue-400',
-    selectedBorder: 'border-blue-400/80',
-    selectedGlow: 'shadow-blue-500/25',
-    selectedBg: 'from-blue-600/25 via-indigo-600/15 to-transparent',
   },
   {
     id: 'midnight',
@@ -113,10 +93,6 @@ const PRESETS: PresetTime[] = [
     time12: '11:59 PM',
     tagline: 'Full day window',
     icon: Sparkles,
-    accent: 'text-emerald-400',
-    selectedBorder: 'border-emerald-400/80',
-    selectedGlow: 'shadow-emerald-500/20',
-    selectedBg: 'from-emerald-500/20 via-teal-500/10 to-transparent',
   },
 ];
 
@@ -166,127 +142,120 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
 }) => {
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
 
-  // Parse hours and minutes
-  const { hour24, minute, hour12, isPM } = useMemo(() => {
+  // Parse hours and minutes from dueTime (HH:mm)
+  const { hour24, minute } = useMemo(() => {
+    if (!dueTime || !dueTime.includes(':')) return { hour24: 21, minute: 0 };
     const [h, m] = dueTime.split(':').map(Number);
-    const validH = isNaN(h) ? 21 : Math.max(0, Math.min(23, h));
-    const validM = isNaN(m) ? 0 : Math.max(0, Math.min(59, m));
-    const isPeriodPM = validH >= 12;
-    const h12 = validH % 12 === 0 ? 12 : validH % 12;
-    return {
-      hour24: validH,
-      minute: validM,
-      hour12: h12,
-      isPM: isPeriodPM,
-    };
+    return { hour24: isNaN(h) ? 21 : h, minute: isNaN(m) ? 0 : m };
   }, [dueTime]);
 
+  const isPM = hour24 >= 12;
+  const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
+
+  // Handlers for adjustments
   const updateHour = useCallback(
     (delta: number) => {
       let nextH = (hour24 + delta) % 24;
       if (nextH < 0) nextH += 24;
-      onDueTimeChange(`${String(nextH).padStart(2, '0')}:${String(minute).padStart(2, '0')}`);
+      const formatted = `${String(nextH).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+      onDueTimeChange(formatted);
     },
     [hour24, minute, onDueTimeChange]
   );
 
   const updateMinute = useCallback(
     (delta: number) => {
-      let nextTotal = hour24 * 60 + minute + delta;
-      nextTotal = ((nextTotal % 1440) + 1440) % 1440;
-      const nextH = Math.floor(nextTotal / 60);
-      const nextM = nextTotal % 60;
-      onDueTimeChange(`${String(nextH).padStart(2, '0')}:${String(nextM).padStart(2, '0')}`);
+      let nextM = (minute + delta) % 60;
+      if (nextM < 0) nextM += 60;
+      const formatted = `${String(hour24).padStart(2, '0')}:${String(nextM).padStart(2, '0')}`;
+      onDueTimeChange(formatted);
     },
     [hour24, minute, onDueTimeChange]
   );
 
   const togglePeriod = useCallback(() => {
-    const newH = (hour24 + 12) % 24;
-    onDueTimeChange(`${String(newH).padStart(2, '0')}:${String(minute).padStart(2, '0')}`);
-  }, [hour24, minute, onDueTimeChange]);
+    const nextH = isPM ? hour24 - 12 : hour24 + 12;
+    const formatted = `${String(nextH).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+    onDueTimeChange(formatted);
+  }, [hour24, minute, isPM, onDueTimeChange]);
 
   const handleSetMinute = useCallback(
-    (targetMinute: number) => {
-      onDueTimeChange(`${String(hour24).padStart(2, '0')}:${String(targetMinute).padStart(2, '0')}`);
+    (newMin: number) => {
+      const formatted = `${String(hour24).padStart(2, '0')}:${String(newMin).padStart(2, '0')}`;
+      onDueTimeChange(formatted);
     },
     [hour24, onDueTimeChange]
   );
 
   const handleDayTimeChange = useCallback(
-    (dayVal: number, timeVal: string) => {
+    (dayValue: number, timeVal: string) => {
       onDayDueTimesChange({
         ...dayDueTimes,
-        [dayVal]: timeVal,
+        [dayValue]: timeVal,
       });
     },
     [dayDueTimes, onDayDueTimesChange]
   );
 
   const applyToAllDays = useCallback(() => {
-    const updated: Record<number, string> = {};
+    const nextMap: Record<number, string> = {};
     for (const d of selectedDays) {
-      updated[d] = dueTime;
+      nextMap[d] = dueTime;
     }
-    onDayDueTimesChange(updated);
-    setCopyFeedback('Applied to all days');
-    setTimeout(() => setCopyFeedback(null), 2000);
+    onDayDueTimesChange(nextMap);
+    setCopyFeedback(`Applied ${format12h(dueTime)} to all active days`);
+    setTimeout(() => setCopyFeedback(null), 2500);
   }, [selectedDays, dueTime, onDayDueTimesChange]);
 
   const applyWeekdayWeekendPreset = useCallback(
     (weekdayTime: string, weekendTime: string) => {
-      const updated: Record<number, string> = {};
+      const nextMap: Record<number, string> = {};
       for (const d of selectedDays) {
         if (d === 0 || d === 6) {
-          updated[d] = weekendTime;
+          nextMap[d] = weekendTime;
         } else {
-          updated[d] = weekdayTime;
+          nextMap[d] = weekdayTime;
         }
       }
-      onDayDueTimesChange(updated);
-      setCopyFeedback('Split weekdays & weekends');
-      setTimeout(() => setCopyFeedback(null), 2000);
+      onDayDueTimesChange(nextMap);
+      setCopyFeedback(`Weekdays ${format12h(weekdayTime)}, Weekends ${format12h(weekendTime)}`);
+      setTimeout(() => setCopyFeedback(null), 2500);
     },
     [selectedDays, onDayDueTimesChange]
   );
 
-  const activePreset = useMemo(() => PRESETS.find((p) => p.time === dueTime), [dueTime]);
   const relativeText = useMemo(() => getRelativeRemainingText(dueTime), [dueTime]);
 
   return (
-    <div className="rounded-2xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/10 p-4 sm:p-5 space-y-4 shadow-xl backdrop-blur-md relative overflow-hidden transition-all duration-300">
-      {/* Decorative background glow */}
-      <div className="absolute -top-16 -right-16 w-36 h-36 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-16 -left-16 w-36 h-36 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-
+    <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 sm:p-5 space-y-4 shadow-sm transition-all duration-300">
       {/* Header Bar with Master Toggle */}
-      <div className="flex items-center justify-between gap-3 relative z-10">
+      <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <div
             className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
               hasEndTime
-                ? 'bg-blue-500/20 text-blue-400 border border-blue-500/40 shadow-md shadow-blue-500/20'
-                : 'bg-white/5 text-zinc-500 border border-white/5'
+                ? 'bg-[var(--color-primary-soft)] text-[var(--color-primary)] border border-[var(--color-primary)]/40'
+                : 'bg-[var(--color-surface-hover)] text-[var(--color-text-muted)] border border-[var(--color-border)]'
             }`}
           >
-            <Clock size={18} className={hasEndTime ? 'animate-pulse' : ''} />
+            <Clock size={18} />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-fluid-sm font-bold text-white tracking-wide">
+              <span className="text-fluid-sm font-bold tracking-wide" style={{ color: 'var(--color-text)' }}>
                 Daily Deadline / Cut-off
               </span>
               {hasEndTime ? (
-                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[var(--color-primary-soft)] text-[var(--color-primary)] border border-[var(--color-primary)]/30">
                   Strict
                 </span>
               ) : (
-                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400">
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[var(--color-surface-hover)] text-[var(--color-text-muted)]">
                   Flexible
                 </span>
               )}
             </div>
-            <p className="text-[11px] text-zinc-400">
+            <p className="text-[11px]" style={{ color: 'var(--color-text-muted)' }}>
               {hasEndTime
                 ? 'Complete before deadline or marked as missed'
                 : 'No strict cut-off time (anytime before midnight)'}
@@ -294,7 +263,7 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
           </div>
         </div>
 
-        {/* Master Neon Switch */}
+        {/* Master Toggle Switch */}
         <label className="relative inline-flex items-center cursor-pointer select-none">
           <input
             type="checkbox"
@@ -302,19 +271,19 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
             onChange={(e) => onToggleHasEndTime(e.target.checked)}
             className="sr-only peer"
           />
-          <div className="w-11 h-6 bg-zinc-800/80 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:shadow-md peer-checked:bg-gradient-to-r peer-checked:from-blue-600 peer-checked:to-cyan-500 border border-white/10 peer-checked:border-blue-400/50"></div>
+          <div className="w-11 h-6 bg-[var(--color-surface-hover)] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all after:shadow-sm peer-checked:bg-[var(--color-primary)] border border-[var(--color-border)]"></div>
         </label>
       </div>
 
       {hasEndTime && (
-        <div className="space-y-4 pt-1 animate-fade-in relative z-10">
-          {/* Atmospheric Time of Day Presets */}
+        <div className="space-y-4 pt-1 animate-fade-in">
+          {/* Quick Time Presets */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
+              <span className="text-[11px] font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>
                 Quick Time Presets
               </span>
-              <span className="text-[10px] text-zinc-500">Pick a daily anchor</span>
+              <span className="text-[10px]" style={{ color: 'var(--color-text-muted)' }}>Pick a daily anchor</span>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
@@ -326,66 +295,72 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
                     type="button"
                     key={preset.id}
                     onClick={() => onDueTimeChange(preset.time)}
-                    className={`relative p-2.5 rounded-xl border text-left transition-all duration-200 group overflow-hidden ${
+                    className={`p-2.5 rounded-xl border text-left transition-all duration-200 ${
                       isSelected
-                        ? `bg-gradient-to-b ${preset.selectedBg} ${preset.selectedBorder} shadow-lg ${preset.selectedGlow} scale-[1.02]`
-                        : 'bg-white/[0.03] hover:bg-white/[0.07] border-white/10 hover:border-white/20'
+                        ? 'border-[var(--color-primary)] bg-[var(--color-primary-soft)] shadow-sm'
+                        : 'border-[var(--color-border)] hover:border-[var(--color-text-muted)] bg-[var(--color-surface)]'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1.5">
                       <div
                         className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
-                          isSelected ? `${preset.accent} bg-white/10` : 'text-zinc-400 bg-white/5'
+                          isSelected ? 'text-[var(--color-primary)] bg-[var(--color-surface)]' : 'text-[var(--color-text-muted)] bg-[var(--color-surface-hover)]'
                         }`}
                       >
                         <Icon size={15} />
                       </div>
                       {isSelected && (
-                        <div className="w-4 h-4 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-sm">
+                        <div className="w-4 h-4 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center shadow-sm">
                           <Check size={10} strokeWidth={3} />
                         </div>
                       )}
                     </div>
-                    <div className="font-semibold text-xs text-white truncate">{preset.label}</div>
-                    <div className="text-[11px] font-mono text-zinc-300 font-medium">{preset.time12}</div>
-                    <div className="text-[9px] text-zinc-500 truncate mt-0.5">{preset.tagline}</div>
+                    <div className="font-semibold text-xs truncate" style={{ color: 'var(--color-text)' }}>
+                      {preset.label}
+                    </div>
+                    <div className="text-[11px] font-mono font-medium" style={{ color: 'var(--color-text-muted)' }}>
+                      {preset.time12}
+                    </div>
+                    <div className="text-[9px] truncate mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
+                      {preset.tagline}
+                    </div>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Central LED Digital Clock Tuner */}
-          <div className="p-4 rounded-2xl bg-black/40 border border-white/10 relative overflow-hidden shadow-inner">
+          {/* Central Digital Tuner */}
+          <div className="p-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-hover)] shadow-inner">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              {/* LED Digital Display */}
+              {/* Digital Display */}
               <div className="flex items-center gap-2">
                 {/* Hours Box */}
                 <div className="flex flex-col items-center">
                   <button
                     type="button"
                     onClick={() => updateHour(1)}
-                    className="p-1 text-zinc-400 hover:text-white hover:bg-white/10 rounded transition-colors"
+                    className="p-1 text-[var(--color-text-muted)] hover:text-[var(--color-text)] rounded transition-colors"
                     title="Add 1 hour"
                   >
                     <ChevronUp size={16} />
                   </button>
-                  <div className="w-16 h-14 rounded-xl bg-zinc-900/90 border border-blue-500/30 shadow-inner flex items-center justify-center text-fluid-2xl font-bold font-mono text-blue-400 tracking-wider">
+                  <div className="w-16 h-14 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-sm flex items-center justify-center text-fluid-2xl font-bold font-mono tracking-wider" style={{ color: 'var(--color-primary)' }}>
                     {String(hour12).padStart(2, '0')}
                   </div>
                   <button
                     type="button"
                     onClick={() => updateHour(-1)}
-                    className="p-1 text-zinc-400 hover:text-white hover:bg-white/10 rounded transition-colors"
+                    className="p-1 text-[var(--color-text-muted)] hover:text-[var(--color-text)] rounded transition-colors"
                     title="Minus 1 hour"
                   >
                     <ChevronDown size={16} />
                   </button>
-                  <span className="text-[10px] text-zinc-500 mt-0.5">HOUR</span>
+                  <span className="text-[10px] mt-0.5" style={{ color: 'var(--color-text-muted)' }}>HOUR</span>
                 </div>
 
-                {/* Blinking Colon */}
-                <div className="text-2xl font-mono text-blue-400 font-bold mb-4 animate-pulse select-none">
+                {/* Colon */}
+                <div className="text-2xl font-mono font-bold mb-4 select-none" style={{ color: 'var(--color-primary)' }}>
                   :
                 </div>
 
@@ -394,23 +369,23 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
                   <button
                     type="button"
                     onClick={() => updateMinute(5)}
-                    className="p-1 text-zinc-400 hover:text-white hover:bg-white/10 rounded transition-colors"
+                    className="p-1 text-[var(--color-text-muted)] hover:text-[var(--color-text)] rounded transition-colors"
                     title="Add 5 minutes"
                   >
                     <ChevronUp size={16} />
                   </button>
-                  <div className="w-16 h-14 rounded-xl bg-zinc-900/90 border border-blue-500/30 shadow-inner flex items-center justify-center text-fluid-2xl font-bold font-mono text-cyan-400 tracking-wider">
+                  <div className="w-16 h-14 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] shadow-sm flex items-center justify-center text-fluid-2xl font-bold font-mono tracking-wider" style={{ color: 'var(--color-primary)' }}>
                     {String(minute).padStart(2, '0')}
                   </div>
                   <button
                     type="button"
                     onClick={() => updateMinute(-5)}
-                    className="p-1 text-zinc-400 hover:text-white hover:bg-white/10 rounded transition-colors"
+                    className="p-1 text-[var(--color-text-muted)] hover:text-[var(--color-text)] rounded transition-colors"
                     title="Minus 5 minutes"
                   >
                     <ChevronDown size={16} />
                   </button>
-                  <span className="text-[10px] text-zinc-500 mt-0.5">MIN</span>
+                  <span className="text-[10px] mt-0.5" style={{ color: 'var(--color-text-muted)' }}>MIN</span>
                 </div>
 
                 {/* AM / PM Toggle */}
@@ -420,8 +395,8 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
                     onClick={() => isPM && togglePeriod()}
                     className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                       !isPM
-                        ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md shadow-orange-500/30 scale-105'
-                        : 'bg-white/5 text-zinc-500 hover:text-zinc-300'
+                        ? 'bg-[var(--color-primary)] text-white shadow-sm'
+                        : 'bg-[var(--color-surface)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
                     }`}
                   >
                     AM
@@ -431,8 +406,8 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
                     onClick={() => !isPM && togglePeriod()}
                     className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                       isPM
-                        ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md shadow-blue-500/30 scale-105'
-                        : 'bg-white/5 text-zinc-500 hover:text-zinc-300'
+                        ? 'bg-[var(--color-primary)] text-white shadow-sm'
+                        : 'bg-[var(--color-surface)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
                     }`}
                   >
                     PM
@@ -443,7 +418,7 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
               {/* Quick Steppers & Synchronized Native Input */}
               <div className="flex flex-col sm:items-end gap-2 w-full sm:w-auto">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[11px] text-zinc-400 font-medium">Quick Minutes:</span>
+                  <span className="text-[11px] font-medium" style={{ color: 'var(--color-text-muted)' }}>Quick Minutes:</span>
                   <div className="flex gap-1">
                     {[0, 15, 30, 45].map((mVal) => (
                       <button
@@ -452,8 +427,8 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
                         onClick={() => handleSetMinute(mVal)}
                         className={`px-2 py-0.5 rounded-md text-[11px] font-mono transition-colors ${
                           minute === mVal
-                            ? 'bg-blue-600 text-white font-semibold'
-                            : 'bg-white/5 hover:bg-white/10 text-zinc-400 border border-white/5'
+                            ? 'bg-[var(--color-primary)] text-white font-semibold'
+                            : 'bg-[var(--color-surface)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-muted)] border border-[var(--color-border)]'
                         }`}
                       >
                         :{String(mVal).padStart(2, '0')}
@@ -464,15 +439,15 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
 
                 {/* Format summary pill & native time sync */}
                 <div className="flex items-center gap-2 pt-1">
-                  <div className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-zinc-300 flex items-center gap-1.5">
-                    <span className="text-blue-400 font-semibold">{format12h(dueTime)}</span>
-                    <span className="text-zinc-500">|</span>
-                    <span className="text-zinc-400">{dueTime} 24h</span>
+                  <div className="px-2.5 py-1 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] text-[11px] font-mono flex items-center gap-1.5" style={{ color: 'var(--color-text)' }}>
+                    <span className="font-semibold text-[var(--color-primary)]">{format12h(dueTime)}</span>
+                    <span style={{ color: 'var(--color-border)' }}>|</span>
+                    <span style={{ color: 'var(--color-text-muted)' }}>{dueTime} 24h</span>
                   </div>
 
                   {/* Native Time Picker trigger */}
                   <label
-                    className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-400 hover:text-white cursor-pointer transition-colors relative"
+                    className="p-1.5 rounded-lg bg-[var(--color-surface)] hover:bg-[var(--color-surface-hover)] border border-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] cursor-pointer transition-colors relative"
                     title="Open native clock"
                   >
                     <input
@@ -486,8 +461,8 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
                 </div>
 
                 {relativeText && (
-                  <span className="text-[10px] text-zinc-400 flex items-center gap-1">
-                    <Zap size={10} className="text-amber-400" />
+                  <span className="text-[10px] flex items-center gap-1" style={{ color: 'var(--color-text-muted)' }}>
+                    <Zap size={10} className="text-[var(--color-warning)]" />
                     <span>{relativeText}</span>
                   </span>
                 )}
@@ -501,10 +476,10 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
               <button
                 type="button"
                 onClick={() => onToggleCustomizePerDay(!customizePerDay)}
-                className="flex items-center gap-2 text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors py-1 group"
+                className="flex items-center gap-2 text-xs font-semibold text-[var(--color-primary)] transition-colors py-1 group"
               >
-                <div className="w-5 h-5 rounded-md bg-blue-500/10 group-hover:bg-blue-500/20 flex items-center justify-center">
-                  <Calendar size={12} className="text-blue-400" />
+                <div className="w-5 h-5 rounded-md bg-[var(--color-primary-soft)] flex items-center justify-center">
+                  <Calendar size={12} className="text-[var(--color-primary)]" />
                 </div>
                 <span>
                   {customizePerDay ? 'Collapse per-day schedule' : 'Customize end time per day'}
@@ -513,34 +488,34 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
               </button>
 
               {customizePerDay && (
-                <span className="text-[10px] text-zinc-500">
+                <span className="text-[10px]" style={{ color: 'var(--color-text-muted)' }}>
                   {selectedDays.length} {selectedDays.length === 1 ? 'day' : 'days'} active
                 </span>
               )}
             </div>
 
             {customizePerDay && (
-              <div className="p-3.5 rounded-xl bg-black/30 border border-white/10 space-y-3 animate-fade-in">
+              <div className="p-3.5 rounded-xl bg-[var(--color-surface-hover)] border border-[var(--color-border)] space-y-3 animate-fade-in">
                 {/* Quick Schedule Action Pills */}
-                <div className="flex flex-wrap items-center gap-1.5 pb-2 border-b border-white/5">
+                <div className="flex flex-wrap items-center gap-1.5 pb-2 border-b border-[var(--color-border)]">
                   <button
                     type="button"
                     onClick={applyToAllDays}
-                    className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10 transition-colors"
+                    className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-[var(--color-surface)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text)] border border-[var(--color-border)] transition-colors"
                   >
                     <Copy size={11} /> Apply {format12h(dueTime)} to all
                   </button>
                   <button
                     type="button"
                     onClick={() => applyWeekdayWeekendPreset('18:00', '22:00')}
-                    className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10 transition-colors"
+                    className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-[var(--color-surface)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text)] border border-[var(--color-border)] transition-colors"
                   >
-                    <Zap size={11} className="text-amber-400" /> Weekdays 6PM / Weekends 10PM
+                    <Zap size={11} className="text-[var(--color-warning)]" /> Weekdays 6PM / Weekends 10PM
                   </button>
                   <button
                     type="button"
                     onClick={() => onDayDueTimesChange({})}
-                    className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-red-300 border border-white/10 transition-colors ml-auto"
+                    className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold bg-[var(--color-surface)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-muted)] hover:text-red-500 border border-[var(--color-border)] transition-colors ml-auto"
                     title="Reset to default"
                   >
                     <RotateCcw size={11} /> Reset
@@ -548,7 +523,7 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
                 </div>
 
                 {copyFeedback && (
-                  <div className="text-[11px] text-emerald-400 flex items-center gap-1 animate-fade-in font-medium">
+                  <div className="text-[11px] text-[var(--color-primary)] flex items-center gap-1 animate-fade-in font-medium">
                     <Check size={12} /> {copyFeedback}
                   </div>
                 )}
@@ -563,17 +538,17 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
                         key={d.value}
                         className={`flex items-center justify-between p-2 rounded-xl border transition-all ${
                           isCustomized
-                            ? 'bg-blue-500/10 border-blue-500/30'
-                            : 'bg-white/[0.02] border-white/5'
+                            ? 'bg-[var(--color-primary-soft)] border-[var(--color-primary)]/40'
+                            : 'bg-[var(--color-surface)] border-[var(--color-border)]'
                         }`}
                       >
                         <div className="flex items-center gap-2">
-                          <span className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-xs font-bold text-white font-mono">
+                          <span className="w-8 h-8 rounded-lg bg-[var(--color-surface-hover)] flex items-center justify-center text-xs font-bold font-mono" style={{ color: 'var(--color-text)' }}>
                             {d.label}
                           </span>
                           <div>
-                            <span className="text-xs text-white font-medium block">{d.full}</span>
-                            <span className="text-[10px] text-zinc-400 block font-mono">
+                            <span className="text-xs font-medium block" style={{ color: 'var(--color-text)' }}>{d.full}</span>
+                            <span className="text-[10px] block font-mono" style={{ color: 'var(--color-text-muted)' }}>
                               {format12h(currentVal)}
                             </span>
                           </div>
@@ -584,7 +559,7 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
                             type="time"
                             value={currentVal}
                             onChange={(e) => handleDayTimeChange(d.value, e.target.value)}
-                            className="glass-input p-1.5 rounded-lg text-xs font-mono text-white bg-black/60 border border-white/15 focus:border-blue-400 w-28 text-center"
+                            className="glass-input p-1.5 rounded-lg text-xs font-mono border border-[var(--color-border)] w-28 text-center"
                           />
                         </div>
                       </div>
@@ -595,17 +570,17 @@ export const DailyTimeSelector: React.FC<DailyTimeSelectorProps> = ({
             )}
           </div>
 
-          {/* Gamified Deadline Rule Notice */}
-          <div className="p-3 rounded-xl bg-gradient-to-r from-blue-900/20 via-indigo-900/20 to-purple-900/20 border border-blue-500/30 flex items-start gap-2.5">
-            <div className="w-6 h-6 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
+          {/* Deadline Rule Notice */}
+          <div className="p-3 rounded-xl bg-[var(--color-surface-hover)] border border-[var(--color-border)] flex items-start gap-2.5">
+            <div className="w-6 h-6 rounded-lg bg-[var(--color-primary-soft)] text-[var(--color-primary)] flex items-center justify-center shrink-0 mt-0.5">
               <AlertCircle size={14} />
             </div>
-            <div className="text-[11px] leading-relaxed text-zinc-300">
-              <span className="font-semibold text-white">Daily Lock Rule: </span>
+            <div className="text-[11px] leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
+              <span className="font-semibold" style={{ color: 'var(--color-text)' }}>Daily Lock Rule: </span>
               Habit must be logged before{' '}
-              <strong className="text-cyan-300 font-mono">{format12h(dueTime)}</strong>. If not
+              <strong className="font-mono text-[var(--color-primary)]">{format12h(dueTime)}</strong>. If not
               completed before the deadline, it will be marked as{' '}
-              <strong className="text-rose-400">Missed / Not Done</strong> for that day and no XP
+              <strong className="text-red-500">Missed / Not Done</strong> for that day and no XP
               will be awarded.
             </div>
           </div>

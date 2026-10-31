@@ -1,4 +1,4 @@
-/** Comprehensive interactive calendar view for habits and daily completion history. */
+/** Comprehensive interactive calendar view for habits and daily completion history (Corbel theme). */
 import React, { useState } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -73,16 +73,16 @@ export const CalendarPage: React.FC = () => {
       />
 
       {/* Month Navigation & Control Bar */}
-      <div className="glass p-4 rounded-2xl border border-white/10 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="glass p-4 rounded-2xl border border-[var(--color-border)] mb-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-blue-500/20 text-blue-500">
+          <div className="p-2.5 rounded-xl bg-[var(--color-primary-soft)] text-[var(--color-primary)]">
             <CalendarIcon size={22} />
           </div>
           <div>
-            <h2 className="text-fluid-xl font-black text-white">
+            <h2 className="text-fluid-xl font-black" style={{ color: 'var(--color-text)' }}>
               {monthName} {currentYear}
             </h2>
-            <p className="text-[11px] text-zinc-400">
+            <p className="text-[11px]" style={{ color: 'var(--color-text-muted)' }}>
               {snapshot ? `${snapshot.completionRate}% average habit completion` : 'Loading...'}
             </p>
           </div>
@@ -91,22 +91,22 @@ export const CalendarPage: React.FC = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={handleGoToday}
-            className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-gray-900 dark:hover:text-white border border-white/10 text-fluid-xs font-semibold transition-all"
+            className="px-3 py-1.5 rounded-xl bg-[var(--color-surface)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text)] border border-[var(--color-border)] text-fluid-xs font-semibold transition-all"
           >
             Today
           </button>
-          <div className="flex items-center gap-1 bg-white/5 p-1 rounded-xl border border-white/10">
+          <div className="flex items-center gap-1 bg-[var(--color-surface)] p-1 rounded-xl border border-[var(--color-border)]">
             <button
               onClick={handlePrevMonth}
               aria-label="Previous Month"
-              className="p-1.5 rounded-lg text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface-hover)] transition-colors"
             >
               <ChevronLeft size={18} />
             </button>
             <button
               onClick={handleNextMonth}
               aria-label="Next Month"
-              className="p-1.5 rounded-lg text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface-hover)] transition-colors"
             >
               <ChevronRight size={18} />
             </button>
@@ -117,67 +117,67 @@ export const CalendarPage: React.FC = () => {
       {/* Month Quick Stats */}
       {snapshot && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-          <div className="glass p-3.5 rounded-2xl border border-blue-500/20 bg-blue-500/5">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400">
+          <div className="glass p-3.5 rounded-2xl border border-[var(--color-border)]">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)]">
               Completed Habits
             </span>
-            <div className="text-fluid-xl font-bold text-white mt-0.5">
+            <div className="text-fluid-xl font-bold mt-0.5" style={{ color: 'var(--color-text)' }}>
               {snapshot.tasksCompleted}{' '}
-              <span className="text-fluid-xs font-normal text-zinc-400">/ {snapshot.totalTasks}</span>
+              <span className="text-fluid-xs font-normal" style={{ color: 'var(--color-text-muted)' }}>/ {snapshot.totalTasks}</span>
             </div>
           </div>
 
-          <div className="glass p-3.5 rounded-2xl border border-emerald-500/20 bg-emerald-500/5">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-300">
+          <div className="glass p-3.5 rounded-2xl border border-[var(--color-border)]">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)]">
               Success Rate
             </span>
-            <div className="text-fluid-xl font-bold text-white mt-0.5">
+            <div className="text-fluid-xl font-bold mt-0.5" style={{ color: 'var(--color-text)' }}>
               {snapshot.completionRate}%
             </div>
           </div>
 
-          <div className="glass p-3.5 rounded-2xl border border-yellow-500/20 bg-yellow-500/5">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-yellow-300">
+          <div className="glass p-3.5 rounded-2xl border border-[var(--color-border)]">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-warning)]">
               XP Earned
             </span>
-            <div className="text-fluid-xl font-bold text-white mt-0.5">+{snapshot.xpEarned}</div>
+            <div className="text-fluid-xl font-bold mt-0.5" style={{ color: 'var(--color-text)' }}>+{snapshot.xpEarned}</div>
           </div>
 
-          <div className="glass p-3.5 rounded-2xl border border-orange-500/20 bg-orange-500/5">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-orange-300">
+          <div className="glass p-3.5 rounded-2xl border border-[var(--color-border)]">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-warning)]">
               Monthly Streak
             </span>
-            <div className="text-fluid-xl font-bold text-white mt-0.5">
-              {snapshot.streakDays} <span className="text-fluid-xs font-normal text-zinc-400">days</span>
+            <div className="text-fluid-xl font-bold mt-0.5" style={{ color: 'var(--color-text)' }}>
+              {snapshot.streakDays} <span className="text-fluid-xs font-normal" style={{ color: 'var(--color-text-muted)' }}>days</span>
             </div>
           </div>
         </div>
       )}
 
       {/* Calendar Grid Box */}
-      <div className="glass p-5 md:p-6 rounded-3xl border border-white/10 mb-6">
+      <div className="glass p-5 md:p-6 rounded-3xl border border-[var(--color-border)] mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
-          <div className="text-fluid-xs text-zinc-400">
+          <div className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
             Click on any day cell to view completed habits, timestamps, and notes.
           </div>
-          <div className="flex items-center gap-3 text-[11px] text-zinc-400">
+          <div className="flex items-center gap-3 text-[11px]" style={{ color: 'var(--color-text-muted)' }}>
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-primary)]" />
               <span>All done</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-warning)]" />
               <span>Partial</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-zinc-600" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-border)]" />
               <span>None</span>
             </div>
           </div>
         </div>
 
         {isLoading ? (
-          <div className="h-96 rounded-2xl bg-white/[0.02] border border-white/5 animate-pulse flex items-center justify-center text-zinc-500 text-fluid-xs">
+          <div className="h-96 rounded-2xl bg-[var(--color-surface-hover)] border border-[var(--color-border)] animate-pulse flex items-center justify-center text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
             Loading calendar days...
           </div>
         ) : (
@@ -186,16 +186,16 @@ export const CalendarPage: React.FC = () => {
       </div>
 
       {/* Archive link footer banner */}
-      <div className="glass p-4 rounded-2xl border border-white/10 flex items-center justify-between">
+      <div className="glass p-4 rounded-2xl border border-[var(--color-border)] flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Sparkles size={16} className="text-blue-500" />
-          <span className="text-fluid-xs text-zinc-300">
+          <Sparkles size={16} className="text-[var(--color-primary)]" />
+          <span className="text-fluid-xs" style={{ color: 'var(--color-text)' }}>
             Want to see archived snapshots of past years and months?
           </span>
         </div>
         <Link
           to="/history"
-          className="text-fluid-xs font-semibold text-blue-500 hover:text-blue-400 inline-flex items-center gap-1"
+          className="text-fluid-xs font-semibold text-[var(--color-primary)] hover:underline inline-flex items-center gap-1"
         >
           Open Archives <ArrowRight size={13} />
         </Link>

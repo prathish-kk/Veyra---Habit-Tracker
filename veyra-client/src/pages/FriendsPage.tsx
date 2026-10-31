@@ -1,4 +1,4 @@
-/** Friends and social accountability management page. */
+/** Friends and social accountability management page (Corbel theme). */
 import React, { useState } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -12,7 +12,7 @@ import {
   FriendActivityFeed,
   DiscoverUserCard,
 } from '@/features/friends';
-import { Users, UserPlus, Flame, Shield, Radio, Bell, Search, Sparkles } from 'lucide-react';
+import { Users, UserPlus, Flame, Bell, Search, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
 type Tab = 'friends' | 'find' | 'requests' | 'feed';
@@ -83,63 +83,64 @@ export const FriendsPage: React.FC = () => {
 
       {/* Top Social Summary Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <div className="glass p-4 rounded-2xl border border-blue-500/20 bg-blue-500/5 flex items-center justify-between">
+        <div className="glass p-4 rounded-2xl border border-[var(--color-border)] flex items-center justify-between">
           <div>
-            <div className="text-fluid-xs font-semibold uppercase tracking-wider text-blue-400">
+            <div className="text-fluid-xs font-semibold uppercase tracking-wider text-[var(--color-primary)]">
               Total Friends
             </div>
-            <div className="text-fluid-2xl font-black text-white mt-0.5">
+            <div className="text-fluid-2xl font-black mt-0.5" style={{ color: 'var(--color-text)' }}>
               {friends.length}
             </div>
           </div>
-          <div className="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+          <div className="w-12 h-12 rounded-xl bg-[var(--color-primary-soft)] text-[var(--color-primary)] flex items-center justify-center">
             <Users size={24} />
           </div>
         </div>
 
-        <div className="glass p-4 rounded-2xl border border-orange-500/20 bg-orange-500/5 flex items-center justify-between">
+        <div className="glass p-4 rounded-2xl border border-[var(--color-border)] flex items-center justify-between">
           <div>
-            <div className="text-fluid-xs font-semibold uppercase tracking-wider text-orange-300">
+            <div className="text-fluid-xs font-semibold uppercase tracking-wider text-[var(--color-warning)]">
               Friend Momentum
             </div>
-            <div className="text-fluid-2xl font-black text-white mt-0.5">
+            <div className="text-fluid-2xl font-black mt-0.5" style={{ color: 'var(--color-text)' }}>
               {totalStreakWithFriends} Days 🔥
             </div>
           </div>
-          <div className="w-12 h-12 rounded-xl bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-orange-400">
+          <div className="w-12 h-12 rounded-xl bg-[var(--color-warning)]/15 text-[var(--color-warning)] flex items-center justify-center">
             <Flame size={24} />
           </div>
         </div>
 
-        <div className="glass p-4 rounded-2xl border border-blue-500/20 bg-blue-500/5 flex items-center justify-between">
+        <div className="glass p-4 rounded-2xl border border-[var(--color-border)] flex items-center justify-between">
           <div>
-            <div className="text-fluid-xs font-semibold uppercase tracking-wider text-blue-300">
+            <div className="text-fluid-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>
               Pending Requests
             </div>
-            <div className="text-fluid-2xl font-black text-white mt-0.5">
+            <div className="text-fluid-2xl font-black mt-0.5" style={{ color: 'var(--color-text)' }}>
               {pendingCount}
             </div>
           </div>
-          <div className="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+          <div className="w-12 h-12 rounded-xl bg-[var(--color-surface-hover)] flex items-center justify-center" style={{ color: 'var(--color-text-muted)' }}>
             <Bell size={24} />
           </div>
         </div>
       </div>
 
-      {/* Navigation Tabs (Smooth horizontal scroll on mobile, no page overflow) */}
-      <div className="flex items-center gap-2 border-b border-white/10 pb-3 mb-6 overflow-x-auto no-scrollbar -mx-2 px-2 sm:mx-0 sm:px-0">
+      {/* Navigation Tabs */}
+      <div className="flex items-center gap-2 border-b border-[var(--color-border)] pb-3 mb-6 overflow-x-auto no-scrollbar -mx-2 px-2 sm:mx-0 sm:px-0">
         <button
           onClick={() => setActiveTab('friends')}
           className={cn(
             'px-4 py-2 rounded-xl text-fluid-xs font-semibold transition-all flex items-center gap-2 border shrink-0',
             activeTab === 'friends'
-              ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 shadow-sm'
-              : 'text-zinc-400 border-transparent hover:text-gray-900 dark:hover:text-white hover:bg-white/5'
+              ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-sm'
+              : 'border-transparent hover:bg-[var(--color-surface-hover)]'
           )}
+          style={activeTab === 'friends' ? {} : { color: 'var(--color-text-muted)' }}
         >
           <Users size={14} />
           <span>My Friends</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-white/10 text-[10px] text-zinc-300">
+          <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">
             {friends.length}
           </span>
         </button>
@@ -149,13 +150,14 @@ export const FriendsPage: React.FC = () => {
           className={cn(
             'px-4 py-2 rounded-xl text-fluid-xs font-semibold transition-all flex items-center gap-2 border shrink-0',
             activeTab === 'find'
-              ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 shadow-sm'
-              : 'text-zinc-400 border-transparent hover:text-gray-900 dark:hover:text-white hover:bg-white/5'
+              ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-sm'
+              : 'border-transparent hover:bg-[var(--color-surface-hover)]'
           )}
+          style={activeTab === 'find' ? {} : { color: 'var(--color-text-muted)' }}
         >
           <UserPlus size={14} />
           <span>Find Friends</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-white/10 text-[10px] text-zinc-300">
+          <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">
             {discoverUsers.length}
           </span>
         </button>
@@ -165,14 +167,15 @@ export const FriendsPage: React.FC = () => {
           className={cn(
             'px-4 py-2 rounded-xl text-fluid-xs font-semibold transition-all flex items-center gap-2 border relative shrink-0',
             activeTab === 'requests'
-              ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 shadow-sm'
-              : 'text-zinc-400 border-transparent hover:text-gray-900 dark:hover:text-white hover:bg-white/5'
+              ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-sm'
+              : 'border-transparent hover:bg-[var(--color-surface-hover)]'
           )}
+          style={activeTab === 'requests' ? {} : { color: 'var(--color-text-muted)' }}
         >
           <Bell size={14} />
           <span>Requests</span>
           {pendingCount > 0 && (
-            <span className="px-1.5 py-0.5 rounded-full bg-rose-500 text-white text-[10px] font-bold animate-pulse">
+            <span className="px-1.5 py-0.5 rounded-full bg-red-500 text-white text-[10px] font-bold animate-pulse">
               {pendingCount}
             </span>
           )}
@@ -183,11 +186,11 @@ export const FriendsPage: React.FC = () => {
           className={cn(
             'px-4 py-2 rounded-xl text-fluid-xs font-semibold transition-all flex items-center gap-2 border shrink-0',
             activeTab === 'feed'
-              ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 shadow-sm'
-              : 'text-zinc-400 border-transparent hover:text-gray-900 dark:hover:text-white hover:bg-white/5'
+              ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-sm'
+              : 'border-transparent hover:bg-[var(--color-surface-hover)]'
           )}
+          style={activeTab === 'feed' ? {} : { color: 'var(--color-text-muted)' }}
         >
-          <Radio size={14} />
           <span>Activity Feed</span>
         </button>
       </div>
@@ -198,17 +201,17 @@ export const FriendsPage: React.FC = () => {
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[...Array(3)].map((_, i) => (
-                <div key={i} className="glass p-5 rounded-2xl border border-white/5 h-48 animate-pulse" />
+                <div key={i} className="glass p-5 rounded-2xl border border-[var(--color-border)] h-48 animate-pulse" />
               ))}
             </div>
           ) : realFriends.length === 0 ? (
             <div className="space-y-6">
-              <div className="glass p-8 sm:p-10 rounded-3xl border border-white/10 text-center relative overflow-hidden">
-                <div className="w-16 h-16 rounded-2xl bg-blue-500/20 border border-blue-500/30 mx-auto flex items-center justify-center text-blue-400 mb-3 shadow-inner">
+              <div className="glass p-8 sm:p-10 rounded-3xl border border-[var(--color-border)] text-center relative overflow-hidden">
+                <div className="w-16 h-16 rounded-2xl bg-[var(--color-primary-soft)] text-[var(--color-primary)] mx-auto flex items-center justify-center mb-3">
                   <Users size={32} />
                 </div>
-                <h3 className="text-fluid-lg font-bold text-white mb-1">No friends added yet</h3>
-                <p className="text-fluid-xs text-zinc-400 max-w-md mx-auto mb-4">
+                <h3 className="text-fluid-lg font-bold mb-1" style={{ color: 'var(--color-text)' }}>No friends added yet</h3>
+                <p className="text-fluid-xs max-w-md mx-auto mb-4" style={{ color: 'var(--color-text-muted)' }}>
                   Connect with members of the Veyra community below to stay accountable, compare streaks, and share progress.
                 </p>
                 <GlassButton variant="primary" onClick={() => setActiveTab('find')}>
@@ -221,10 +224,10 @@ export const FriendsPage: React.FC = () => {
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <Sparkles size={16} className="text-yellow-400" />
-                      <h4 className="text-fluid-sm font-bold text-white">Community Members</h4>
+                      <Sparkles size={16} className="text-[var(--color-primary)]" />
+                      <h4 className="text-fluid-sm font-bold" style={{ color: 'var(--color-text)' }}>Community Members</h4>
                     </div>
-                    <span className="text-fluid-xs text-zinc-400">Click Add Friend to connect</span>
+                    <span className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>Click Add Friend to connect</span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {realDiscoverUsers.map((user) => (
@@ -261,16 +264,16 @@ export const FriendsPage: React.FC = () => {
 
               {/* Suggestions Section below active friends */}
               {realDiscoverUsers.some((u) => u.friendshipStatus === 'none') && (
-                <div className="pt-6 border-t border-white/10">
+                <div className="pt-6 border-t border-[var(--color-border)]">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <Sparkles size={16} className="text-yellow-400" />
-                      <h4 className="text-fluid-sm font-bold text-white">Suggested Friends</h4>
+                      <Sparkles size={16} className="text-[var(--color-primary)]" />
+                      <h4 className="text-fluid-sm font-bold" style={{ color: 'var(--color-text)' }}>Suggested Friends</h4>
                     </div>
                     <button
                       type="button"
                       onClick={() => setActiveTab('find')}
-                      className="text-fluid-xs text-blue-400 hover:text-blue-300 font-medium"
+                      className="text-fluid-xs text-[var(--color-primary)] hover:underline font-medium"
                     >
                       View All ({realDiscoverUsers.length}) →
                     </button>
@@ -303,27 +306,29 @@ export const FriendsPage: React.FC = () => {
       {activeTab === 'find' && (
         <div className="space-y-4">
           {/* Filter Bar & Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 glass p-4 rounded-2xl border border-white/10">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 glass p-4 rounded-2xl border border-[var(--color-border)]">
             <div>
-              <h3 className="text-fluid-base font-bold text-white">Community Directory</h3>
-              <p className="text-fluid-xs text-zinc-400">
+              <h3 className="text-fluid-base font-bold" style={{ color: 'var(--color-text)' }}>Community Directory</h3>
+              <p className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
                 Browse every user on Veyra and send friend requests directly with one click.
               </p>
             </div>
             <div className="relative min-w-[240px]">
-              <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" />
+              <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2" style={{ color: 'var(--color-text-muted)' }} />
               <input
                 type="text"
                 placeholder="Filter by name or @username..."
                 value={searchFilter}
                 onChange={(e) => setSearchFilter(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-zinc-500 text-fluid-xs focus:outline-none focus:border-blue-500/50"
+                className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-[var(--color-surface-hover)] border border-[var(--color-border)] text-fluid-xs focus:outline-none focus:border-[var(--color-primary)]"
+                style={{ color: 'var(--color-text)' }}
               />
               {searchFilter && (
                 <button
                   type="button"
                   onClick={() => setSearchFilter('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white text-xs"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs"
+                  style={{ color: 'var(--color-text-muted)' }}
                 >
                   Clear
                 </button>
@@ -334,16 +339,16 @@ export const FriendsPage: React.FC = () => {
           {isLoadingDiscover ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="glass p-5 rounded-2xl border border-white/5 h-24 animate-pulse" />
+                <div key={i} className="glass p-5 rounded-2xl border border-[var(--color-border)] h-24 animate-pulse" />
               ))}
             </div>
           ) : filteredDiscoverUsers.length === 0 ? (
-            <div className="glass p-12 rounded-3xl border border-white/5 text-center">
-              <Users size={40} className="mx-auto text-zinc-600 mb-2" />
-              <h4 className="text-fluid-base font-bold text-white">
+            <div className="glass p-12 rounded-3xl border border-[var(--color-border)] text-center">
+              <Users size={40} className="mx-auto mb-2" style={{ color: 'var(--color-text-muted)' }} />
+              <h4 className="text-fluid-base font-bold" style={{ color: 'var(--color-text)' }}>
                 {searchFilter ? 'No users found' : 'No other users yet'}
               </h4>
-              <p className="text-fluid-xs text-zinc-400 mt-1">
+              <p className="text-fluid-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>
                 {searchFilter
                   ? `No users matched "${searchFilter}". Clear your filter to view all members.`
                   : 'No other registered users found yet. Invite friends to join Veyra and build habits together!'}

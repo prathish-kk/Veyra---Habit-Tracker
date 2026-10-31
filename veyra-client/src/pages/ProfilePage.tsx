@@ -20,7 +20,6 @@ import {
   PlusSquare,
   Sparkles,
   X,
-  CheckCircle2,
 } from 'lucide-react';
 
 export const ProfilePage: React.FC = () => {
@@ -55,16 +54,15 @@ export const ProfilePage: React.FC = () => {
 
       <div className="max-w-3xl space-y-6">
         {/* User Hero Glass Card */}
-        <div className="glass p-6 md:p-8 rounded-2xl relative overflow-hidden">
+        <div className="glass p-6 md:p-8 rounded-2xl relative overflow-hidden border border-[var(--color-border)]">
           <div
             className="absolute top-0 inset-x-0 h-1.5"
-            style={{ background: 'linear-gradient(90deg, var(--color-primary), var(--color-accent))' }}
+            style={{ background: 'var(--color-primary)' }}
           />
 
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
             <div
-              className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center text-3xl font-bold shrink-0 shadow-lg text-white"
-              style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center text-3xl font-bold shrink-0 shadow-sm text-white bg-[var(--color-primary)]"
             >
               {user?.avatarUrl ? (
                 <img src={user.avatarUrl} alt="Avatar" className="w-full h-full object-cover rounded-2xl" />
@@ -78,7 +76,7 @@ export const ProfilePage: React.FC = () => {
                 <h2 className="text-fluid-2xl font-bold" style={{ color: 'var(--color-text)' }}>
                   {user?.name || 'Veyra Adventurer'}
                 </h2>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/30 inline-block self-center sm:self-auto">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--color-primary-soft)] text-[var(--color-primary)] border border-[var(--color-primary)]/30 inline-block self-center sm:self-auto">
                   Level {level}
                 </span>
               </div>
@@ -90,19 +88,18 @@ export const ProfilePage: React.FC = () => {
               <div className="pt-2">
                 <div className="flex justify-between text-fluid-xs mb-1.5" style={{ color: 'var(--color-text-muted)' }}>
                   <span className="flex items-center gap-1">
-                    <Zap size={13} className="text-yellow-400" />
+                    <Zap size={13} className="text-[var(--color-warning)]" />
                     <span>Experience Points</span>
                   </span>
-                  <span className="font-semibold text-white">
+                  <span className="font-semibold" style={{ color: 'var(--color-text)' }}>
                     {xp} / {nextLevelXp} XP
                   </span>
                 </div>
-                <div className="w-full h-3 bg-white/10 rounded-full overflow-hidden p-0.5">
+                <div className="w-full h-3 bg-[var(--color-surface-hover)] border border-[var(--color-border)] rounded-full overflow-hidden p-0.5">
                   <div
-                    className="h-full rounded-full transition-all duration-500"
+                    className="h-full rounded-full transition-all duration-500 bg-[var(--color-primary)]"
                     style={{
                       width: `${progressPercent}%`,
-                      background: 'linear-gradient(90deg, var(--color-primary), var(--color-accent))',
                     }}
                   />
                 </div>
@@ -113,9 +110,9 @@ export const ProfilePage: React.FC = () => {
 
         {/* Account Details & Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="glass p-5 rounded-2xl space-y-3">
+          <div className="glass p-5 rounded-2xl space-y-3 border border-[var(--color-border)]">
             <h3 className="text-fluid-base font-semibold flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
-              <UserIcon size={18} className="text-blue-500" />
+              <UserIcon size={18} className="text-[var(--color-primary)]" />
               <span>Account Info</span>
             </h3>
             <div className="space-y-2 text-fluid-sm">
@@ -134,9 +131,9 @@ export const ProfilePage: React.FC = () => {
             </div>
           </div>
 
-          <div className="glass p-5 rounded-2xl space-y-3">
+          <div className="glass p-5 rounded-2xl space-y-3 border border-[var(--color-border)]">
             <h3 className="text-fluid-base font-semibold flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
-              <Award size={18} className="text-blue-500" />
+              <Award size={18} className="text-[var(--color-primary)]" />
               <span>Quick Actions</span>
             </h3>
             <div className="flex flex-col gap-2 pt-1">
@@ -144,14 +141,14 @@ export const ProfilePage: React.FC = () => {
                 <GlassButton
                   variant="primary"
                   onClick={handleInstall}
-                  className="w-full justify-start gap-2.5 min-h-[44px] bg-gradient-to-r from-blue-600/30 to-violet-600/30 hover:from-blue-600/40 hover:to-violet-600/40 border-blue-500/40 text-blue-100 hover:text-white transition-all shadow-sm"
+                  className="w-full justify-start gap-2.5 min-h-[44px]"
                 >
-                  <Smartphone size={16} className="text-blue-400" />
+                  <Smartphone size={16} />
                   <span>Add to Home Screen</span>
                 </GlassButton>
               )}
               <Link to="/settings">
-                <GlassButton variant="ghost" className="w-full justify-start gap-2 min-h-[44px]">
+                <GlassButton variant="secondary" className="w-full justify-start gap-2 min-h-[44px]">
                   <SettingsIcon size={16} />
                   <span>Edit Profile & Preferences</span>
                 </GlassButton>
@@ -169,29 +166,28 @@ export const ProfilePage: React.FC = () => {
         </div>
       </div>
 
-      {/* PWA Install Guide Modal (Shown when manual browser install step is needed) */}
+      {/* PWA Install Guide Modal */}
       <GlassModal open={showInstallGuide} onClose={() => setShowInstallGuide(false)}>
         <div className="space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-white/10">
+          <div className="flex items-center justify-between pb-3 border-b border-[var(--color-border)]">
             <div className="flex items-center gap-2.5">
               <div
-                className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm text-white shadow-md"
-                style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}
+                className="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm text-white shadow-sm bg-[var(--color-primary)]"
               >
                 V
               </div>
               <div>
-                <h3 className="text-fluid-base font-bold text-white flex items-center gap-1.5">
-                  <Sparkles size={14} className="text-yellow-400" />
+                <h3 className="text-fluid-base font-bold flex items-center gap-1.5" style={{ color: 'var(--color-text)' }}>
+                  <Sparkles size={14} className="text-[var(--color-primary)]" />
                   Install Veyra App
                 </h3>
-                <p className="text-[11px] text-zinc-400">Add to your home screen for the full app experience</p>
+                <p className="text-[11px]" style={{ color: 'var(--color-text-muted)' }}>Add to your home screen for the full app experience</p>
               </div>
             </div>
             <button
               type="button"
               onClick={() => setShowInstallGuide(false)}
-              className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface-hover)] transition-colors"
             >
               <X size={16} />
             </button>
@@ -199,59 +195,59 @@ export const ProfilePage: React.FC = () => {
 
           {isIos ? (
             <div className="space-y-3 py-1 text-fluid-xs">
-              <p className="text-zinc-300">Follow these 2 simple steps in Safari to add Veyra to your home screen:</p>
+              <p style={{ color: 'var(--color-text)' }}>Follow these 2 simple steps in Safari to add Veyra to your home screen:</p>
               <div className="space-y-2.5">
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="w-6 h-6 rounded-lg bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center shrink-0 text-xs">
+                <div className="flex items-start gap-3 p-3 rounded-xl bg-[var(--color-surface-hover)] border border-[var(--color-border)]">
+                  <span className="w-6 h-6 rounded-lg bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-bold flex items-center justify-center shrink-0 text-xs">
                     1
                   </span>
-                  <div className="text-zinc-200">
-                    Tap the <strong className="text-white">Share</strong> button{' '}
-                    <Share size={14} className="inline text-blue-400 mx-0.5" /> in the bottom toolbar of Safari.
+                  <div style={{ color: 'var(--color-text)' }}>
+                    Tap the <strong>Share</strong> button{' '}
+                    <Share size={14} className="inline text-[var(--color-primary)] mx-0.5" /> in the bottom toolbar of Safari.
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="w-6 h-6 rounded-lg bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center shrink-0 text-xs">
+                <div className="flex items-start gap-3 p-3 rounded-xl bg-[var(--color-surface-hover)] border border-[var(--color-border)]">
+                  <span className="w-6 h-6 rounded-lg bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-bold flex items-center justify-center shrink-0 text-xs">
                     2
                   </span>
-                  <div className="text-zinc-200">
+                  <div style={{ color: 'var(--color-text)' }}>
                     Scroll down and tap{' '}
-                    <strong className="text-white">Add to Home Screen</strong>{' '}
-                    <PlusSquare size={14} className="inline text-blue-400 mx-0.5" />.
+                    <strong>Add to Home Screen</strong>{' '}
+                    <PlusSquare size={14} className="inline text-[var(--color-primary)] mx-0.5" />.
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center shrink-0 text-xs">
+                <div className="flex items-start gap-3 p-3 rounded-xl bg-[var(--color-surface-hover)] border border-[var(--color-border)]">
+                  <span className="w-6 h-6 rounded-lg bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-bold flex items-center justify-center shrink-0 text-xs">
                     ✓
                   </span>
-                  <div className="text-zinc-200">
-                    Tap <strong className="text-white">Add</strong> in the top right. Veyra will appear on your home screen with its app icon!
+                  <div style={{ color: 'var(--color-text)' }}>
+                    Tap <strong>Add</strong> in the top right. Veyra will appear on your home screen with its app icon!
                   </div>
                 </div>
               </div>
             </div>
           ) : (
             <div className="space-y-3 py-1 text-fluid-xs">
-              <p className="text-zinc-300">To install Veyra on your device:</p>
+              <p style={{ color: 'var(--color-text)' }}>To install Veyra on your device:</p>
               <div className="space-y-2.5">
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="w-6 h-6 rounded-lg bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center shrink-0 text-xs">
+                <div className="flex items-start gap-3 p-3 rounded-xl bg-[var(--color-surface-hover)] border border-[var(--color-border)]">
+                  <span className="w-6 h-6 rounded-lg bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-bold flex items-center justify-center shrink-0 text-xs">
                     1
                   </span>
-                  <div className="text-zinc-200">
-                    Tap the browser menu <strong className="text-white">(⋮ or ⋯)</strong> in the top right.
+                  <div style={{ color: 'var(--color-text)' }}>
+                    Tap the browser menu <strong>(⋮ or ⋯)</strong> in the top right.
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="w-6 h-6 rounded-lg bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center shrink-0 text-xs">
+                <div className="flex items-start gap-3 p-3 rounded-xl bg-[var(--color-surface-hover)] border border-[var(--color-border)]">
+                  <span className="w-6 h-6 rounded-lg bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-bold flex items-center justify-center shrink-0 text-xs">
                     2
                   </span>
-                  <div className="text-zinc-200">
-                    Select <strong className="text-white">"Install app"</strong> or{' '}
-                    <strong className="text-white">"Add to Home screen"</strong>.
+                  <div style={{ color: 'var(--color-text)' }}>
+                    Select <strong>"Install app"</strong> or{' '}
+                    <strong>"Add to Home screen"</strong>.
                   </div>
                 </div>
               </div>

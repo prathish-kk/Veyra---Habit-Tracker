@@ -1,4 +1,4 @@
-/** Main dashboard with live daily habits, gamification stats, and integrated productivity analytics. */
+/** Main dashboard with live daily habits, gamification stats, and integrated productivity analytics (Corbel theme). */
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { AppShell } from '@/components/layout/AppShell';
@@ -83,14 +83,14 @@ export const DashboardPage: React.FC = () => {
       {/* Gamification & Performance Quick Stats Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         {/* Daily Streak Card with Animated Flame */}
-        <div className="glass p-4 rounded-2xl flex items-center justify-between border border-orange-500/20 bg-orange-500/5">
+        <div className="glass p-4 rounded-2xl flex items-center justify-between border border-[var(--color-border)]">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-orange-500/20 text-orange-400">
+            <div className="p-2.5 rounded-xl bg-[var(--color-warning)]/15 text-[var(--color-warning)]">
               <Flame size={24} />
             </div>
             <div>
-              <div className="text-fluid-xs text-orange-300 font-medium">Daily Streak</div>
-              <div className="text-fluid-xl font-bold text-white flex items-center gap-2 mt-0.5">
+              <div className="text-fluid-xs font-medium" style={{ color: 'var(--color-text-muted)' }}>Daily Streak</div>
+              <div className="text-fluid-xl font-bold flex items-center gap-2 mt-0.5" style={{ color: 'var(--color-text)' }}>
                 {dailyStreak} {dailyStreak === 1 ? 'Day' : 'Days'}
               </div>
             </div>
@@ -103,15 +103,15 @@ export const DashboardPage: React.FC = () => {
           />
         </div>
 
-        {/* Player Level Card */}
-        <div className="glass p-4 rounded-2xl flex items-center justify-between border border-blue-500/20 bg-blue-500/5">
+        {/* Player Level Card - Contrast Card (Corbel accent dark style) */}
+        <div className="p-4 rounded-2xl flex items-center justify-between bg-[var(--color-surface-alt)] text-[var(--color-text-on-dark)] border border-transparent shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-blue-500/20 text-blue-500">
+            <div className="p-2.5 rounded-xl bg-[var(--color-primary)] text-white">
               <Zap size={24} />
             </div>
             <div>
-              <div className="text-fluid-xs text-blue-400 font-medium">Player Rank</div>
-              <div className="text-fluid-xl font-bold text-white mt-0.5">
+              <div className="text-fluid-xs opacity-70 font-medium">Player Rank</div>
+              <div className="text-fluid-xl font-bold mt-0.5">
                 Level {level}
               </div>
             </div>
@@ -119,47 +119,47 @@ export const DashboardPage: React.FC = () => {
           <button
             onClick={() => setIsLevelUpModalOpen(true)}
             title="Preview Level Celebration"
-            className="text-[11px] px-2.5 py-1 rounded-full bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 border border-blue-500/30 font-medium transition-colors"
+            className="text-[11px] px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/20 text-white font-medium transition-colors"
           >
             Milestone
           </button>
         </div>
 
         {/* Total XP Card with Link to Achievements */}
-        <div className="glass p-4 rounded-2xl flex items-center justify-between border border-yellow-500/20 bg-yellow-500/5">
+        <div className="glass p-4 rounded-2xl flex items-center justify-between border border-[var(--color-border)]">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-yellow-500/20 text-yellow-400">
+            <div className="p-2.5 rounded-xl bg-[var(--color-primary-soft)] text-[var(--color-primary)]">
               <Award size={24} />
             </div>
             <div>
-              <div className="text-fluid-xs text-yellow-300 font-medium">Total XP</div>
-              <div className="text-fluid-xl font-bold text-white mt-0.5">
+              <div className="text-fluid-xs font-medium" style={{ color: 'var(--color-text-muted)' }}>Total XP</div>
+              <div className="text-fluid-xl font-bold mt-0.5" style={{ color: 'var(--color-text)' }}>
                 {totalXp.toLocaleString()} XP
               </div>
             </div>
           </div>
           <Link
             to="/achievements"
-            className="text-[11px] px-2.5 py-1 rounded-full bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-200 border border-yellow-400/30 font-medium transition-colors flex items-center gap-1"
+            className="text-[11px] px-2.5 py-1 rounded-full bg-[var(--color-surface-hover)] hover:bg-[var(--color-border)] text-[var(--color-text)] border border-[var(--color-border)] font-medium transition-colors flex items-center gap-1"
           >
             <Trophy size={11} /> Badges
           </Link>
         </div>
 
         {/* Average Completion Rate Card */}
-        <div className="glass p-4 rounded-2xl flex items-center justify-between border border-emerald-500/20 bg-emerald-500/5">
+        <div className="glass p-4 rounded-2xl flex items-center justify-between border border-[var(--color-border)]">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-emerald-500/20 text-emerald-400">
+            <div className="p-2.5 rounded-xl bg-[var(--color-primary-soft)] text-[var(--color-primary)]">
               <TrendingUp size={24} />
             </div>
             <div>
-              <div className="text-fluid-xs text-emerald-300 font-medium">Avg. Completion</div>
-              <div className="text-fluid-xl font-bold text-white mt-0.5">
+              <div className="text-fluid-xs font-medium" style={{ color: 'var(--color-text-muted)' }}>Avg. Completion</div>
+              <div className="text-fluid-xl font-bold mt-0.5" style={{ color: 'var(--color-text)' }}>
                 {averageCompletionRate}%
               </div>
             </div>
           </div>
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold uppercase">
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-primary-soft)] text-[var(--color-primary)] border border-[var(--color-primary)]/20 font-semibold uppercase">
             {period}
           </span>
         </div>
@@ -179,37 +179,37 @@ export const DashboardPage: React.FC = () => {
       {/* Main Grid: Daily Habits & Goals Overview */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
         {/* Daily Habits Dominates (2 cols on desktop) */}
-        <div className="glass p-5 md:p-6 rounded-2xl md:col-span-2 border border-white/10">
+        <div className="glass p-5 md:p-6 rounded-2xl md:col-span-2 border border-[var(--color-border)]">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <CalendarCheck size={20} className="text-blue-500" />
+              <CalendarCheck size={20} className="text-[var(--color-primary)]" />
               <h2 className="text-fluid-lg font-semibold" style={{ color: 'var(--color-text)' }}>
                 Today's Habits & Tasks
               </h2>
             </div>
             <Link
               to="/daily"
-              className="text-fluid-xs text-blue-500 hover:text-blue-400 font-medium inline-flex items-center gap-1 transition-colors"
+              className="text-fluid-xs text-[var(--color-primary)] hover:underline font-medium inline-flex items-center gap-1 transition-colors"
             >
               Manage Habits <ArrowRight size={13} />
             </Link>
           </div>
 
           {/* Quick Progress Indicator */}
-          <div className="mb-4 p-3 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between">
-            <div className="text-fluid-xs text-zinc-300">
-              <span className="font-semibold text-white">{summary.completedTasks}</span> of{' '}
-              <span className="font-semibold text-white">{summary.totalTasks}</span> completed
+          <div className="mb-4 p-3 rounded-xl bg-[var(--color-surface-hover)] border border-[var(--color-border)] flex items-center justify-between">
+            <div className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
+              <span className="font-semibold" style={{ color: 'var(--color-text)' }}>{summary.completedTasks}</span> of{' '}
+              <span className="font-semibold" style={{ color: 'var(--color-text)' }}>{summary.totalTasks}</span> completed
             </div>
-            <div className="text-fluid-xs font-bold text-blue-400">
+            <div className="text-fluid-xs font-bold text-[var(--color-primary)]">
               {summary.completionPercentage}% Done
             </div>
           </div>
 
           {/* Habit Items */}
           {isLoading ? (
-            <div className="py-8 text-center text-zinc-400 text-fluid-sm">
-              <div className="inline-block w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mb-2" />
+            <div className="py-8 text-center text-fluid-sm" style={{ color: 'var(--color-text-muted)' }}>
+              <div className="inline-block w-6 h-6 border-2 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin mb-2" />
               <p>Loading habits...</p>
             </div>
           ) : occurrences.length > 0 ? (
@@ -225,11 +225,11 @@ export const DashboardPage: React.FC = () => {
             </div>
           ) : (
             <div className="py-8 text-center">
-              <Sparkles size={28} className="mx-auto text-blue-500/60 mb-2" />
-              <p className="text-fluid-sm text-zinc-400 mb-3">No habits scheduled for today yet.</p>
+              <Sparkles size={28} className="mx-auto text-[var(--color-primary)]/60 mb-2" />
+              <p className="text-fluid-sm mb-3" style={{ color: 'var(--color-text-muted)' }}>No habits scheduled for today yet.</p>
               <Link
                 to="/daily"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-fluid-xs font-medium bg-blue-700/70 hover:bg-blue-700 text-white transition-all shadow-sm"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-fluid-xs font-medium bg-[var(--color-primary)] hover:opacity-90 text-white transition-all shadow-sm"
               >
                 <Plus size={14} /> Add Your First Habit
               </Link>
@@ -239,43 +239,43 @@ export const DashboardPage: React.FC = () => {
 
         {/* Weekly & Monthly Overview Cards */}
         <div className="space-y-4">
-          <div className="glass p-5 rounded-2xl border border-white/10">
+          <div className="glass p-5 rounded-2xl border border-[var(--color-border)]">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-fluid-base font-semibold" style={{ color: 'var(--color-text)' }}>
                 Weekly Plan
               </h3>
-              <Link to="/weekly" className="text-fluid-xs text-blue-500 hover:underline">
+              <Link to="/weekly" className="text-fluid-xs text-[var(--color-primary)] hover:underline">
                 View
               </Link>
             </div>
-            <p className="text-fluid-xs text-zinc-400 mb-3">
+            <p className="text-fluid-xs mb-3" style={{ color: 'var(--color-text-muted)' }}>
               Monday – Sunday planning cycle.
             </p>
-            <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-              <div className="text-fluid-xs text-blue-400 font-medium">Cycle Status</div>
-              <div className="text-fluid-lg font-bold text-white mt-0.5">Active Sprint</div>
-              <div className="text-[11px] text-zinc-400 mt-1 flex items-center gap-1">
-                <CheckCircle2 size={12} className="text-emerald-400" /> Auto-rollover scheduled for Monday
+            <div className="p-3.5 rounded-xl bg-[var(--color-surface-hover)] border border-[var(--color-border)]">
+              <div className="text-fluid-xs font-medium text-[var(--color-primary)]">Cycle Status</div>
+              <div className="text-fluid-lg font-bold mt-0.5" style={{ color: 'var(--color-text)' }}>Active Sprint</div>
+              <div className="text-[11px] mt-1 flex items-center gap-1" style={{ color: 'var(--color-text-muted)' }}>
+                <CheckCircle2 size={12} className="text-[var(--color-primary)]" /> Auto-rollover scheduled for Monday
               </div>
             </div>
           </div>
 
-          <div className="glass p-5 rounded-2xl border border-white/10">
+          <div className="glass p-5 rounded-2xl border border-[var(--color-border)]">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-fluid-base font-semibold" style={{ color: 'var(--color-text)' }}>
                 Monthly Goals
               </h3>
-              <Link to="/monthly" className="text-fluid-xs text-blue-500 hover:underline">
+              <Link to="/monthly" className="text-fluid-xs text-[var(--color-primary)] hover:underline">
                 View
               </Link>
             </div>
-            <p className="text-fluid-xs text-zinc-400 mb-3">Current month target overview.</p>
-            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-              <div className="text-fluid-xs text-emerald-300 font-medium">
+            <p className="text-fluid-xs mb-3" style={{ color: 'var(--color-text-muted)' }}>Current month target overview.</p>
+            <div className="p-3.5 rounded-xl bg-[var(--color-surface-hover)] border border-[var(--color-border)]">
+              <div className="text-fluid-xs font-medium text-[var(--color-primary)]">
                 {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
               </div>
-              <div className="text-fluid-lg font-bold text-white mt-0.5">Strategic Plan</div>
-              <div className="text-[11px] text-zinc-400 mt-1">Track strategic targets for this cycle</div>
+              <div className="text-fluid-lg font-bold mt-0.5" style={{ color: 'var(--color-text)' }}>Strategic Plan</div>
+              <div className="text-[11px] mt-1" style={{ color: 'var(--color-text-muted)' }}>Track strategic targets for this cycle</div>
             </div>
           </div>
         </div>
@@ -285,21 +285,21 @@ export const DashboardPage: React.FC = () => {
       <div className="mb-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-blue-500/20 text-blue-500">
+            <div className="p-2 rounded-xl bg-[var(--color-primary-soft)] text-[var(--color-primary)]">
               <BarChart3 size={22} />
             </div>
             <div>
               <h2 className="text-fluid-xl font-bold" style={{ color: 'var(--color-text)' }}>
                 Productivity & Performance Analytics
               </h2>
-              <p className="text-fluid-xs text-zinc-400">
+              <p className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
                 Discover peak performance days, category distribution, and track habit consistency.
               </p>
             </div>
           </div>
 
           {/* Period Selector Tabs */}
-          <div className="flex items-center p-1 rounded-2xl glass border border-white/10 self-start sm:self-auto shrink-0">
+          <div className="flex items-center p-1 rounded-2xl glass border border-[var(--color-border)] self-start sm:self-auto shrink-0">
             {(['7d', '30d', '90d'] as const).map((p) => (
               <button
                 key={p}
@@ -307,8 +307,8 @@ export const DashboardPage: React.FC = () => {
                 className={cn(
                   'px-3.5 py-1.5 rounded-xl text-fluid-xs font-semibold transition-all',
                   period === p
-                    ? 'bg-blue-700 text-white shadow-sm'
-                    : 'text-zinc-400 hover:text-gray-900 dark:hover:text-white'
+                    ? 'bg-[var(--color-primary)] text-white shadow-sm'
+                    : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
                 )}
               >
                 {p === '7d' ? '7 Days' : p === '30d' ? '30 Days' : '90 Days'}
@@ -319,84 +319,84 @@ export const DashboardPage: React.FC = () => {
 
         {/* Analytics Key Performance Indicators Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="glass p-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/5">
+          <div className="glass p-4 rounded-2xl border border-[var(--color-border)]">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-fluid-xs font-semibold uppercase tracking-wider text-emerald-300">
+              <span className="text-fluid-xs font-semibold uppercase tracking-wider text-[var(--color-primary)]">
                 Habits Logged
               </span>
-              <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400">
+              <div className="p-2 rounded-xl bg-[var(--color-primary-soft)] text-[var(--color-primary)]">
                 <CheckCircle2 size={16} />
               </div>
             </div>
-            <div className="text-fluid-2xl font-black text-white">
+            <div className="text-fluid-2xl font-black" style={{ color: 'var(--color-text)' }}>
               {totalTasksCompleted}{' '}
-              <span className="text-fluid-sm font-normal text-zinc-400">/ {totalTasksScheduled}</span>
+              <span className="text-fluid-sm font-normal" style={{ color: 'var(--color-text-muted)' }}>/ {totalTasksScheduled}</span>
             </div>
-            <p className="text-[11px] text-zinc-400 mt-1">Total habit check-ins in window</p>
+            <p className="text-[11px] mt-1" style={{ color: 'var(--color-text-muted)' }}>Total habit check-ins in window</p>
           </div>
 
-          <div className="glass p-4 rounded-2xl border border-blue-500/20 bg-blue-500/5">
+          <div className="glass p-4 rounded-2xl border border-[var(--color-border)]">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-fluid-xs font-semibold uppercase tracking-wider text-blue-300">
+              <span className="text-fluid-xs font-semibold uppercase tracking-wider text-[var(--color-primary)]">
                 Peak Day
               </span>
-              <div className="p-2 rounded-xl bg-blue-500/20 text-blue-400">
+              <div className="p-2 rounded-xl bg-[var(--color-primary-soft)] text-[var(--color-primary)]">
                 <CalendarIcon size={16} />
               </div>
             </div>
-            <div className="text-fluid-2xl font-black text-white">{topProductiveDay}</div>
-            <p className="text-[11px] text-zinc-400 mt-1">Highest consistency day of week</p>
+            <div className="text-fluid-2xl font-black" style={{ color: 'var(--color-text)' }}>{topProductiveDay}</div>
+            <p className="text-[11px] mt-1" style={{ color: 'var(--color-text-muted)' }}>Highest consistency day of week</p>
           </div>
 
-          <div className="glass p-4 rounded-2xl border border-orange-500/20 bg-orange-500/5">
+          <div className="glass p-4 rounded-2xl border border-[var(--color-border)]">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-fluid-xs font-semibold uppercase tracking-wider text-orange-300">
+              <span className="text-fluid-xs font-semibold uppercase tracking-wider text-[var(--color-warning)]">
                 Record Streak
               </span>
-              <div className="p-2 rounded-xl bg-orange-500/20 text-orange-400">
+              <div className="p-2 rounded-xl bg-[var(--color-warning)]/15 text-[var(--color-warning)]">
                 <Flame size={16} />
               </div>
             </div>
-            <div className="text-fluid-2xl font-black text-white">
+            <div className="text-fluid-2xl font-black" style={{ color: 'var(--color-text)' }}>
               {bestStreak} Days 🔥
             </div>
-            <p className="text-[11px] text-zinc-400 mt-1">All-time personal best</p>
+            <p className="text-[11px] mt-1" style={{ color: 'var(--color-text-muted)' }}>All-time personal best</p>
           </div>
 
-          <div className="glass p-4 rounded-2xl border border-teal-500/20 bg-teal-500/5">
+          <div className="glass p-4 rounded-2xl border border-[var(--color-border)]">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-fluid-xs font-semibold uppercase tracking-wider text-teal-300">
+              <span className="text-fluid-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--color-text-muted)' }}>
                 Scheduled Volume
               </span>
-              <div className="p-2 rounded-xl bg-teal-500/20 text-teal-400">
+              <div className="p-2 rounded-xl bg-[var(--color-surface-hover)]" style={{ color: 'var(--color-text)' }}>
                 <Activity size={16} />
               </div>
             </div>
-            <div className="text-fluid-2xl font-black text-white">
+            <div className="text-fluid-2xl font-black" style={{ color: 'var(--color-text)' }}>
               {totalTasksScheduled}
             </div>
-            <p className="text-[11px] text-zinc-400 mt-1">Planned routine occurrences</p>
+            <p className="text-[11px] mt-1" style={{ color: 'var(--color-text-muted)' }}>Planned routine occurrences</p>
           </div>
         </div>
 
         {/* Charts Row: Day of Week Performance & Category Distribution */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <div className="glass p-5 md:p-6 rounded-3xl border border-white/10">
+          <div className="glass p-5 md:p-6 rounded-3xl border border-[var(--color-border)]">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <BarChart3 size={18} className="text-blue-500" />
-                <h3 className="text-fluid-base font-bold text-white">Day of Week Performance</h3>
+                <BarChart3 size={18} className="text-[var(--color-primary)]" />
+                <h3 className="text-fluid-base font-bold" style={{ color: 'var(--color-text)' }}>Day of Week Performance</h3>
               </div>
-              <span className="text-fluid-xs text-zinc-400">Monday — Sunday</span>
+              <span className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>Monday — Sunday</span>
             </div>
             <WeekdayBreakdownChart data={weekdayBreakdown} />
           </div>
 
-          <div className="glass p-5 md:p-6 rounded-3xl border border-white/10">
+          <div className="glass p-5 md:p-6 rounded-3xl border border-[var(--color-border)]">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <PieIcon size={18} className="text-emerald-400" />
-                <h3 className="text-fluid-base font-bold text-white">Category Distribution</h3>
+                <PieIcon size={18} className="text-[var(--color-primary)]" />
+                <h3 className="text-fluid-base font-bold" style={{ color: 'var(--color-text)' }}>Category Distribution</h3>
               </div>
             </div>
             <CategoryPieChart data={categoryDistribution} />
@@ -404,15 +404,15 @@ export const DashboardPage: React.FC = () => {
         </div>
 
         {/* Consistency Calendar Heatmap */}
-        <div className="glass p-5 md:p-6 rounded-3xl border border-white/10 mb-6">
+        <div className="glass p-5 md:p-6 rounded-3xl border border-[var(--color-border)] mb-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <CalendarIcon size={18} className="text-amber-400" />
-              <h3 className="text-fluid-base font-bold text-white">Consistency Calendar Heatmap</h3>
+              <CalendarIcon size={18} className="text-[var(--color-primary)]" />
+              <h3 className="text-fluid-base font-bold" style={{ color: 'var(--color-text)' }}>Consistency Calendar Heatmap</h3>
             </div>
-            <span className="text-fluid-xs text-zinc-400">Density matrix</span>
+            <span className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>Density matrix</span>
           </div>
-          <p className="text-fluid-xs text-zinc-400 mb-4 leading-relaxed">
+          <p className="text-fluid-xs mb-4 leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
             Every square represents a day of habit tracking. Darker shades indicate higher completion rates.
           </p>
           <CalendarHeatmap data={heatmap} />

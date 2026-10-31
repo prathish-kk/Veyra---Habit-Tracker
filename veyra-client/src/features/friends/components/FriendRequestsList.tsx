@@ -14,10 +14,10 @@ export const FriendRequestsList: React.FC<FriendRequestsListProps> = ({ requests
 
   if (requests.length === 0) {
     return (
-      <div className="glass p-8 rounded-2xl border border-white/5 text-center text-zinc-400 text-fluid-sm">
-        <UserCheck size={36} className="mx-auto text-zinc-500 mb-2" />
-        <p className="font-semibold text-white">No pending friend requests</p>
-        <p className="text-fluid-xs text-zinc-400 mt-1">When someone sends you a friend request, it will show up here.</p>
+      <div className="glass p-8 rounded-2xl border border-[var(--glass-border)] text-center text-gray-500 dark:text-zinc-400 text-fluid-sm">
+        <UserCheck size={36} className="mx-auto text-gray-400 dark:text-zinc-500 mb-2" />
+        <p className="font-semibold text-gray-900 dark:text-white">No pending friend requests</p>
+        <p className="text-fluid-xs text-gray-600 dark:text-zinc-400 mt-1">When someone sends you a friend request, it will show up here.</p>
       </div>
     );
   }
@@ -36,21 +36,21 @@ export const FriendRequestsList: React.FC<FriendRequestsListProps> = ({ requests
       {requests.map((req) => (
         <div
           key={req.id}
-          className="glass p-4 rounded-2xl border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 select-none"
+          className="glass p-4 rounded-2xl border border-[var(--glass-border)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 select-none"
         >
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 font-bold text-fluid-base">
+            <div className="w-11 h-11 rounded-xl bg-primary/15 border border-primary/30 flex items-center justify-center text-primary font-bold text-fluid-base">
               {req.sender.name ? req.sender.name.charAt(0).toUpperCase() : 'U'}
             </div>
             <div>
-              <div className="font-bold text-white text-fluid-sm">{req.sender.name || req.sender.username}</div>
-              <div className="text-fluid-xs text-zinc-400">@{req.sender.username || 'user'}</div>
-              <div className="flex items-center gap-2 mt-1 text-[11px] text-zinc-300">
-                <span className="flex items-center gap-0.5 text-blue-400 font-medium">
+              <div className="font-bold text-gray-900 dark:text-white text-fluid-sm">{req.sender.name || req.sender.username}</div>
+              <div className="text-fluid-xs text-gray-600 dark:text-zinc-400">@{req.sender.username || 'user'}</div>
+              <div className="flex items-center gap-2 mt-1 text-[11px] text-gray-500 dark:text-zinc-300">
+                <span className="flex items-center gap-0.5 text-primary font-medium">
                   <Zap size={11} /> Lv. {req.sender.level}
                 </span>
                 <span>•</span>
-                <span className="flex items-center gap-0.5 text-orange-400 font-medium">
+                <span className="flex items-center gap-0.5 text-orange-500 dark:text-orange-400 font-medium">
                   <Flame size={11} /> {req.sender.currentStreak}d streak
                 </span>
               </div>

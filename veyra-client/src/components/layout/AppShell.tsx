@@ -19,7 +19,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
       {/* WCAG 2.1 AA Skip Navigation Link */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 z-50 px-4 py-2 bg-blue-700 text-white font-semibold rounded-xl shadow-2xl border border-blue-500 focus:outline-none focus:ring-2 focus:ring-white transition-all text-xs"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 z-50 px-4 py-2 bg-[var(--color-primary)] text-white font-semibold rounded-xl shadow-md border border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-xs"
       >
         Skip to main content
       </a>

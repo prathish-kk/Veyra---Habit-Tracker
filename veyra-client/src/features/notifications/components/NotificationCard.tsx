@@ -1,4 +1,4 @@
-/** NotificationCard — item in notifications list or drawer. */
+/** NotificationCard — item in notifications list or drawer (Corbel theme). */
 import React from 'react';
 import {
   Flame,
@@ -9,7 +9,6 @@ import {
   Sparkles,
   Check,
   Trash2,
-  Bell,
 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import type { NotificationItem, NotificationType } from '../types';
@@ -30,17 +29,17 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
   const getTypeIcon = (t: NotificationType) => {
     switch (t) {
       case 'streak':
-        return <Flame size={18} className="text-orange-400" />;
+        return <Flame size={18} className="text-[var(--color-warning)]" />;
       case 'achievement':
-        return <Trophy size={18} className="text-yellow-400" />;
+        return <Trophy size={18} className="text-[var(--color-warning)]" />;
       case 'friend_request':
-        return <Users size={18} className="text-blue-500" />;
+        return <Users size={18} className="text-[var(--color-primary)]" />;
       case 'challenge_invite':
-        return <Target size={18} className="text-emerald-400" />;
+        return <Target size={18} className="text-[var(--color-primary)]" />;
       case 'deadline_urgent':
-        return <Clock size={18} className="text-red-400" />;
+        return <Clock size={18} className="text-red-500" />;
       default:
-        return <Sparkles size={18} className="text-blue-400" />;
+        return <Sparkles size={18} className="text-[var(--color-primary)]" />;
     }
   };
 
@@ -60,15 +59,15 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
       className={cn(
         'p-4 rounded-2xl border transition-all flex items-start justify-between gap-3 group',
         read
-          ? 'bg-white/[0.02] border-white/5 opacity-80 hover:opacity-100 hover:bg-white/[0.04]'
-          : 'bg-blue-500/10 border-blue-500/30 shadow-[0_0_15px_rgba(0,136,221,0.1)]'
+          ? 'bg-[var(--color-surface)] border-[var(--color-border)] opacity-80 hover:opacity-100 hover:bg-[var(--color-surface-hover)]'
+          : 'bg-[var(--color-primary-soft)]/40 border-[var(--color-primary)]/40 shadow-sm'
       )}
     >
       <div className="flex items-start gap-3 min-w-0">
         <div
           className={cn(
             'p-2.5 rounded-xl border shrink-0',
-            read ? 'bg-white/5 border-white/10' : 'bg-blue-500/20 border-blue-500/30'
+            read ? 'bg-[var(--color-surface-hover)] border-[var(--color-border)]' : 'bg-[var(--color-surface)] border-[var(--color-primary)]/30'
           )}
         >
           {getTypeIcon(type)}
@@ -76,13 +75,13 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
 
         <div className="min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h4 className="text-fluid-xs font-bold text-white truncate">{title}</h4>
+            <h4 className="text-fluid-xs font-bold truncate" style={{ color: 'var(--color-text)' }}>{title}</h4>
             {!read && (
-              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse shrink-0" />
+              <span className="w-2 h-2 rounded-full bg-[var(--color-primary)] shrink-0" />
             )}
           </div>
-          <p className="text-[12px] text-zinc-300 leading-snug mb-1.5">{body}</p>
-          <span className="text-[10px] text-zinc-400 font-medium">{getRelativeTime(createdAt)}</span>
+          <p className="text-[12px] leading-snug mb-1.5" style={{ color: 'var(--color-text-muted)' }}>{body}</p>
+          <span className="text-[10px] font-medium" style={{ color: 'var(--color-text-muted)' }}>{getRelativeTime(createdAt)}</span>
         </div>
       </div>
 
@@ -93,7 +92,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
             onClick={() => onMarkAsRead(id)}
             title="Mark as read"
             aria-label="Mark as read"
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-emerald-300 hover:bg-emerald-500/10 transition-colors"
+            className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-primary)] hover:bg-[var(--color-surface-hover)] transition-colors"
           >
             <Check size={14} />
           </button>
@@ -103,7 +102,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
             onClick={() => onDelete(id)}
             title="Delete notification"
             aria-label="Delete notification"
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+            className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:text-red-500 hover:bg-red-500/10 transition-colors"
           >
             <Trash2 size={14} />
           </button>

@@ -1,4 +1,4 @@
-/** Register page with username verification, timezone detection, and validation. */
+/** Register page with username verification, timezone detection, and validation (Corbel theme). */
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PublicLayout } from '@/components/layout/PublicLayout';
@@ -94,10 +94,10 @@ export const RegisterPage: React.FC = () => {
   return (
     <PublicLayout>
       <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-        <div className="glass p-6 sm:p-8 w-full max-w-lg rounded-2xl shadow-2xl relative overflow-hidden my-6">
+        <div className="glass p-6 sm:p-8 w-full max-w-lg rounded-2xl shadow-xl border border-[var(--color-border)] relative overflow-hidden my-6 bg-[var(--color-surface)]">
           <div
             className="absolute top-0 inset-x-0 h-1.5"
-            style={{ background: 'linear-gradient(90deg, var(--color-primary), var(--color-accent))' }}
+            style={{ background: 'var(--color-primary)' }}
           />
 
           <div className="text-center mb-6">
@@ -111,10 +111,10 @@ export const RegisterPage: React.FC = () => {
 
           {authError && (
             <div
-              className="mb-5 p-3 rounded-lg flex items-center gap-2 text-fluid-xs bg-red-500/10 border border-red-500/20 text-red-300"
+              className="mb-5 p-3 rounded-lg flex items-center gap-2 text-fluid-xs bg-red-500/10 border border-red-500/20 text-red-500 dark:text-red-400"
               role="alert"
             >
-              <AlertCircle size={16} className="shrink-0 text-red-400" />
+              <AlertCircle size={16} className="shrink-0" />
               <span>{authError}</span>
             </div>
           )}
@@ -147,19 +147,19 @@ export const RegisterPage: React.FC = () => {
                   />
                   <div className="absolute right-2.5 top-1/2 -translate-y-1/2">
                     {isCheckingUsername ? (
-                      <Loader2 size={16} className="animate-spin text-blue-500" />
+                      <Loader2 size={16} className="animate-spin text-[var(--color-primary)]" />
                     ) : usernameStatus === 'available' ? (
-                      <CheckCircle2 size={16} className="text-emerald-400" />
+                      <CheckCircle2 size={16} className="text-[var(--color-primary)]" />
                     ) : usernameStatus === 'taken' || usernameStatus === 'invalid' ? (
-                      <AlertCircle size={16} className="text-red-400" />
+                      <AlertCircle size={16} className="text-red-500" />
                     ) : null}
                   </div>
                 </div>
                 {usernameStatus === 'taken' && (
-                  <p className="text-[11px] text-red-400 mt-1">Username is already taken</p>
+                  <p className="text-[11px] text-red-500 mt-1">Username is already taken</p>
                 )}
                 {usernameStatus === 'invalid' && (
-                  <p className="text-[11px] text-red-400 mt-1">Letters, numbers, and underscores only</p>
+                  <p className="text-[11px] text-red-500 mt-1">Letters, numbers, and underscores only</p>
                 )}
               </div>
             </div>
@@ -231,11 +231,11 @@ export const RegisterPage: React.FC = () => {
           </form>
 
           <div className="flex items-center my-4">
-            <div className="flex-1 border-t" style={{ borderColor: 'var(--glass-border)' }} />
+            <div className="flex-1 border-t" style={{ borderColor: 'var(--color-border)' }} />
             <span className="px-3 text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
               or continue with Google
             </span>
-            <div className="flex-1 border-t" style={{ borderColor: 'var(--glass-border)' }} />
+            <div className="flex-1 border-t" style={{ borderColor: 'var(--color-border)' }} />
           </div>
 
           <button
@@ -245,7 +245,7 @@ export const RegisterPage: React.FC = () => {
               if (success) navigate('/dashboard', { replace: true });
             }}
             disabled={isSubmitting}
-            className="w-full py-2.5 px-4 rounded-xl border border-white/10 hover:bg-white/5 transition-all text-fluid-sm font-medium flex items-center justify-center gap-2 min-h-[44px]"
+            className="w-full py-2.5 px-4 rounded-xl border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-all text-fluid-sm font-medium flex items-center justify-center gap-2 min-h-[44px]"
             style={{ color: 'var(--color-text)' }}
           >
             <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
@@ -284,4 +284,3 @@ export const RegisterPage: React.FC = () => {
     </PublicLayout>
   );
 };
-

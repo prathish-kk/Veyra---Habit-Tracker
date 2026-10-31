@@ -1,4 +1,4 @@
-/** Login page with glassmorphism design, validation, demo login, and Email / Google / Phone authentication. */
+/** Login page with Corbel theme design, validation, demo login, and Email / Google / Phone authentication. */
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { PublicLayout } from '@/components/layout/PublicLayout';
@@ -90,19 +90,18 @@ export const LoginPage: React.FC = () => {
   return (
     <PublicLayout>
       <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-        <div className="glass p-6 sm:p-8 w-full max-w-md rounded-2xl shadow-2xl relative overflow-hidden">
-          {/* Subtle gradient banner */}
+        <div className="glass p-6 sm:p-8 w-full max-w-md rounded-2xl shadow-xl border border-[var(--color-border)] relative overflow-hidden bg-[var(--color-surface)]">
+          {/* Accent top banner */}
           <div
             className="absolute top-0 inset-x-0 h-1.5"
-            style={{ background: 'linear-gradient(90deg, var(--color-primary), var(--color-accent))' }}
+            style={{ background: 'var(--color-primary)' }}
           />
 
           <div className="text-center mb-6">
             <div
-              className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3"
-              style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}
+              className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 shadow-sm text-white bg-[var(--color-primary)]"
             >
-              <span className="text-2xl font-bold text-white">V</span>
+              <span className="text-2xl font-bold">V</span>
             </div>
             <h1 className="text-fluid-2xl font-bold mb-1" style={{ color: 'var(--color-text)' }}>
               Welcome back
@@ -114,10 +113,10 @@ export const LoginPage: React.FC = () => {
 
           {authError && (
             <div
-              className="mb-5 p-3 rounded-lg flex items-center gap-2 text-fluid-xs bg-red-500/10 border border-red-500/20 text-red-300"
+              className="mb-5 p-3 rounded-lg flex items-center gap-2 text-fluid-xs bg-red-500/10 border border-red-500/20 text-red-500 dark:text-red-400"
               role="alert"
             >
-              <AlertCircle size={16} className="shrink-0 text-red-400" />
+              <AlertCircle size={16} className="shrink-0" />
               <span>{authError}</span>
             </div>
           )}
@@ -127,24 +126,24 @@ export const LoginPage: React.FC = () => {
             type="button"
             onClick={handleDemoLogin}
             disabled={isSubmitting}
-            className="w-full mb-4 py-2.5 px-4 rounded-xl border border-blue-500/30 bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 transition-all text-fluid-sm font-medium flex items-center justify-center gap-2 min-h-[44px]"
+            className="w-full mb-4 py-2.5 px-4 rounded-xl border border-[var(--color-primary)]/30 bg-[var(--color-primary-soft)] hover:opacity-90 text-[var(--color-primary)] transition-all text-fluid-sm font-semibold flex items-center justify-center gap-2 min-h-[44px]"
           >
-            <Sparkles size={16} className="text-blue-500" />
+            <Sparkles size={16} />
             <span>One-Click Demo Login</span>
           </button>
 
           {/* Auth Method Switcher Tabs */}
-          <div className="flex rounded-xl p-1 mb-5 bg-white/5 border border-white/10">
+          <div className="flex rounded-xl p-1 mb-5 bg-[var(--color-surface-hover)] border border-[var(--color-border)]">
             <button
               type="button"
               onClick={() => {
                 setAuthMethod('email');
                 cancelPhoneAuth();
               }}
-              className={`flex-1 py-2 px-3 rounded-lg text-fluid-xs font-medium flex items-center justify-center gap-1.5 transition-all ${
+              className={`flex-1 py-2 px-3 rounded-lg text-fluid-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
                 authMethod === 'email'
-                  ? 'bg-blue-700/60 text-white shadow-sm'
-                  : 'text-zinc-400 hover:text-gray-900 dark:hover:text-white'
+                  ? 'bg-[var(--color-primary)] text-white shadow-sm'
+                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
               }`}
             >
               <Mail size={14} />
@@ -156,10 +155,10 @@ export const LoginPage: React.FC = () => {
                 setAuthMethod('phone');
                 setAuthError(null);
               }}
-              className={`flex-1 py-2 px-3 rounded-lg text-fluid-xs font-medium flex items-center justify-center gap-1.5 transition-all ${
+              className={`flex-1 py-2 px-3 rounded-lg text-fluid-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
                 authMethod === 'phone'
-                  ? 'bg-blue-700/60 text-white shadow-sm'
-                  : 'text-zinc-400 hover:text-gray-900 dark:hover:text-white'
+                  ? 'bg-[var(--color-primary)] text-white shadow-sm'
+                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
               }`}
             >
               <Phone size={14} />
@@ -230,7 +229,7 @@ export const LoginPage: React.FC = () => {
                       required
                       disabled={isSubmitting}
                     />
-                    <p className="mt-1 text-fluid-xs text-zinc-400">
+                    <p className="mt-1 text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
                       Include country code (e.g. +1 for US/CA, +91 for India, +44 for UK).
                     </p>
                   </div>
@@ -247,9 +246,9 @@ export const LoginPage: React.FC = () => {
                 </form>
               ) : (
                 <form onSubmit={handleVerifyPhoneCode} className="space-y-4">
-                  <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-fluid-xs text-blue-300">
+                  <div className="p-3 rounded-xl bg-[var(--color-primary-soft)] border border-[var(--color-primary)]/30 text-fluid-xs text-[var(--color-primary)]">
                     Verification code sent to{' '}
-                    <span className="font-semibold text-white">{pendingPhoneNumber || phoneNumber}</span>
+                    <span className="font-semibold" style={{ color: 'var(--color-text)' }}>{pendingPhoneNumber || phoneNumber}</span>
                   </div>
 
                   <div>
@@ -283,7 +282,8 @@ export const LoginPage: React.FC = () => {
                     type="button"
                     onClick={cancelPhoneAuth}
                     disabled={isSubmitting}
-                    className="w-full py-2 text-fluid-xs text-zinc-400 hover:text-gray-900 dark:hover:text-white flex items-center justify-center gap-1 transition-colors"
+                    className="w-full py-2 text-fluid-xs hover:underline flex items-center justify-center gap-1 transition-colors"
+                    style={{ color: 'var(--color-text-muted)' }}
                   >
                     <RotateCcw size={13} />
                     <span>Change phone number</span>
@@ -297,18 +297,18 @@ export const LoginPage: React.FC = () => {
           )}
 
           <div className="flex items-center my-4">
-            <div className="flex-1 border-t" style={{ borderColor: 'var(--glass-border)' }} />
+            <div className="flex-1 border-t" style={{ borderColor: 'var(--color-border)' }} />
             <span className="px-3 text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
               or continue with Google
             </span>
-            <div className="flex-1 border-t" style={{ borderColor: 'var(--glass-border)' }} />
+            <div className="flex-1 border-t" style={{ borderColor: 'var(--color-border)' }} />
           </div>
 
           <button
             type="button"
             onClick={handleGoogleLogin}
             disabled={isSubmitting}
-            className="w-full py-2.5 px-4 rounded-xl border border-white/10 hover:bg-white/5 transition-all text-fluid-sm font-medium flex items-center justify-center gap-2 min-h-[44px]"
+            className="w-full py-2.5 px-4 rounded-xl border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)] transition-all text-fluid-sm font-medium flex items-center justify-center gap-2 min-h-[44px]"
             style={{ color: 'var(--color-text)' }}
           >
             <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
@@ -347,4 +347,3 @@ export const LoginPage: React.FC = () => {
     </PublicLayout>
   );
 };
-

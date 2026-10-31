@@ -10,34 +10,34 @@ interface FriendActivityFeedProps {
 
 const ACTION_ICONS: Record<string, { icon: React.ReactNode; color: string; bg: string }> = {
   streak: {
-    icon: <Flame size={16} className="text-orange-400" />,
-    color: 'text-orange-400',
-    bg: 'bg-orange-500/20 border-orange-500/30',
+    icon: <Flame size={16} className="text-orange-500 dark:text-orange-400" />,
+    color: 'text-orange-500 dark:text-orange-400',
+    bg: 'bg-orange-500/10 border-orange-500/20',
   },
   achievement: {
-    icon: <Award size={16} className="text-blue-500" />,
-    color: 'text-blue-500',
-    bg: 'bg-blue-500/20 border-blue-500/30',
+    icon: <Award size={16} className="text-primary" />,
+    color: 'text-primary',
+    bg: 'bg-primary/15 border-primary/30',
   },
   completed_day: {
-    icon: <CheckCircle2 size={16} className="text-emerald-400" />,
-    color: 'text-emerald-400',
-    bg: 'bg-emerald-500/20 border-emerald-500/30',
+    icon: <CheckCircle2 size={16} className="text-emerald-600 dark:text-emerald-400" />,
+    color: 'text-emerald-600 dark:text-emerald-400',
+    bg: 'bg-emerald-500/10 border-emerald-500/20',
   },
   joined_challenge: {
-    icon: <Trophy size={16} className="text-amber-400" />,
-    color: 'text-amber-400',
-    bg: 'bg-amber-500/20 border-amber-500/30',
+    icon: <Trophy size={16} className="text-amber-500 dark:text-amber-400" />,
+    color: 'text-amber-500 dark:text-amber-400',
+    bg: 'bg-amber-500/10 border-amber-500/20',
   },
 };
 
 export const FriendActivityFeed: React.FC<FriendActivityFeedProps> = ({ feed }) => {
   if (feed.length === 0) {
     return (
-      <div className="glass p-8 rounded-2xl border border-white/5 text-center text-zinc-400 text-fluid-sm">
-        <Clock size={36} className="mx-auto text-zinc-500 mb-2" />
-        <p className="font-semibold text-white">No recent activity</p>
-        <p className="text-fluid-xs text-zinc-400 mt-1">Updates will appear as your friends complete habits and earn badges.</p>
+      <div className="glass p-8 rounded-2xl border border-[var(--glass-border)] text-center text-gray-500 dark:text-zinc-400 text-fluid-sm">
+        <Clock size={36} className="mx-auto text-gray-400 dark:text-zinc-500 mb-2" />
+        <p className="font-semibold text-gray-900 dark:text-white">No recent activity</p>
+        <p className="text-fluid-xs text-gray-600 dark:text-zinc-400 mt-1">Updates will appear as your friends complete habits and earn badges.</p>
       </div>
     );
   }
@@ -58,18 +58,18 @@ export const FriendActivityFeed: React.FC<FriendActivityFeedProps> = ({ feed }) 
         return (
           <div
             key={item.id}
-            className="glass p-4 rounded-2xl border border-white/10 flex items-center justify-between gap-3 select-none hover:border-white/20 transition-colors"
+            className="glass p-4 rounded-2xl border border-[var(--glass-border)] flex items-center justify-between gap-3 select-none hover:border-[var(--color-primary)]/40 transition-colors"
           >
             <div className="flex items-center gap-3">
               <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center border', conf.bg)}>
                 {conf.icon}
               </div>
               <div>
-                <p className="text-fluid-xs text-white">
+                <p className="text-fluid-xs text-gray-900 dark:text-white">
                   <span className="font-bold">{item.userName}</span>{' '}
-                  <span className="text-zinc-300 font-normal">{item.text}</span>
+                  <span className="text-gray-600 dark:text-zinc-300 font-normal">{item.text}</span>
                 </p>
-                <div className="flex items-center gap-2 mt-0.5 text-[11px] text-zinc-400">
+                <div className="flex items-center gap-2 mt-0.5 text-[11px] text-gray-500 dark:text-zinc-400">
                   <span>Level {item.userLevel}</span>
                   <span>•</span>
                   <span>{formatTimeAgo(item.timestamp)}</span>

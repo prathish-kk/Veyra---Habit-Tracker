@@ -1,6 +1,6 @@
-/** Month calendar grid showing daily habit check/cross indicators. */
+/** Month calendar grid showing daily habit check/cross indicators (Corbel theme). */
 import React from 'react';
-import { Check, X, Clock } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import type { DayHistory } from '../types';
 
@@ -21,7 +21,7 @@ export const MonthCalendarGrid: React.FC<MonthCalendarGridProps> = ({ days, onSe
   return (
     <div className="w-full select-none">
       {/* Weekday Header */}
-      <div className="grid grid-cols-7 gap-2 mb-2 text-center text-fluid-xs font-semibold text-zinc-400">
+      <div className="grid grid-cols-7 gap-2 mb-2 text-center text-fluid-xs font-semibold" style={{ color: 'var(--color-text-muted)' }}>
         {WEEKDAYS.map((wd) => (
           <div key={wd} className="py-1">
             {wd}
@@ -45,32 +45,32 @@ export const MonthCalendarGrid: React.FC<MonthCalendarGridProps> = ({ days, onSe
               type="button"
               onClick={() => onSelectDay(day)}
               className={cn(
-                'h-16 md:h-20 p-2 rounded-xl border flex flex-col justify-between text-left transition-all hover:scale-105 hover:z-10',
+                'h-16 md:h-20 p-2 rounded-xl border flex flex-col justify-between text-left transition-all hover:scale-105 hover:z-10 bg-[var(--color-surface)]',
                 isCompleted
-                  ? 'bg-emerald-500/10 border-emerald-500/30 hover:border-emerald-400'
+                  ? 'bg-[var(--color-primary-soft)]/50 border-[var(--color-primary)]/40 hover:border-[var(--color-primary)]'
                   : isPartial
-                  ? 'bg-amber-500/10 border-amber-500/30 hover:border-amber-400'
-                  : 'bg-white/[0.02] border-white/5 hover:border-white/20'
+                  ? 'bg-[var(--color-warning)]/10 border-[var(--color-warning)]/30 hover:border-[var(--color-warning)]'
+                  : 'border-[var(--color-border)] hover:border-[var(--color-text-muted)]'
               )}
             >
               <div className="flex items-center justify-between">
-                <span className="text-fluid-xs font-bold text-white">{day.dayNumber}</span>
+                <span className="text-fluid-xs font-bold" style={{ color: 'var(--color-text)' }}>{day.dayNumber}</span>
                 {isCompleted ? (
-                  <span className="w-4 h-4 rounded-full bg-emerald-500/30 text-emerald-300 flex items-center justify-center">
+                  <span className="w-4 h-4 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center">
                     <Check size={11} strokeWidth={3} />
                   </span>
                 ) : isPartial ? (
-                  <span className="w-4 h-4 rounded-full bg-amber-500/30 text-amber-300 flex items-center justify-center text-[10px] font-bold">
+                  <span className="w-4 h-4 rounded-full bg-[var(--color-warning)] text-white flex items-center justify-center text-[10px] font-bold">
                     {day.completedCount}
                   </span>
                 ) : (
-                  <span className="w-4 h-4 rounded-full bg-white/5 text-zinc-500 flex items-center justify-center">
+                  <span className="w-4 h-4 rounded-full bg-[var(--color-surface-hover)] text-[var(--color-text-muted)] flex items-center justify-center">
                     <X size={10} />
                   </span>
                 )}
               </div>
 
-              <div className="text-[10px] text-zinc-400 truncate">
+              <div className="text-[10px] truncate" style={{ color: 'var(--color-text-muted)' }}>
                 {day.completedCount} of {day.totalCount}
               </div>
             </button>

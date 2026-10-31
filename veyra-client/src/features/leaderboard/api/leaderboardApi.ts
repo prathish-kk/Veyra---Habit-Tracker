@@ -12,7 +12,7 @@ interface ApiResponse<T> {
 function isDummy(u: { id?: string; username?: string | null; name?: string | null }): boolean {
   if (!u) return true;
   const BANNED_IDS = ['usr_demo', 'demo', 'mock', 'usr_sarahkim', 'usr_jordanlee', 'usr_alexrivera', 'usr_samtaylor', 'usr_mayachen'];
-  const BANNED_USERNAMES = ['demo', 'friend', 'sarah_k', 'sarahkim', 'jordan_lee', 'jordanlee', 'alex_r', 'alexrivera', 'sam_t', 'samtaylor', 'mayachen'];
+  const BANNED_USERNAMES = ['demo', 'friend', 'sarah_k', 'sarahkim', 'jordan_lee', 'jordanlee', 'alex_r', 'alexrivera', 'samtaylor', 'mayachen'];
   const BANNED_NAMES = ['demo user', 'friend', 'sarah kim', 'jordan lee', 'alex rivera', 'sam taylor', 'maya chen'];
 
   const id = u.id?.toLowerCase().trim();

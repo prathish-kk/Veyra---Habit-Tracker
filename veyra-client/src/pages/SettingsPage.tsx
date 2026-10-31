@@ -1,4 +1,4 @@
-/** Settings tabs — Account, Appearance, Privacy & Friends, Notifications. */
+/** Settings tabs — Account, Appearance, Privacy & Friends, Notifications (Corbel theme). */
 import React, { useState, useEffect } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
 import { PageHeader } from '@/components/layout/PageHeader';
@@ -19,6 +19,8 @@ import {
   Save,
   Volume2,
   Clock,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { isSoundEnabled, setSoundEnabled, playHabitChime } from '@/lib/sound';
 
@@ -176,8 +178,8 @@ export const SettingsPage: React.FC = () => {
         <div
           className={`mb-6 p-4 rounded-xl flex items-center gap-3 text-fluid-sm border ${
             message.type === 'success'
-              ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300'
-              : 'bg-red-500/10 border-red-500/20 text-red-300'
+              ? 'bg-[var(--color-primary-soft)] border-[var(--color-primary)]/30 text-[var(--color-primary)]'
+              : 'bg-red-500/10 border-red-500/20 text-red-500 dark:text-red-400'
           }`}
         >
           {message.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
@@ -186,13 +188,13 @@ export const SettingsPage: React.FC = () => {
       )}
 
       {/* Tabs */}
-      <div className="flex border-b mb-6 overflow-x-auto gap-2" style={{ borderColor: 'var(--glass-border)' }}>
+      <div className="flex border-b mb-6 overflow-x-auto gap-2" style={{ borderColor: 'var(--color-border)' }}>
         <button
           onClick={() => setActiveTab('account')}
           className={`flex items-center gap-2 pb-3 px-3 text-fluid-sm font-medium border-b-2 transition-all shrink-0 ${
             activeTab === 'account'
-              ? 'border-blue-500 text-blue-400'
-              : 'border-transparent hover:text-gray-900 dark:hover:text-white text-gray-400'
+              ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
+              : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
           }`}
         >
           <UserIcon size={16} />
@@ -202,8 +204,8 @@ export const SettingsPage: React.FC = () => {
           onClick={() => setActiveTab('appearance')}
           className={`flex items-center gap-2 pb-3 px-3 text-fluid-sm font-medium border-b-2 transition-all shrink-0 ${
             activeTab === 'appearance'
-              ? 'border-blue-500 text-blue-400'
-              : 'border-transparent hover:text-gray-900 dark:hover:text-white text-gray-400'
+              ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
+              : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
           }`}
         >
           <Palette size={16} />
@@ -213,8 +215,8 @@ export const SettingsPage: React.FC = () => {
           onClick={() => setActiveTab('privacy')}
           className={`flex items-center gap-2 pb-3 px-3 text-fluid-sm font-medium border-b-2 transition-all shrink-0 ${
             activeTab === 'privacy'
-              ? 'border-blue-500 text-blue-400'
-              : 'border-transparent hover:text-gray-900 dark:hover:text-white text-gray-400'
+              ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
+              : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
           }`}
         >
           <Shield size={16} />
@@ -224,8 +226,8 @@ export const SettingsPage: React.FC = () => {
           onClick={() => setActiveTab('notifications')}
           className={`flex items-center gap-2 pb-3 px-3 text-fluid-sm font-medium border-b-2 transition-all shrink-0 ${
             activeTab === 'notifications'
-              ? 'border-blue-500 text-blue-400'
-              : 'border-transparent hover:text-gray-900 dark:hover:text-white text-gray-400'
+              ? 'border-[var(--color-primary)] text-[var(--color-primary)]'
+              : 'border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
           }`}
         >
           <Bell size={16} />
@@ -280,36 +282,59 @@ export const SettingsPage: React.FC = () => {
           <div className="space-y-6">
             <div>
               <h3 className="text-fluid-base font-semibold mb-2" style={{ color: 'var(--color-text)' }}>
-                Theme Preset
+                Theme Selection
               </h3>
               <p className="text-fluid-xs mb-4" style={{ color: 'var(--color-text-muted)' }}>
-                Choose the visual style for cards, blur effects, and interface elements.
+                Choose between warm neutral Light Mode and deep charcoal Dark Mode.
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
-                  { id: 'dark', label: 'Dark Glass', desc: 'Deep cosmic dark palette' },
-                  { id: 'ambient', label: 'Ambient Glow', desc: 'Vivid blue backlight' },
-                  { id: 'light', label: 'Light Frost', desc: 'Bright frosted glass' },
-                  { id: 'system', label: 'System', desc: 'Follow your OS preference' },
-                ].map((preset) => (
-                  <button
-                    key={preset.id}
-                    type="button"
-                    onClick={() => setTheme(preset.id as Theme)}
-                    className={`p-4 rounded-xl border text-left transition-all ${
-                      theme === preset.id
-                        ? 'border-blue-500 bg-blue-500/20'
-                        : 'border-white/10 hover:border-white/20'
-                    }`}
-                  >
-                    <div className="font-semibold text-fluid-sm" style={{ color: 'var(--color-text)' }}>
-                      {preset.label}
-                    </div>
-                    <div className="text-[11px]" style={{ color: 'var(--color-text-muted)' }}>
-                      {preset.desc}
-                    </div>
-                  </button>
-                ))}
+                  {
+                    id: 'light' as Theme,
+                    icon: Sun,
+                    label: 'Light Mode',
+                    desc: 'Clean warm off-white surfaces with sage green accents',
+                  },
+                  {
+                    id: 'dark' as Theme,
+                    icon: Moon,
+                    label: 'Dark Mode',
+                    desc: 'Deep charcoal background with sage green accents',
+                  },
+                ].map((preset) => {
+                  const Icon = preset.icon;
+                  const isSelected = theme === preset.id;
+                  return (
+                    <button
+                      key={preset.id}
+                      type="button"
+                      onClick={() => setTheme(preset.id)}
+                      className={`p-5 rounded-2xl border text-left transition-all flex items-start gap-3.5 ${
+                        isSelected
+                          ? 'border-[var(--color-primary)] bg-[var(--color-primary-soft)] ring-1 ring-[var(--color-primary)]'
+                          : 'border-[var(--color-border)] hover:border-[var(--color-text-muted)] bg-[var(--color-surface)]'
+                      }`}
+                    >
+                      <div
+                        className={`p-2.5 rounded-xl ${
+                          isSelected
+                            ? 'bg-[var(--color-primary)] text-white'
+                            : 'bg-[var(--color-surface-hover)] text-[var(--color-text-muted)]'
+                        }`}
+                      >
+                        <Icon size={20} />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-fluid-sm" style={{ color: 'var(--color-text)' }}>
+                          {preset.label}
+                        </div>
+                        <div className="text-[12px] mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
+                          {preset.desc}
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
             <GlassButton onClick={handleSaveSettings} disabled={saving} className="flex items-center gap-2">
@@ -337,10 +362,10 @@ export const SettingsPage: React.FC = () => {
                 ].map((item) => (
                   <label
                     key={item.level}
-                    className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
+                    className={`flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition-all ${
                       friendVisibility === item.level
-                        ? 'border-blue-500 bg-blue-500/10'
-                        : 'border-white/10 hover:border-white/20'
+                        ? 'border-[var(--color-primary)] bg-[var(--color-primary-soft)]'
+                        : 'border-[var(--color-border)] hover:border-[var(--color-text-muted)]'
                     }`}
                   >
                     <input
@@ -348,7 +373,7 @@ export const SettingsPage: React.FC = () => {
                       name="friendVisibility"
                       checked={friendVisibility === item.level}
                       onChange={() => setFriendVisibility(item.level)}
-                      className="mt-1"
+                      className="mt-1 accent-[var(--color-primary)]"
                     />
                     <div>
                       <div className="text-fluid-sm font-medium" style={{ color: 'var(--color-text)' }}>
@@ -363,7 +388,7 @@ export const SettingsPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="pt-4 border-t" style={{ borderColor: 'var(--glass-border)' }}>
+            <div className="pt-4 border-t" style={{ borderColor: 'var(--color-border)' }}>
               <label className="flex items-center justify-between cursor-pointer">
                 <div>
                   <div className="text-fluid-sm font-medium" style={{ color: 'var(--color-text)' }}>
@@ -377,7 +402,7 @@ export const SettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={leaderboardOptIn}
                   onChange={(e) => setLeaderboardOptIn(e.target.checked)}
-                  className="w-5 h-5 rounded accent-blue-500"
+                  className="w-5 h-5 rounded accent-[var(--color-primary)]"
                 />
               </label>
             </div>
@@ -392,12 +417,12 @@ export const SettingsPage: React.FC = () => {
         {activeTab === 'notifications' && (
           <div className="space-y-6">
             <div className="space-y-4">
-              <label className="flex items-center justify-between cursor-pointer p-3.5 rounded-xl border border-white/10 hover:border-white/20 transition-all">
+              <label className="flex items-center justify-between cursor-pointer p-3.5 rounded-xl border border-[var(--color-border)] hover:border-[var(--color-text-muted)] transition-all">
                 <div className="pr-4">
                   <div className="text-fluid-sm font-medium flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
-                    <Clock size={16} className="text-blue-400 shrink-0" />
+                    <Clock size={16} className="text-[var(--color-primary)] shrink-0" />
                     <span>Scheduled 9:00 PM Habit Check-in</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 font-semibold uppercase tracking-wider">
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-semibold uppercase tracking-wider">
                       ON by default
                     </span>
                   </div>
@@ -409,16 +434,16 @@ export const SettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={dailyEveningReminder}
                   onChange={(e) => setDailyEveningReminder(e.target.checked)}
-                  className="w-5 h-5 rounded accent-blue-500 cursor-pointer shrink-0"
+                  className="w-5 h-5 rounded accent-[var(--color-primary)] cursor-pointer shrink-0"
                 />
               </label>
 
-              <label className="flex items-center justify-between cursor-pointer p-3.5 rounded-xl border border-white/10 hover:border-white/20 transition-all">
+              <label className="flex items-center justify-between cursor-pointer p-3.5 rounded-xl border border-[var(--color-border)] hover:border-[var(--color-text-muted)] transition-all">
                 <div className="pr-4">
                   <div className="text-fluid-sm font-medium flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
-                    <Bell size={16} className="text-orange-400 shrink-0" />
+                    <Bell size={16} className="text-[var(--color-warning)] shrink-0" />
                     <span>1-Hour Task Due Reminder Pop-up</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-orange-500/20 text-orange-300 font-semibold uppercase tracking-wider">
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-[var(--color-warning)]/15 text-[var(--color-warning)] font-semibold uppercase tracking-wider">
                       ON by default
                     </span>
                   </div>
@@ -430,11 +455,11 @@ export const SettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={taskDueReminder}
                   onChange={(e) => setTaskDueReminder(e.target.checked)}
-                  className="w-5 h-5 rounded accent-blue-500 cursor-pointer shrink-0"
+                  className="w-5 h-5 rounded accent-[var(--color-primary)] cursor-pointer shrink-0"
                 />
               </label>
 
-              <label className="flex items-center justify-between cursor-pointer p-3 rounded-xl border border-white/10 hover:border-white/20">
+              <label className="flex items-center justify-between cursor-pointer p-3.5 rounded-xl border border-[var(--color-border)] hover:border-[var(--color-text-muted)]">
                 <div>
                   <div className="text-fluid-sm font-medium" style={{ color: 'var(--color-text)' }}>
                     Push & In-App Notifications
@@ -447,11 +472,11 @@ export const SettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={pushNotifs}
                   onChange={(e) => setPushNotifs(e.target.checked)}
-                  className="w-5 h-5 rounded accent-blue-500"
+                  className="w-5 h-5 rounded accent-[var(--color-primary)]"
                 />
               </label>
 
-              <label className="flex items-center justify-between cursor-pointer p-3 rounded-xl border border-white/10 hover:border-white/20">
+              <label className="flex items-center justify-between cursor-pointer p-3.5 rounded-xl border border-[var(--color-border)] hover:border-[var(--color-text-muted)]">
                 <div>
                   <div className="text-fluid-sm font-medium" style={{ color: 'var(--color-text)' }}>
                     Deadline Urgency Alerts
@@ -464,14 +489,14 @@ export const SettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={deadlineAlerts}
                   onChange={(e) => setDeadlineAlerts(e.target.checked)}
-                  className="w-5 h-5 rounded accent-blue-500"
+                  className="w-5 h-5 rounded accent-[var(--color-primary)]"
                 />
               </label>
 
-              <div className="p-3 rounded-xl border border-white/10 hover:border-white/20 flex items-center justify-between">
+              <div className="p-3.5 rounded-xl border border-[var(--color-border)] hover:border-[var(--color-text-muted)] flex items-center justify-between">
                 <div>
                   <div className="text-fluid-sm font-medium flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
-                    <Volume2 size={16} className="text-blue-500" />
+                    <Volume2 size={16} className="text-[var(--color-primary)]" />
                     <span>Reward Audio Effects</span>
                   </div>
                   <div className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
@@ -482,7 +507,7 @@ export const SettingsPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => playHabitChime()}
-                    className="text-[11px] px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                    className="text-[11px] px-2.5 py-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-hover)] text-[var(--color-text)] transition-colors"
                   >
                     Test Chime
                   </button>
@@ -493,7 +518,7 @@ export const SettingsPage: React.FC = () => {
                       setSoundEffects(e.target.checked);
                       setSoundEnabled(e.target.checked);
                     }}
-                    className="w-5 h-5 rounded accent-blue-500 cursor-pointer"
+                    className="w-5 h-5 rounded accent-[var(--color-primary)] cursor-pointer"
                   />
                 </div>
               </div>

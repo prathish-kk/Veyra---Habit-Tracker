@@ -23,7 +23,7 @@ export const TopBar: React.FC<TopBarProps> = ({ onOpenMobileNav }) => {
         className="sticky top-0 z-30 glass border-b px-[var(--page-padding)] flex items-center justify-between"
         style={{
           height: 'var(--topbar-height)',
-          borderColor: 'var(--glass-border)',
+          borderColor: 'var(--color-border)',
         }}
       >
         {/* Left: Mobile Hamburger & Brand / Desktop Welcome Title */}
@@ -33,22 +33,27 @@ export const TopBar: React.FC<TopBarProps> = ({ onOpenMobileNav }) => {
             type="button"
             onClick={onOpenMobileNav}
             aria-label="Open navigation menu"
-            className="lg:hidden p-2 rounded-xl text-zinc-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 active:scale-95 transition-all flex items-center justify-center"
+            className="lg:hidden p-2 rounded-xl transition-all flex items-center justify-center"
+            style={{
+              color: 'var(--color-text-muted)',
+              border: '1px solid var(--color-border)',
+              background: 'var(--color-surface-hover)',
+            }}
           >
             <Menu size={18} />
           </button>
 
           <Link to="/dashboard" className="flex items-center gap-2 lg:hidden">
             <div
-              className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs text-white shadow-sm"
-              style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}
+              className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shadow-sm"
+              style={{ background: 'var(--color-text)', color: 'var(--color-text-on-dark)' }}
             >
               V
             </div>
-            <span className="font-bold text-fluid-sm text-white tracking-tight">Veyra</span>
+            <span className="font-bold text-fluid-sm tracking-tight" style={{ color: 'var(--color-text)' }}>Veyra</span>
           </Link>
-          <div className="hidden lg:block text-fluid-xs text-zinc-400">
-            Welcome to <span className="font-semibold text-blue-400">Veyra Productivity</span>
+          <div className="hidden lg:block text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
+            Welcome to <span className="font-semibold" style={{ color: 'var(--color-primary)' }}>Veyra Productivity</span>
           </div>
         </div>
 
@@ -59,11 +64,18 @@ export const TopBar: React.FC<TopBarProps> = ({ onOpenMobileNav }) => {
             type="button"
             onClick={() => setIsDrawerOpen(true)}
             aria-label="Open notifications drawer"
-            className="relative p-2 rounded-xl text-zinc-300 hover:text-white hover:bg-white/10 border border-white/5 transition-all"
+            className="relative p-2 rounded-xl transition-all"
+            style={{
+              color: 'var(--color-text-muted)',
+              border: '1px solid var(--color-border)',
+            }}
           >
             <Bell size={18} />
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-blue-500 text-white text-[9px] font-black flex items-center justify-center shadow-lg border border-blue-400/40 animate-pulse">
+              <span
+                className="absolute -top-1 -right-1 w-4 h-4 rounded-full text-[9px] font-black flex items-center justify-center shadow-lg animate-pulse"
+                style={{ background: 'var(--color-primary)', color: 'var(--color-text-on-primary)' }}
+              >
                 {unreadCount > 9 ? '9+' : unreadCount}
               </span>
             )}
@@ -73,23 +85,32 @@ export const TopBar: React.FC<TopBarProps> = ({ onOpenMobileNav }) => {
           {user && (
             <Link
               to="/profile"
-              className="flex items-center gap-2 p-1 pl-2 sm:pl-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-fluid-xs transition-colors group"
+              className="flex items-center gap-2 p-1 pl-2 sm:pl-2.5 rounded-xl text-fluid-xs transition-colors group"
+              style={{
+                border: '1px solid var(--color-border)',
+                background: 'var(--color-surface)',
+              }}
             >
               {/* Daily Streak Badge directly before our name */}
               <div
-                className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-orange-500/15 border border-orange-500/30 text-orange-300 font-bold text-[11px] group-hover:bg-orange-500/25 group-hover:border-orange-500/40 transition-colors"
+                className="flex items-center gap-1 px-2 py-0.5 rounded-lg font-bold text-[11px] transition-colors"
                 title={`Current Daily Streak: ${dailyStreak} day${dailyStreak === 1 ? '' : 's'}`}
+                style={{
+                  background: 'var(--color-accent-soft)',
+                  color: 'var(--color-primary)',
+                  border: '1px solid var(--color-border)',
+                }}
               >
-                <Flame size={12} className="text-orange-400 fill-orange-500/30" />
+                <Flame size={12} style={{ color: 'var(--color-primary)' }} />
                 <span className="tabular-nums">{dailyStreak}d</span>
               </div>
 
-              <span className="font-medium text-white hidden sm:inline max-w-[120px] truncate">
+              <span className="font-medium hidden sm:inline max-w-[120px] truncate" style={{ color: 'var(--color-text)' }}>
                 {user.name || user.username || 'Adventurer'}
               </span>
               <div
-                className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs text-white"
-                style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}
+                className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs"
+                style={{ background: 'var(--color-text)', color: 'var(--color-text-on-dark)' }}
               >
                 {(user.name || user.email || 'U').charAt(0).toUpperCase()}
               </div>

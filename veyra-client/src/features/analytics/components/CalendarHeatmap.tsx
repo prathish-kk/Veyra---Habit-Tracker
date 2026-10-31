@@ -1,4 +1,4 @@
-/** Habit completion calendar heatmap grid. */
+/** Habit completion calendar heatmap grid (Corbel theme with sage green levels). */
 import React from 'react';
 import { cn } from '@/lib/cn';
 import type { HeatmapDay } from '../types';
@@ -11,21 +11,21 @@ export const CalendarHeatmap: React.FC<CalendarHeatmapProps> = ({ data }) => {
   const getLevelColor = (level: number) => {
     switch (level) {
       case 4:
-        return 'bg-emerald-400 border-emerald-300/40 shadow-[0_0_8px_rgba(52,211,153,0.4)]';
+        return 'bg-[#58684A] border-[#47543C] shadow-sm';
       case 3:
-        return 'bg-blue-500 border-blue-500/40 shadow-[0_0_6px_rgba(0,136,221,0.3)]';
+        return 'bg-[#8B9A7B] border-[#7A896A] shadow-sm';
       case 2:
-        return 'bg-blue-900/80 border-blue-800/40';
+        return 'bg-[#A3B18A]/70 border-[#8B9A7B]/50';
       case 1:
-        return 'bg-blue-950/60 border-blue-950/30';
+        return 'bg-[#A3B18A]/30 border-[#A3B18A]/40';
       default:
-        return 'bg-white/5 border-white/5';
+        return 'bg-[var(--color-surface-hover)] border-[var(--color-border)]';
     }
   };
 
   return (
     <div className="w-full">
-      <div className="flex flex-wrap gap-1.5 p-3 rounded-2xl bg-white/[0.02] border border-white/5 overflow-x-auto">
+      <div className="flex flex-wrap gap-1.5 p-3 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border)] overflow-x-auto">
         {data.map((day, idx) => (
           <div
             key={idx}
@@ -39,7 +39,7 @@ export const CalendarHeatmap: React.FC<CalendarHeatmapProps> = ({ data }) => {
       </div>
 
       {/* Legend Footer */}
-      <div className="flex items-center justify-end gap-2 mt-3 text-[11px] text-zinc-400">
+      <div className="flex items-center justify-end gap-2 mt-3 text-[11px]" style={{ color: 'var(--color-text-muted)' }}>
         <span>Less</span>
         {[0, 1, 2, 3, 4].map((lvl) => (
           <span

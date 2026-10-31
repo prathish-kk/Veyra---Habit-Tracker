@@ -1,6 +1,6 @@
-/** Friend card displaying friend status, streak, privacy level badge, and progress trigger. */
+/** Friend card displaying friend status, streak, privacy level badge, and progress trigger (Corbel theme). */
 import React, { useState } from 'react';
-import { Shield, Flame, Zap, Eye, MoreHorizontal, UserMinus } from 'lucide-react';
+import { Shield, Flame, Zap, Eye, UserMinus } from 'lucide-react';
 import { cn } from '@/lib/cn';
 import type { Friendship, PrivacyLevel } from '../types';
 
@@ -12,10 +12,10 @@ interface FriendCardProps {
 }
 
 const PRIVACY_LABELS: Record<PrivacyLevel, { label: string; desc: string; badge: string }> = {
-  basic: { label: 'L1: % Only', desc: 'Can only see your completion %', badge: 'bg-zinc-500/20 text-zinc-300 border-zinc-500/30' },
-  counts: { label: 'L2: Counts', desc: 'Can see task counts + %', badge: 'bg-blue-500/20 text-blue-300 border-blue-500/30' },
-  detailed: { label: 'L3: Detailed', desc: 'Can see task titles and status', badge: 'bg-blue-500/20 text-blue-400 border-blue-500/30' },
-  full: { label: 'L4: Full', desc: 'Can see full habits, streak, and notes', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
+  basic: { label: 'L1: % Only', desc: 'Can only see your completion %', badge: 'bg-[var(--color-surface-hover)] text-[var(--color-text-muted)] border-[var(--color-border)]' },
+  counts: { label: 'L2: Counts', desc: 'Can see task counts + %', badge: 'bg-[var(--color-primary-soft)] text-[var(--color-primary)] border-[var(--color-primary)]/30' },
+  detailed: { label: 'L3: Detailed', desc: 'Can see task titles and status', badge: 'bg-[var(--color-primary-soft)] text-[var(--color-primary)] border-[var(--color-primary)]/30' },
+  full: { label: 'L4: Full', desc: 'Can see full habits, streak, and notes', badge: 'bg-[var(--color-primary-soft)] text-[var(--color-primary)] border-[var(--color-primary)]/40 font-bold' },
 };
 
 export const FriendCard: React.FC<FriendCardProps> = ({
@@ -45,19 +45,19 @@ export const FriendCard: React.FC<FriendCardProps> = ({
   };
 
   return (
-    <div className="glass p-5 rounded-2xl border border-white/10 hover:border-white/20 transition-all flex flex-col justify-between select-none relative group">
+    <div className="glass p-5 rounded-2xl border border-[var(--color-border)] hover:border-[var(--color-text-muted)] transition-all flex flex-col justify-between select-none relative group bg-[var(--color-surface)]">
       <div>
         {/* Top Header: Avatar + User Info + Options */}
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500/30 to-blue-600/30 border border-blue-500/40 flex items-center justify-center text-white font-bold text-fluid-lg shadow-sm">
+            <div className="w-12 h-12 rounded-2xl bg-[var(--color-primary)] text-white font-bold text-fluid-lg shadow-sm flex items-center justify-center">
               {friend.name ? friend.name.charAt(0).toUpperCase() : friend.username?.charAt(0).toUpperCase() || 'F'}
             </div>
             <div>
-              <h3 className="text-fluid-base font-bold text-white leading-tight">
+              <h3 className="text-fluid-base font-bold leading-tight" style={{ color: 'var(--color-text)' }}>
                 {friend.name || friend.username}
               </h3>
-              <p className="text-fluid-xs text-zinc-400">@{friend.username || 'user'}</p>
+              <p className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>@{friend.username || 'user'}</p>
             </div>
           </div>
 
@@ -78,8 +78,8 @@ export const FriendCard: React.FC<FriendCardProps> = ({
 
               {/* Privacy Menu Dropdown */}
               {showPrivacyMenu && (
-                <div className="absolute right-0 top-full mt-2 w-56 glass-heavy p-2 rounded-xl border border-white/20 shadow-2xl z-30 animate-in fade-in zoom-in-95">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 px-2 py-1">
+                <div className="absolute right-0 top-full mt-2 w-56 glass-heavy p-2 rounded-xl border border-[var(--color-border)] shadow-xl z-30 bg-[var(--color-surface)]">
+                  <div className="text-[10px] font-bold uppercase tracking-wider px-2 py-1" style={{ color: 'var(--color-text-muted)' }}>
                     Your Privacy Setting
                   </div>
                   {(['basic', 'counts', 'detailed', 'full'] as PrivacyLevel[]).map((lvl) => (
@@ -89,11 +89,12 @@ export const FriendCard: React.FC<FriendCardProps> = ({
                       disabled={isUpdating}
                       className={cn(
                         'w-full text-left px-2 py-1.5 rounded-lg text-fluid-xs transition-colors flex flex-col',
-                        privacyLevel === lvl ? 'bg-blue-500/20 text-blue-300 font-semibold' : 'text-zinc-300 hover:bg-white/5'
+                        privacyLevel === lvl ? 'bg-[var(--color-primary-soft)] text-[var(--color-primary)] font-semibold' : 'hover:bg-[var(--color-surface-hover)]'
                       )}
+                      style={privacyLevel === lvl ? {} : { color: 'var(--color-text)' }}
                     >
                       <span>{PRIVACY_LABELS[lvl].label}</span>
-                      <span className="text-[10px] text-zinc-400 font-normal">{PRIVACY_LABELS[lvl].desc}</span>
+                      <span className="text-[10px] font-normal" style={{ color: 'var(--color-text-muted)' }}>{PRIVACY_LABELS[lvl].desc}</span>
                     </button>
                   ))}
                 </div>
@@ -103,7 +104,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
             {/* Remove Friend Button */}
             <button
               onClick={handleRemove}
-              className="p-1.5 rounded-lg text-zinc-500 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+              className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:text-red-500 hover:bg-red-500/10 transition-colors"
               title="Remove friend"
             >
               <UserMinus size={15} />
@@ -112,24 +113,24 @@ export const FriendCard: React.FC<FriendCardProps> = ({
         </div>
 
         {/* Stats Row: Streak, Level, Total XP */}
-        <div className="grid grid-cols-3 gap-2 my-4 p-2.5 rounded-xl bg-white/[0.03] border border-white/5 text-center">
+        <div className="grid grid-cols-3 gap-2 my-4 p-2.5 rounded-xl bg-[var(--color-surface-hover)] border border-[var(--color-border)] text-center">
           <div>
-            <div className="text-[10px] uppercase font-semibold text-orange-400 flex items-center justify-center gap-1">
+            <div className="text-[10px] uppercase font-semibold text-[var(--color-warning)] flex items-center justify-center gap-1">
               <Flame size={11} /> Streak
             </div>
-            <div className="text-fluid-sm font-bold text-white mt-0.5">{friend.currentStreak}d</div>
+            <div className="text-fluid-sm font-bold mt-0.5" style={{ color: 'var(--color-text)' }}>{friend.currentStreak}d</div>
           </div>
           <div>
-            <div className="text-[10px] uppercase font-semibold text-blue-500 flex items-center justify-center gap-1">
+            <div className="text-[10px] uppercase font-semibold text-[var(--color-primary)] flex items-center justify-center gap-1">
               <Zap size={11} /> Level
             </div>
-            <div className="text-fluid-sm font-bold text-white mt-0.5">Lv. {friend.level}</div>
+            <div className="text-fluid-sm font-bold mt-0.5" style={{ color: 'var(--color-text)' }}>Lv. {friend.level}</div>
           </div>
           <div>
-            <div className="text-[10px] uppercase font-semibold text-yellow-400 flex items-center justify-center gap-1">
+            <div className="text-[10px] uppercase font-semibold text-[var(--color-primary)] flex items-center justify-center gap-1">
               XP
             </div>
-            <div className="text-fluid-sm font-bold text-white mt-0.5">{friend.totalXp.toLocaleString()}</div>
+            <div className="text-fluid-sm font-bold mt-0.5" style={{ color: 'var(--color-text)' }}>{friend.totalXp.toLocaleString()}</div>
           </div>
         </div>
       </div>
@@ -137,7 +138,7 @@ export const FriendCard: React.FC<FriendCardProps> = ({
       {/* Action: View Progress */}
       <button
         onClick={() => onViewProgress(friend.id)}
-        className="w-full mt-2 py-2 px-3 rounded-xl bg-white/5 hover:bg-blue-700/30 text-zinc-200 hover:text-gray-900 dark:hover:text-white border border-white/10 hover:border-blue-500/40 text-fluid-xs font-semibold transition-all flex items-center justify-center gap-1.5 shadow-sm"
+        className="w-full mt-2 py-2 px-3 rounded-xl bg-[var(--color-surface-hover)] hover:bg-[var(--color-primary-soft)] text-[var(--color-text)] border border-[var(--color-border)] hover:border-[var(--color-primary)]/40 text-fluid-xs font-semibold transition-all flex items-center justify-center gap-1.5 shadow-sm"
       >
         <Eye size={13} />
         <span>View Accountability Progress</span>

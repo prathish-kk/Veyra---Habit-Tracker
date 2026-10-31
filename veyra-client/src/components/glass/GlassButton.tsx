@@ -1,4 +1,4 @@
-/** GlassButton — glass-styled button with touch-friendly sizing. */
+/** GlassButton — styled button with touch-friendly sizing (Corbel theme). */
 import React from 'react';
 import { cn } from '@/lib/cn';
 
@@ -21,16 +21,23 @@ export const GlassButton: React.FC<GlassButtonProps> = ({
     variant === 'primary'
       ? 'glass-button-primary'
       : variant === 'secondary'
-      ? 'border border-white/10 bg-white/5 hover:bg-white/10 text-white'
+      ? 'border'
       : variant === 'ghost'
       ? 'glass-button-ghost'
-      : 'glass-button-primary bg-rose-600 hover:bg-rose-500';
+      : 'glass-button-primary';
+
+  const variantStyle =
+    variant === 'secondary'
+      ? { borderColor: 'var(--color-border)', background: 'var(--color-surface-hover)', color: 'var(--color-text)' }
+      : variant === 'danger'
+      ? { background: 'var(--color-danger)', color: '#fff', border: 'none' }
+      : undefined;
 
   const sizeClass =
     size === 'sm' ? 'px-3 py-1.5 text-xs' : size === 'lg' ? 'px-6 py-3 text-base' : 'px-4 py-2 text-sm';
 
   return (
-    <button className={cn('glass-button', variantClass, sizeClass, className)} {...props}>
+    <button className={cn('glass-button', variantClass, sizeClass, className)} style={variantStyle} {...props}>
       {children}
     </button>
   );

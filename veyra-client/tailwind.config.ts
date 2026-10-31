@@ -1,5 +1,33 @@
 import type { Config } from 'tailwindcss';
 
+const sageGreen = {
+  50: '#F4F6F1',
+  100: '#E8EDE4',
+  200: '#D1DBC8',
+  300: '#B5C49C',
+  400: '#A3B18A',
+  500: '#8B9A7B',
+  600: '#7C8C6E',
+  700: '#6B7A5E',
+  800: '#4A5542',
+  900: '#3A4334',
+  950: '#232B1E',
+};
+
+const warmNeutrals = {
+  50: '#F7F7F5',
+  100: '#F0F0EE',
+  200: '#E8E8E4',
+  300: '#D0D0CC',
+  400: '#8A8A86',
+  500: '#6A6A66',
+  600: '#4A4A48',
+  700: '#2E2E2C',
+  800: '#1E1E1C',
+  900: '#121210',
+  950: '#0A0A09',
+};
+
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   darkMode: 'class',
@@ -9,26 +37,22 @@ export default {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
-        primary: {
-          50: 'hsl(205, 100%, 97%)',
-          100: 'hsl(205, 100%, 92%)',
-          200: 'hsl(205, 100%, 82%)',
-          300: 'hsl(205, 100%, 68%)',
-          400: 'hsl(205, 100%, 50%)',
-          500: 'hsl(205, 100%, 42%)',
-          600: 'hsl(210, 100%, 35%)',
-          700: 'hsl(215, 100%, 28%)',
-          800: 'hsl(218, 100%, 20%)',
-          900: 'hsl(220, 100%, 12%)',
-        },
+        primary: sageGreen,
+        // Map blue to sage green for full codebase consistency
+        blue: sageGreen,
+        // Map zinc and gray to warm neutrals
+        zinc: warmNeutrals,
+        gray: warmNeutrals,
         accent: {
-          400: 'hsl(195, 100%, 42%)',
-          500: 'hsl(195, 100%, 36%)',
+          400: '#A3B18A',
+          500: '#8B9A7B',
         },
         surface: {
-          light: 'hsla(43, 40%, 95%, 0.65)',
-          dark: 'hsla(214, 55%, 13%, 0.55)',
+          light: '#FFFFFF',
+          dark: '#1E1E1C',
+          alt: '#1A1A1A',
         },
+        warm: warmNeutrals,
       },
       container: {
         center: true,
@@ -43,18 +67,22 @@ export default {
         'safe-bottom': 'env(safe-area-inset-bottom)',
         'safe-top': 'env(safe-area-inset-top)',
       },
-      backdropBlur: {
-        glass: '16px',
-        'glass-heavy': '24px',
-      },
       borderRadius: {
+        surface: '16px',
+        'surface-sm': '8px',
+        'surface-lg': '24px',
+        // Legacy aliases
         glass: '16px',
         'glass-sm': '8px',
         'glass-lg': '24px',
       },
       boxShadow: {
-        glass: '0 8px 32px hsla(0, 0%, 0%, 0.08)',
-        'glass-hover': '0 12px 40px hsla(0, 0%, 0%, 0.12)',
+        surface: '0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02)',
+        'surface-hover': '0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.03)',
+        'surface-elevated': '0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04)',
+        // Legacy aliases
+        glass: '0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02)',
+        'glass-hover': '0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.03)',
       },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-out',

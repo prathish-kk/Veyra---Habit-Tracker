@@ -1,4 +1,4 @@
-/** AreaChart component showing habit completion percentage trends over time. */
+/** AreaChart component showing habit completion percentage trends over time (Corbel theme). */
 import React from 'react';
 import {
   ResponsiveContainer,
@@ -17,7 +17,11 @@ interface CompletionTrendChartProps {
 
 export const CompletionTrendChart: React.FC<CompletionTrendChartProps> = ({ data }) => {
   if (data.length === 0) {
-    return <div className="h-64 flex items-center justify-center text-zinc-500">No trend data available</div>;
+    return (
+      <div className="h-64 flex items-center justify-center text-[var(--color-text-muted)]">
+        No trend data available
+      </div>
+    );
   }
 
   // Format short date for X-axis (e.g., "10/01")
@@ -32,21 +36,21 @@ export const CompletionTrendChart: React.FC<CompletionTrendChartProps> = ({ data
         <AreaChart data={formattedData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
           <defs>
             <linearGradient id="trendGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.6} />
-              <stop offset="95%" stopColor="#06B6D4" stopOpacity={0.0} />
+              <stop offset="5%" stopColor="#8B9A7B" stopOpacity={0.6} />
+              <stop offset="95%" stopColor="#8B9A7B" stopOpacity={0.0} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.05)" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
           <XAxis
             dataKey="shortDate"
-            stroke="rgba(255, 255, 255, 0.3)"
+            stroke="var(--color-text-muted)"
             fontSize={11}
             tickLine={false}
-            axisLine={{ stroke: 'rgba(255, 255, 255, 0.1)' }}
+            axisLine={{ stroke: 'var(--color-border)' }}
           />
           <YAxis
             domain={[0, 100]}
-            stroke="rgba(255, 255, 255, 0.3)"
+            stroke="var(--color-text-muted)"
             fontSize={11}
             tickLine={false}
             axisLine={false}
@@ -57,14 +61,14 @@ export const CompletionTrendChart: React.FC<CompletionTrendChartProps> = ({ data
               if (active && payload && payload.length) {
                 const item = payload[0].payload as DailyTrendPoint;
                 return (
-                  <div className="glass-heavy p-3 rounded-xl border border-white/20 shadow-xl text-fluid-xs">
-                    <div className="font-bold text-white mb-1">
+                  <div className="glass-heavy p-3 rounded-xl border border-[var(--color-border)] shadow-lg text-fluid-xs bg-[var(--color-surface)]">
+                    <div className="font-bold mb-1" style={{ color: 'var(--color-text)' }}>
                       {item.date} ({item.dayOfWeek})
                     </div>
-                    <div className="text-blue-400 font-semibold">
+                    <div className="font-semibold text-[var(--color-primary)]">
                       {item.completionRate}% Completion
                     </div>
-                    <div className="text-zinc-400 text-[11px]">
+                    <div className="text-[11px]" style={{ color: 'var(--color-text-muted)' }}>
                       {item.completed} of {item.total} habits finished
                     </div>
                   </div>
@@ -76,8 +80,8 @@ export const CompletionTrendChart: React.FC<CompletionTrendChartProps> = ({ data
           <Area
             type="monotone"
             dataKey="completionRate"
-            stroke="#A78BFA"
-            strokeWidth={3}
+            stroke="#8B9A7B"
+            strokeWidth={2.5}
             fillOpacity={1}
             fill="url(#trendGradient)"
           />

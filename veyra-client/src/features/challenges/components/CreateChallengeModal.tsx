@@ -67,36 +67,36 @@ export const CreateChallengeModal: React.FC<CreateChallengeModalProps> = ({
 
       {/* Modal Card */}
       <div
-        className="glass-heavy relative z-10 w-full max-w-lg p-6 rounded-3xl border border-white/15 shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto"
+        className="glass-heavy relative z-10 w-full max-w-lg p-6 rounded-3xl border border-[var(--glass-border)] shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className="p-2 rounded-xl bg-blue-500/20 text-blue-500">
+            <div className="p-2 rounded-xl bg-primary/15 text-primary">
               <Trophy size={20} />
             </div>
             <div>
-              <h2 className="text-fluid-lg font-bold text-white">Create Challenge</h2>
-              <p className="text-fluid-xs text-zinc-400">Rally friends or the community for a goal sprint</p>
+              <h2 className="text-fluid-lg font-bold text-gray-900 dark:text-white">Create Challenge</h2>
+              <p className="text-fluid-xs text-gray-600 dark:text-zinc-400">Rally friends or the community for a goal sprint</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/10 transition-colors"
+            className="p-1.5 rounded-xl text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
           >
             <X size={18} />
           </button>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-300 text-fluid-xs">
+          <div className="mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-300 text-fluid-xs">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-fluid-xs font-semibold text-zinc-300 mb-1.5">
+            <label className="block text-fluid-xs font-semibold text-gray-700 dark:text-zinc-300 mb-1.5">
               Challenge Title
             </label>
             <GlassInput
@@ -109,11 +109,11 @@ export const CreateChallengeModal: React.FC<CreateChallengeModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-fluid-xs font-semibold text-zinc-300 mb-1.5">
+            <label className="block text-fluid-xs font-semibold text-gray-700 dark:text-zinc-300 mb-1.5">
               Description (Optional)
             </label>
             <textarea
-              className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-fluid-xs placeholder:text-zinc-500 focus:outline-none focus:border-blue-500/50 resize-none h-20"
+              className="w-full px-3 py-2 rounded-xl bg-black/5 dark:bg-white/5 border border-[var(--glass-border)] text-gray-900 dark:text-white text-fluid-xs placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:outline-none focus:border-primary resize-none h-20"
               placeholder="Explain the rules and what habits count towards this challenge..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -122,14 +122,14 @@ export const CreateChallengeModal: React.FC<CreateChallengeModalProps> = ({
 
           {/* Challenge Type */}
           <div>
-            <label className="block text-fluid-xs font-semibold text-zinc-300 mb-1.5">
+            <label className="block text-fluid-xs font-semibold text-gray-700 dark:text-zinc-300 mb-1.5">
               Challenge Format
             </label>
             <div className="grid grid-cols-3 gap-2">
               {[
-                { id: 'daily_streak', label: 'Daily Streak', icon: <Flame size={14} className="text-orange-400" /> },
-                { id: 'task_count', label: 'Habit Count', icon: <Target size={14} className="text-emerald-400" /> },
-                { id: 'custom', label: 'Custom Goal', icon: <Trophy size={14} className="text-blue-500" /> },
+                { id: 'daily_streak', label: 'Daily Streak', icon: <Flame size={14} className="text-orange-500 dark:text-orange-400" /> },
+                { id: 'task_count', label: 'Habit Count', icon: <Target size={14} className="text-emerald-500" /> },
+                { id: 'custom', label: 'Custom Goal', icon: <Trophy size={14} className="text-primary" /> },
               ].map((fmt) => (
                 <button
                   key={fmt.id}
@@ -137,8 +137,8 @@ export const CreateChallengeModal: React.FC<CreateChallengeModalProps> = ({
                   onClick={() => setType(fmt.id as ChallengeType)}
                   className={`p-2.5 rounded-xl border text-center text-fluid-xs font-semibold flex flex-col items-center gap-1 transition-all ${
                     type === fmt.id
-                      ? 'bg-blue-500/20 border-blue-500 text-white shadow-sm'
-                      : 'bg-white/[0.02] border-white/5 text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-primary/15 border-primary text-primary shadow-sm'
+                      : 'bg-black/[0.02] dark:bg-white/[0.02] border-[var(--glass-border)] text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-zinc-200'
                   }`}
                 >
                   {fmt.icon}
@@ -151,7 +151,7 @@ export const CreateChallengeModal: React.FC<CreateChallengeModalProps> = ({
           {/* Target Value & Reward XP */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-fluid-xs font-semibold text-zinc-300 mb-1.5">
+              <label className="block text-fluid-xs font-semibold text-gray-700 dark:text-zinc-300 mb-1.5">
                 Target Value
               </label>
               <GlassInput

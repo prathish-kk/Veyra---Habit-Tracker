@@ -1,4 +1,4 @@
-/** Glassmorphic modal to create a recurring daily habit or task with end time / deadline. */
+/** Modal to create a recurring daily habit or task with end time / deadline (Corbel theme). */
 import React, { useState } from 'react';
 import { GlassButton } from '@/components/glass/GlassButton';
 import { GlassInput } from '@/components/glass/GlassInput';
@@ -101,9 +101,9 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClos
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
-      <div className="glass p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl relative border border-white/10">
-        <div className="flex items-center justify-between mb-4 sticky top-0 bg-transparent backdrop-blur-md pb-2 border-b border-white/10 z-10">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 animate-fade-in">
+      <div className="glass p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl shadow-xl relative border border-[var(--color-border)]">
+        <div className="flex items-center justify-between mb-4 sticky top-0 bg-[var(--color-surface)] pb-2 border-b border-[var(--color-border)] z-10">
           <div className="flex items-center gap-2">
             <span className="text-xl">{selectedEmoji}</span>
             <h2 className="text-fluid-lg font-bold" style={{ color: 'var(--color-text)' }}>
@@ -112,15 +112,15 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClos
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/10 transition-colors"
+            className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface-hover)] transition-colors"
           >
             <X size={18} />
           </button>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 rounded-lg text-fluid-xs bg-red-500/10 border border-red-500/20 text-red-300 flex items-center gap-2">
-            <AlertCircle size={15} className="shrink-0 text-red-400" />
+          <div className="mb-4 p-3 rounded-lg text-fluid-xs bg-red-500/10 border border-red-500/20 text-red-500 dark:text-red-400 flex items-center gap-2">
+            <AlertCircle size={15} className="shrink-0" />
             <span>{error}</span>
           </div>
         )}
@@ -147,8 +147,8 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClos
                   onClick={() => setSelectedEmoji(emoji)}
                   className={`w-10 h-10 rounded-xl text-lg flex items-center justify-center transition-all ${
                     selectedEmoji === emoji
-                      ? 'bg-blue-700/50 border border-blue-500 scale-110 shadow-lg'
-                      : 'bg-white/5 hover:bg-white/10 border border-white/5'
+                      ? 'bg-[var(--color-primary-soft)] border border-[var(--color-primary)] scale-110 shadow-sm'
+                      : 'bg-[var(--color-surface-hover)] hover:bg-[var(--color-surface)] border border-[var(--color-border)]'
                   }`}
                 >
                   {emoji}
@@ -183,8 +183,8 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClos
                     onClick={() => toggleDay(day.value)}
                     className={`py-2 text-xs font-semibold rounded-lg transition-all ${
                       isSelected
-                        ? 'bg-blue-700/80 text-white shadow-sm'
-                        : 'bg-white/5 text-zinc-400 hover:text-gray-900 dark:hover:text-white'
+                        ? 'bg-[var(--color-primary)] text-white shadow-sm'
+                        : 'bg-[var(--color-surface-hover)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]'
                     }`}
                   >
                     {day.label}
@@ -194,7 +194,7 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClos
             </div>
           </div>
 
-          {/* Attractive Daily Time Selector */}
+          {/* Daily Time Selector */}
           <DailyTimeSelector
             hasEndTime={hasEndTime}
             onToggleHasEndTime={setHasEndTime}
@@ -211,7 +211,7 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClos
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-fluid-sm text-zinc-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+              className="px-4 py-2 rounded-xl text-fluid-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
             >
               Cancel
             </button>
@@ -225,4 +225,3 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({ isOpen, onClos
     </div>
   );
 };
-

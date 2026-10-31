@@ -1,60 +1,33 @@
-/* Glass surface recipes + @supports fallback */
+/* Solid surface recipes — replaces glass blur with clean modern surfaces */
 
 .glass {
   background: var(--color-surface);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--glass-radius);
-  box-shadow: var(--glass-shadow);
+  border: 1px solid var(--color-border);
+  border-radius: var(--surface-radius);
+  box-shadow: var(--surface-shadow);
 }
 
-@supports (backdrop-filter: blur(1px)) {
-  .glass {
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-  }
-}
-
-@supports not (backdrop-filter: blur(1px)) {
-  .glass {
-    background: var(--color-surface-hover);
-  }
+.glass:hover {
+  box-shadow: var(--surface-shadow-hover);
 }
 
 .glass-heavy {
   background: var(--color-surface);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--glass-radius-lg);
-  box-shadow: var(--glass-shadow);
-}
-
-@supports (backdrop-filter: blur(1px)) {
-  .glass-heavy {
-    backdrop-filter: blur(var(--glass-blur-heavy));
-    -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
-  }
-}
-
-.glass:hover {
-  box-shadow: var(--glass-shadow-hover);
+  border: 1px solid var(--color-border);
+  border-radius: var(--surface-radius-lg);
+  box-shadow: var(--surface-shadow-elevated);
 }
 
 .glass-input {
   background: var(--color-surface);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--glass-radius-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--surface-radius-sm);
   padding: 0.75rem 1rem;
   min-height: 44px; /* Touch target */
   font-size: var(--text-base);
   color: var(--color-text);
   transition: border-color var(--duration-fast) var(--ease-standard),
               box-shadow var(--duration-fast) var(--ease-standard);
-}
-
-@supports (backdrop-filter: blur(1px)) {
-  .glass-input {
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-  }
 }
 
 .glass-input:focus {
@@ -69,7 +42,7 @@
   justify-content: center;
   min-height: 44px; /* Touch target */
   padding: 0.625rem 1.25rem;
-  border-radius: var(--glass-radius-sm);
+  border-radius: var(--surface-radius-sm);
   font-weight: 500;
   font-size: var(--text-sm);
   cursor: pointer;
@@ -77,22 +50,28 @@
 }
 
 .glass-button-primary {
-  background: var(--color-primary);
-  color: white;
+  background: var(--color-text);
+  color: var(--color-text-on-dark);
   border: none;
 }
 
+.dark .glass-button-primary {
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-strong);
+}
+
 .glass-button-primary:hover {
-  filter: brightness(1.1);
+  opacity: 0.88;
   transform: translateY(-1px);
 }
 
 .glass-button-ghost {
   background: transparent;
   color: var(--color-text);
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--color-border);
 }
 
 .glass-button-ghost:hover {
-  background: var(--color-surface);
+  background: var(--color-surface-hover);
 }

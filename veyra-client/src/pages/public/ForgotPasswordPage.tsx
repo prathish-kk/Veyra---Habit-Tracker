@@ -68,7 +68,7 @@ export const ForgotPasswordPage: React.FC = () => {
                 Reset Email Sent
               </h2>
               <p className="text-fluid-xs leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
-                If an account exists for <strong className="text-white">{email}</strong>, you'll receive password reset instructions shortly.
+                If an account exists for <strong className="text-gray-900 dark:text-white">{email}</strong>, you'll receive password reset instructions shortly.
               </p>
               <Link to="/login" className="inline-block mt-4">
                 <GlassButton variant="primary">Return to Sign In</GlassButton>

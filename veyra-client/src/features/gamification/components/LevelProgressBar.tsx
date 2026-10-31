@@ -1,4 +1,4 @@
-/** RPG-style Level Progress Bar with animated gradient fill and level badge. */
+/** Level Progress Bar with animated fill and level badge (Corbel theme). */
 import React from 'react';
 import { Shield, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/cn';
@@ -27,21 +27,26 @@ export const LevelProgressBar: React.FC<LevelProgressBarProps> = ({
   if (compact) {
     return (
       <div className={cn('w-full flex items-center gap-3', className)}>
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-500/20 border border-blue-500/30 text-blue-400 font-bold text-fluid-xs shrink-0">
-          <Shield size={12} className="text-blue-500" />
+        <div
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg font-bold text-fluid-xs shrink-0"
+          style={{
+            background: 'var(--color-primary-soft)',
+            color: 'var(--color-primary)',
+            border: '1px solid var(--color-border)',
+          }}
+        >
+          <Shield size={12} />
           <span>Lv. {level}</span>
         </div>
         <div className="flex-1">
-          <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden relative">
+          <div className="w-full h-2 rounded-full overflow-hidden relative" style={{ background: 'var(--color-border)' }}>
             <div
-              className="h-full rounded-full bg-gradient-to-r from-blue-500 via-blue-600 to-cyan-400 transition-all duration-700 ease-out relative"
-              style={{ width: `${clampedProgress}%` }}
-            >
-              <div className="absolute inset-0 bg-white/20 animate-pulse pointer-events-none" />
-            </div>
+              className="h-full rounded-full transition-all duration-700 ease-out relative"
+              style={{ width: `${clampedProgress}%`, background: 'var(--color-primary)' }}
+            />
           </div>
         </div>
-        <span className="text-fluid-xs font-semibold text-zinc-400 shrink-0">
+        <span className="text-fluid-xs font-semibold shrink-0" style={{ color: 'var(--color-text-muted)' }}>
           {clampedProgress}%
         </span>
       </div>
@@ -51,53 +56,65 @@ export const LevelProgressBar: React.FC<LevelProgressBarProps> = ({
   return (
     <div
       className={cn(
-        'glass p-4 md:p-5 rounded-2xl border border-white/10 relative overflow-hidden',
+        'glass p-4 md:p-5 rounded-2xl border relative overflow-hidden',
         className
       )}
+      style={{ borderColor: 'var(--color-border)' }}
     >
-      {/* Background ambient glow */}
-      <div className="absolute -top-12 -right-12 w-36 h-36 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-
       {/* Top Header: Level Badge and XP status */}
       <div className="flex items-center justify-between gap-4 mb-3">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-extrabold text-fluid-base shadow-[0_0_15px_rgba(0,119,204,0.4)] border border-blue-400/30">
+            <div
+              className="w-11 h-11 rounded-xl flex items-center justify-center font-extrabold text-fluid-base shadow-sm"
+              style={{
+                background: 'var(--color-text)',
+                color: 'var(--color-text-on-dark)',
+                border: '1px solid var(--color-border)',
+              }}
+            >
               {level}
             </div>
-            <div className="absolute -bottom-1 -right-1 p-0.5 rounded-full bg-zinc-900 border border-blue-500/50 text-blue-400">
+            <div
+              className="absolute -bottom-1 -right-1 p-0.5 rounded-full"
+              style={{
+                background: 'var(--color-surface)',
+                border: '1px solid var(--color-border)',
+                color: 'var(--color-primary)',
+              }}
+            >
               <Sparkles size={10} />
             </div>
           </div>
           <div>
-            <div className="text-fluid-sm font-bold text-white flex items-center gap-1.5">
+            <div className="text-fluid-sm font-bold flex items-center gap-1.5" style={{ color: 'var(--color-text)' }}>
               Level {level} Adventurer
             </div>
-            <div className="text-fluid-xs text-zinc-400">
+            <div className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
               {totalXp !== undefined ? `${totalXp.toLocaleString()} Total XP` : `XP to Level ${level + 1}`}
             </div>
           </div>
         </div>
 
         <div className="text-right">
-          <div className="text-fluid-sm font-semibold text-blue-400">
-            {currentLevelXp.toLocaleString()} / {nextLevelXp.toLocaleString()} <span className="text-fluid-xs text-zinc-400 font-normal">XP</span>
+          <div className="text-fluid-sm font-semibold" style={{ color: 'var(--color-primary)' }}>
+            {currentLevelXp.toLocaleString()} / {nextLevelXp.toLocaleString()} <span className="text-fluid-xs font-normal" style={{ color: 'var(--color-text-muted)' }}>XP</span>
           </div>
-          <div className="text-fluid-xs text-zinc-400 font-medium">
+          <div className="text-fluid-xs font-medium" style={{ color: 'var(--color-text-muted)' }}>
             {100 - clampedProgress}% remaining
           </div>
         </div>
       </div>
 
-      {/* Sleek Progress Bar Track */}
-      <div className="relative w-full h-3 rounded-full bg-zinc-900/80 border border-white/5 overflow-hidden p-0.5">
+      {/* Progress Bar Track */}
+      <div className="relative w-full h-3 rounded-full overflow-hidden p-0.5" style={{ background: 'var(--color-border)' }}>
         <div
-          className="h-full rounded-full bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-400 transition-all duration-700 ease-out shadow-[0_0_12px_rgba(0,136,221,0.5)] relative"
-          style={{ width: `${clampedProgress}%` }}
-        >
-          {/* Shimmer sweep animation */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-pulse" />
-        </div>
+          className="h-full rounded-full transition-all duration-700 ease-out relative"
+          style={{
+            width: `${clampedProgress}%`,
+            background: 'var(--color-primary)',
+          }}
+        />
       </div>
     </div>
   );

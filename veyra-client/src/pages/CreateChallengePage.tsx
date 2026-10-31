@@ -73,15 +73,15 @@ export const CreateChallengePage: React.FC = () => {
           subtitle="Forge a community challenge. Accepted participants will have a daily habit injected into their routine."
         />
 
-        <form onSubmit={handleSubmit} className="glass p-6 sm:p-8 rounded-3xl border border-white/10 space-y-5 shadow-2xl">
+        <form onSubmit={handleSubmit} className="glass p-6 sm:p-8 rounded-3xl border border-[var(--glass-border)] space-y-5 shadow-2xl">
           {error && (
-            <div className="p-3 rounded-xl bg-rose-500/20 border border-rose-500/30 text-rose-300 text-fluid-xs">
+            <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 dark:text-rose-300 text-fluid-xs">
               {error}
             </div>
           )}
 
           <div className="space-y-1.5">
-            <label className="block text-fluid-xs font-medium text-zinc-300">
+            <label className="block text-fluid-xs font-medium text-gray-700 dark:text-zinc-300">
               Challenge Sprint Title *
             </label>
             <GlassInput
@@ -93,19 +93,19 @@ export const CreateChallengePage: React.FC = () => {
           </div>
 
           <div className="space-y-1.5">
-            <label className="block text-fluid-xs font-medium text-zinc-300">Description & Rules</label>
+            <label className="block text-fluid-xs font-medium text-gray-700 dark:text-zinc-300">Description & Rules</label>
             <textarea
               rows={3}
               placeholder="Detail what participants must achieve each day to claim victory..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full rounded-xl p-3 bg-black/40 border border-white/10 text-white text-fluid-xs placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              className="w-full rounded-xl p-3 bg-black/5 dark:bg-black/40 border border-[var(--glass-border)] text-gray-900 dark:text-white text-fluid-xs placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-primary resize-none"
             />
           </div>
 
           {/* Type Selector */}
           <div className="space-y-1.5">
-            <label className="block text-fluid-xs font-medium text-zinc-300">Sprint Format</label>
+            <label className="block text-fluid-xs font-medium text-gray-700 dark:text-zinc-300">Sprint Format</label>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
                 { id: 'daily_streak' as const, label: 'Daily Streak', icon: Flame, desc: 'Consecutive days' },
@@ -121,13 +121,13 @@ export const CreateChallengePage: React.FC = () => {
                     onClick={() => setType(format.id)}
                     className={`p-3 rounded-2xl border text-left transition-all ${
                       isSelected
-                        ? 'border-blue-500 bg-blue-500/20 text-white'
-                        : 'border-white/5 bg-white/5 text-zinc-400 hover:text-gray-900 dark:hover:text-white'
+                        ? 'border-primary bg-primary/15 text-primary shadow-sm'
+                        : 'border-[var(--glass-border)] bg-black/[0.02] dark:bg-white/5 text-gray-600 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white'
                     }`}
                   >
-                    <Icon size={18} className={isSelected ? 'text-blue-400 mb-1' : 'mb-1'} />
-                    <div className="text-fluid-xs font-bold text-white">{format.label}</div>
-                    <div className="text-[10px] text-zinc-400">{format.desc}</div>
+                    <Icon size={18} className={isSelected ? 'text-primary mb-1' : 'text-gray-400 dark:text-zinc-400 mb-1'} />
+                    <div className="text-fluid-xs font-bold text-gray-900 dark:text-white">{format.label}</div>
+                    <div className="text-[10px] text-gray-500 dark:text-zinc-400">{format.desc}</div>
                   </button>
                 );
               })}
@@ -137,7 +137,7 @@ export const CreateChallengePage: React.FC = () => {
           {/* Target & Reward XP */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="block text-fluid-xs font-medium text-zinc-300">Target Value (Days / Count)</label>
+              <label className="block text-fluid-xs font-medium text-gray-700 dark:text-zinc-300">Target Value (Days / Count)</label>
               <GlassInput
                 type="number"
                 min={1}
@@ -148,7 +148,7 @@ export const CreateChallengePage: React.FC = () => {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-fluid-xs font-medium text-zinc-300">Reward XP</label>
+              <label className="block text-fluid-xs font-medium text-gray-700 dark:text-zinc-300">Reward XP</label>
               <GlassInput
                 type="number"
                 min={10}
@@ -163,7 +163,7 @@ export const CreateChallengePage: React.FC = () => {
           {/* Date Range */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="block text-fluid-xs font-medium text-zinc-300">Start Date</label>
+              <label className="block text-fluid-xs font-medium text-gray-700 dark:text-zinc-300">Start Date</label>
               <GlassInput
                 type="date"
                 value={startDate}
@@ -172,7 +172,7 @@ export const CreateChallengePage: React.FC = () => {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-fluid-xs font-medium text-zinc-300">End Date</label>
+              <label className="block text-fluid-xs font-medium text-gray-700 dark:text-zinc-300">End Date</label>
               <GlassInput
                 type="date"
                 value={endDate}
@@ -185,7 +185,7 @@ export const CreateChallengePage: React.FC = () => {
             <Link to="/challenges">
               <button
                 type="button"
-                className="text-fluid-xs text-zinc-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                className="text-fluid-xs text-gray-500 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 Cancel
               </button>

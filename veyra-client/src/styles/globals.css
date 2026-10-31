@@ -27,6 +27,14 @@
     min-height: 100dvh;
   }
 
+  /* Smooth theme transitions */
+  html,
+  html * {
+    transition-property: background-color, border-color, color;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+  }
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *,

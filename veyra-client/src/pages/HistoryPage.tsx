@@ -1,9 +1,9 @@
-/** History archive browser page — Year/Month tree navigation and locked snapshots. */
+/** History archive browser page — Year/Month tree navigation and locked snapshots (Corbel theme). */
 import React, { useState } from 'react';
 import { AppShell } from '@/components/layout/AppShell';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { useHistoryTree, MonthCard } from '@/features/history';
-import { Archive, Calendar, Lock, CheckCircle2, Award } from 'lucide-react';
+import { Archive, Lock, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
 export const HistoryPage: React.FC = () => {
@@ -23,44 +23,44 @@ export const HistoryPage: React.FC = () => {
 
       {/* Top Archive Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <div className="glass p-4 rounded-2xl border border-blue-500/20 bg-blue-500/5 flex items-center justify-between">
+        <div className="glass p-4 rounded-2xl border border-[var(--color-border)] flex items-center justify-between">
           <div>
-            <div className="text-fluid-xs font-semibold uppercase tracking-wider text-blue-400">
+            <div className="text-fluid-xs font-semibold uppercase tracking-wider text-[var(--color-primary)]">
               Archived Months
             </div>
-            <div className="text-fluid-2xl font-black text-white mt-0.5">
+            <div className="text-fluid-2xl font-black mt-0.5" style={{ color: 'var(--color-text)' }}>
               {months.length}
             </div>
           </div>
-          <div className="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400">
+          <div className="w-12 h-12 rounded-xl bg-[var(--color-primary-soft)] text-[var(--color-primary)] flex items-center justify-center">
             <Archive size={24} />
           </div>
         </div>
 
-        <div className="glass p-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 flex items-center justify-between">
+        <div className="glass p-4 rounded-2xl border border-[var(--color-border)] flex items-center justify-between">
           <div>
-            <div className="text-fluid-xs font-semibold uppercase tracking-wider text-emerald-300">
+            <div className="text-fluid-xs font-semibold uppercase tracking-wider text-[var(--color-primary)]">
               Annual Habits Logged
             </div>
-            <div className="text-fluid-2xl font-black text-white mt-0.5">
+            <div className="text-fluid-2xl font-black mt-0.5" style={{ color: 'var(--color-text)' }}>
               {totalCompletedInYear.toLocaleString()}
             </div>
           </div>
-          <div className="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+          <div className="w-12 h-12 rounded-xl bg-[var(--color-primary-soft)] text-[var(--color-primary)] flex items-center justify-center">
             <CheckCircle2 size={24} />
           </div>
         </div>
 
-        <div className="glass p-4 rounded-2xl border border-amber-500/20 bg-amber-500/5 flex items-center justify-between">
+        <div className="glass p-4 rounded-2xl border border-[var(--color-border)] flex items-center justify-between">
           <div>
-            <div className="text-fluid-xs font-semibold uppercase tracking-wider text-amber-300">
+            <div className="text-fluid-xs font-semibold uppercase tracking-wider text-[var(--color-warning)]">
               Snapshots Locked
             </div>
-            <div className="text-fluid-2xl font-black text-white mt-0.5">
+            <div className="text-fluid-2xl font-black mt-0.5" style={{ color: 'var(--color-text)' }}>
               {months.filter((m) => m.isLocked).length}
             </div>
           </div>
-          <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
+          <div className="w-12 h-12 rounded-xl bg-[var(--color-warning)]/15 text-[var(--color-warning)] flex items-center justify-center">
             <Lock size={24} />
           </div>
         </div>
@@ -68,7 +68,7 @@ export const HistoryPage: React.FC = () => {
 
       {/* Year Selection Tabs */}
       {years.length > 1 && (
-        <div className="flex items-center gap-2 border-b border-white/10 pb-3 mb-6">
+        <div className="flex items-center gap-2 border-b border-[var(--color-border)] pb-3 mb-6">
           {years.map((y) => (
             <button
               key={y}
@@ -76,9 +76,10 @@ export const HistoryPage: React.FC = () => {
               className={cn(
                 'px-4 py-2 rounded-xl text-fluid-xs font-bold transition-all border',
                 selectedYear === y
-                  ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 shadow-sm'
-                  : 'text-zinc-400 border-transparent hover:text-gray-900 dark:hover:text-white hover:bg-white/5'
+                  ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)] shadow-sm'
+                  : 'border-transparent hover:bg-[var(--color-surface-hover)]'
               )}
+              style={selectedYear === y ? {} : { color: 'var(--color-text-muted)' }}
             >
               {y} Archive
             </button>
@@ -90,14 +91,14 @@ export const HistoryPage: React.FC = () => {
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="glass p-5 rounded-2xl border border-white/5 h-64 animate-pulse" />
+            <div key={i} className="glass p-5 rounded-2xl border border-[var(--color-border)] h-64 animate-pulse" />
           ))}
         </div>
       ) : months.length === 0 ? (
-        <div className="glass p-12 rounded-3xl border border-white/5 text-center">
-          <Archive size={48} className="mx-auto text-zinc-600 mb-3" />
-          <h3 className="text-fluid-lg font-bold text-white mb-1">No archives yet</h3>
-          <p className="text-fluid-xs text-zinc-400">
+        <div className="glass p-12 rounded-3xl border border-[var(--color-border)] text-center">
+          <Archive size={48} className="mx-auto mb-3" style={{ color: 'var(--color-text-muted)' }} />
+          <h3 className="text-fluid-lg font-bold mb-1" style={{ color: 'var(--color-text)' }}>No archives yet</h3>
+          <p className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
             At the end of each month, your progress locks into a permanent snapshot.
           </p>
         </div>

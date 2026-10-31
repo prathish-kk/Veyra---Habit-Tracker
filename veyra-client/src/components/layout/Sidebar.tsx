@@ -46,13 +46,13 @@ export const Sidebar: React.FC = () => {
   return (
     <aside
       className="fixed inset-y-0 left-0 z-40 hidden lg:flex flex-col glass-heavy border-r"
-      style={{ width: 'var(--sidebar-width)', borderColor: 'var(--glass-border)' }}
+      style={{ width: 'var(--sidebar-width)', borderColor: 'var(--color-border)' }}
     >
       {/* Brand Header */}
-      <div className="p-6 flex items-center gap-3 border-b" style={{ borderColor: 'var(--glass-border)' }}>
+      <div className="p-6 flex items-center gap-3 border-b" style={{ borderColor: 'var(--color-border)' }}>
         <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xl text-white shadow-md"
-          style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}
+          className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-xl shadow-md"
+          style={{ background: 'var(--color-text)', color: 'var(--color-text-on-dark)' }}
         >
           V
         </div>
@@ -75,12 +75,16 @@ export const Sidebar: React.FC = () => {
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-xl text-fluid-sm font-medium transition-all ${
+                `flex items-center gap-3 px-3 py-2.5 rounded-xl text-fluid-sm font-medium transition-all border ${
                   isActive
-                    ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                    : 'text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/5 border border-transparent'
+                    ? 'border-[var(--color-border-strong)]'
+                    : 'border-transparent'
                 }`
               }
+              style={({ isActive }) => ({
+                background: isActive ? 'var(--color-primary-soft)' : 'transparent',
+                color: isActive ? 'var(--color-primary)' : 'var(--color-text-muted)',
+              })}
             >
               <Icon size={18} />
               <span>{item.label}</span>
@@ -91,28 +95,29 @@ export const Sidebar: React.FC = () => {
 
       {/* User Footer */}
       {user && (
-        <div className="p-4 border-t" style={{ borderColor: 'var(--glass-border)' }}>
+        <div className="p-4 border-t" style={{ borderColor: 'var(--color-border)' }}>
           <div className="flex items-center justify-between gap-3">
             <NavLink to="/profile" className="flex items-center gap-3 min-w-0 hover:opacity-80 transition-opacity">
               <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold text-white shrink-0"
-                style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}
+                className="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold shrink-0"
+                style={{ background: 'var(--color-text)', color: 'var(--color-text-on-dark)' }}
               >
                 {(user.name || user.email || 'U').charAt(0).toUpperCase()}
               </div>
               <div className="min-w-0">
-                <div className="text-fluid-xs font-semibold truncate text-white">
+                <div className="text-fluid-xs font-semibold truncate" style={{ color: 'var(--color-text)' }}>
                   {user.name || 'User'}
                 </div>
-                <div className="text-[11px] text-blue-500">Level {user.level || 1}</div>
+                <div className="text-[11px]" style={{ color: 'var(--color-primary)' }}>Level {user.level || 1}</div>
               </div>
             </NavLink>
 
             <button
               onClick={handleLogout}
-              className="p-2 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+              className="p-2 rounded-lg transition-colors"
               title="Sign Out"
               aria-label="Sign Out"
+              style={{ color: 'var(--color-text-muted)' }}
             >
               <LogOut size={16} />
             </button>

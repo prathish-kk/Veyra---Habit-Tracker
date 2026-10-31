@@ -1,4 +1,4 @@
-/** Weekly planning page with goal targets, reflection notes, and sprint progress. */
+/** Weekly planning page with goal targets, reflection notes, and sprint progress (Corbel theme). */
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AppShell } from '@/components/layout/AppShell';
@@ -168,18 +168,18 @@ export const WeeklyTasksPage: React.FC = () => {
       />
 
       {/* Week Header Banner */}
-      <div className="glass p-5 rounded-2xl mb-6 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="glass p-5 rounded-2xl mb-6 border border-[var(--color-border)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-fluid-xs text-blue-400 font-semibold mb-1">
+          <div className="flex items-center gap-2 text-fluid-xs text-[var(--color-primary)] font-semibold mb-1">
             <Calendar size={15} />
             <span>Cycle: Monday to Sunday</span>
             {plan?.isLocked && (
-              <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] flex items-center gap-1">
+              <span className="px-2 py-0.5 rounded-full bg-[var(--color-warning)]/15 text-[var(--color-warning)] text-[10px] flex items-center gap-1 font-semibold">
                 <Lock size={10} /> Locked
               </span>
             )}
           </div>
-          <h2 className="text-fluid-xl font-bold text-white">
+          <h2 className="text-fluid-xl font-bold" style={{ color: 'var(--color-text)' }}>
             Week of {plan?.weekStart ? new Date(`${plan.weekStart}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Current Week'}
           </h2>
         </div>
@@ -189,19 +189,19 @@ export const WeeklyTasksPage: React.FC = () => {
           <GlassButton
             variant="secondary"
             onClick={() => setIsRitualOpen(true)}
-            className="flex items-center gap-2 border-blue-500/30 text-blue-300"
+            className="flex items-center gap-2 border-[var(--color-primary)]/30 text-[var(--color-primary)]"
           >
-            <Sparkles size={15} className="text-yellow-300" />
+            <Sparkles size={15} />
             <span>Weekly Ritual</span>
           </GlassButton>
 
           <div className="text-right">
-            <div className="text-fluid-xs text-zinc-400">Goals Accomplished</div>
-            <div className="text-fluid-lg font-bold text-white">
+            <div className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>Goals Accomplished</div>
+            <div className="text-fluid-lg font-bold" style={{ color: 'var(--color-text)' }}>
               {completedGoals} / {totalGoals}
             </div>
           </div>
-          <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center font-bold text-blue-400 text-lg">
+          <div className="w-14 h-14 rounded-2xl bg-[var(--color-primary-soft)] border border-[var(--color-primary)]/30 flex items-center justify-center font-bold text-[var(--color-primary)] text-lg">
             {percent}%
           </div>
         </div>
@@ -212,7 +212,7 @@ export const WeeklyTasksPage: React.FC = () => {
         <div className="lg:col-span-2 space-y-4">
           {/* Add Goal Card */}
           {!plan?.isLocked && (
-            <div className="glass p-4 rounded-xl border border-white/10">
+            <div className="glass p-4 rounded-xl border border-[var(--color-border)]">
               <form onSubmit={handleAddGoal} className="flex flex-col sm:flex-row gap-2">
                 <div className="flex-1">
                   <GlassInput
@@ -241,7 +241,7 @@ export const WeeklyTasksPage: React.FC = () => {
 
           {/* List of Goals */}
           {isLoading ? (
-            <div className="glass p-8 text-center text-zinc-400 text-fluid-sm rounded-xl">
+            <div className="glass p-8 text-center text-fluid-sm rounded-xl border border-[var(--color-border)]" style={{ color: 'var(--color-text-muted)' }}>
               Loading weekly goals...
             </div>
           ) : plan && plan.goals.length > 0 ? (
@@ -253,16 +253,16 @@ export const WeeklyTasksPage: React.FC = () => {
                     key={goal.id || idx}
                     className={`glass p-4 rounded-xl border transition-all flex items-center justify-between gap-3 ${
                       isFinished
-                        ? 'border-emerald-500/30 bg-emerald-500/5'
-                        : 'border-white/10 hover:border-blue-500/30'
+                        ? 'border-[var(--color-primary)]/30 bg-[var(--color-primary-soft)]/40'
+                        : 'border-[var(--color-border)] hover:border-[var(--color-primary)]/40'
                     }`}
                   >
                     <div className="flex items-center gap-3 min-w-0 flex-1">
                       <div
                         className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 ${
                           isFinished
-                            ? 'bg-emerald-500/20 text-emerald-400'
-                            : 'bg-blue-500/20 text-blue-400'
+                            ? 'bg-[var(--color-primary)] text-white'
+                            : 'bg-[var(--color-primary-soft)] text-[var(--color-primary)]'
                         }`}
                       >
                         {isFinished ? <CheckCircle2 size={18} /> : <Target size={18} />}
@@ -271,13 +271,14 @@ export const WeeklyTasksPage: React.FC = () => {
                       <div className="min-w-0 flex-1">
                         <div
                           className={`text-fluid-sm font-medium truncate ${
-                            isFinished ? 'line-through text-zinc-400' : 'text-white'
+                            isFinished ? 'line-through opacity-60' : ''
                           }`}
+                          style={{ color: 'var(--color-text)' }}
                         >
                           {goal.title}
                         </div>
-                        <div className="text-fluid-xs text-zinc-400 mt-0.5">
-                          Progress: <span className="font-semibold text-white">{goal.completedCount}</span> /{' '}
+                        <div className="text-fluid-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
+                          Progress: <span className="font-semibold" style={{ color: 'var(--color-text)' }}>{goal.completedCount}</span> /{' '}
                           {goal.targetCount} times
                         </div>
                       </div>
@@ -289,14 +290,14 @@ export const WeeklyTasksPage: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => handleIncrementGoal(idx)}
-                            className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-700/50 hover:bg-blue-700 text-white transition-all active:scale-95 shadow-sm"
+                            className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-[var(--color-primary)] hover:opacity-90 text-white transition-all active:scale-95 shadow-sm"
                           >
                             +1 Check
                           </button>
                           <button
                             type="button"
                             onClick={() => setGoalToDelete({ index: idx, title: goal.title })}
-                            className="p-1.5 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                            className="p-1.5 rounded-lg text-[var(--color-text-muted)] hover:text-red-500 hover:bg-red-500/10 transition-colors"
                             title="Delete weekly goal"
                             aria-label="Delete weekly goal"
                           >
@@ -310,10 +311,10 @@ export const WeeklyTasksPage: React.FC = () => {
               })}
             </div>
           ) : (
-            <div className="glass p-10 text-center rounded-xl border border-white/10">
-              <Target size={32} className="mx-auto text-blue-500/60 mb-2" />
-              <h3 className="text-fluid-base font-semibold text-white mb-1">No weekly goals set yet</h3>
-              <p className="text-fluid-xs text-zinc-400 max-w-sm mx-auto">
+            <div className="glass p-10 text-center rounded-xl border border-[var(--color-border)]">
+              <Target size={32} className="mx-auto text-[var(--color-primary)]/60 mb-2" />
+              <h3 className="text-fluid-base font-semibold mb-1" style={{ color: 'var(--color-text)' }}>No weekly goals set yet</h3>
+              <p className="text-fluid-xs max-w-sm mx-auto" style={{ color: 'var(--color-text-muted)' }}>
                 Add 2–4 targeted objectives to focus your momentum this week.
               </p>
             </div>
@@ -322,9 +323,9 @@ export const WeeklyTasksPage: React.FC = () => {
 
         {/* Weekly Reflection (1 col) */}
         <div>
-          <div className="glass p-5 rounded-2xl border border-white/10 space-y-3">
-            <h3 className="text-fluid-base font-semibold text-white">Weekly Reflection</h3>
-            <p className="text-fluid-xs text-zinc-400">
+          <div className="glass p-5 rounded-2xl border border-[var(--color-border)] space-y-3">
+            <h3 className="text-fluid-base font-semibold" style={{ color: 'var(--color-text)' }}>Weekly Reflection</h3>
+            <p className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
               What went well this week? What friction did you encounter? Use this space for Sunday reflections.
             </p>
 

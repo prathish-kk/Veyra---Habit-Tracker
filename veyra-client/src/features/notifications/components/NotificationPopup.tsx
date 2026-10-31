@@ -1,6 +1,6 @@
 /**
- * NotificationPopup — Floating glass alert toast that pops up when a scheduled
- * or real-time notification arrives (e.g. 9:30 PM IST daily habit completion reminder).
+ * NotificationPopup — Floating alert toast that pops up when a scheduled
+ * or real-time notification arrives (Corbel theme).
  */
 import React, { useEffect, useState, useRef } from 'react';
 import { Sparkles, Zap, Bell, X, Check, Volume2, Clock } from 'lucide-react';
@@ -90,37 +90,33 @@ export const NotificationPopup: React.FC = () => {
 
   const config = is1HourReminder
     ? {
-        border: 'border-orange-500/40',
-        bg: 'bg-orange-950/40',
-        accentBg: 'bg-orange-500/20 text-orange-300',
-        barColor: 'bg-orange-400',
-        icon: <Clock size={16} className="text-orange-400 animate-pulse" />,
+        border: 'border-[var(--color-warning)]/40',
+        accentBg: 'bg-[var(--color-warning)]/15 text-[var(--color-warning)]',
+        barColor: 'bg-[var(--color-warning)]',
+        icon: <Clock size={16} className="text-[var(--color-warning)] animate-pulse" />,
         badgeText: '1-Hour Task Reminder',
       }
     : is100Percent
     ? {
-        border: 'border-emerald-500/40',
-        bg: 'bg-emerald-950/40',
-        accentBg: 'bg-emerald-500/20 text-emerald-300',
-        barColor: 'bg-emerald-400',
-        icon: <Sparkles size={16} className="text-emerald-400 animate-pulse" />,
+        border: 'border-[var(--color-primary)]/40',
+        accentBg: 'bg-[var(--color-primary-soft)] text-[var(--color-primary)]',
+        barColor: 'bg-[var(--color-primary)]',
+        icon: <Sparkles size={16} className="text-[var(--color-primary)] animate-pulse" />,
         badgeText: 'Daily Completion Goal Achieved',
       }
     : isIncomplete
     ? {
-        border: 'border-amber-500/40',
-        bg: 'bg-amber-950/40',
-        accentBg: 'bg-amber-500/20 text-amber-300',
-        barColor: 'bg-amber-400',
-        icon: <Zap size={16} className="text-amber-400 animate-bounce" />,
+        border: 'border-[var(--color-warning)]/40',
+        accentBg: 'bg-[var(--color-warning)]/15 text-[var(--color-warning)]',
+        barColor: 'bg-[var(--color-warning)]',
+        icon: <Zap size={16} className="text-[var(--color-warning)] animate-bounce" />,
         badgeText: '9:00 PM Habit Check-in',
       }
     : {
-        border: 'border-blue-500/40',
-        bg: 'bg-blue-950/40',
-        accentBg: 'bg-blue-500/20 text-blue-300',
-        barColor: 'bg-blue-400',
-        icon: <Bell size={16} className="text-blue-400" />,
+        border: 'border-[var(--color-primary)]/40',
+        accentBg: 'bg-[var(--color-primary-soft)] text-[var(--color-primary)]',
+        barColor: 'bg-[var(--color-primary)]',
+        icon: <Bell size={16} className="text-[var(--color-primary)]" />,
         badgeText: 'Notification',
       };
 
@@ -131,10 +127,7 @@ export const NotificationPopup: React.FC = () => {
       data-testid="notification-popup-toast"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      className={`fixed top-4 right-4 sm:right-6 z-50 max-w-sm w-[calc(100%-2rem)] glass p-4 rounded-2xl border ${config.border} ${config.bg} shadow-2xl backdrop-blur-xl animate-in slide-in-from-top-4 duration-300`}
-      style={{
-        boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.6), 0 0 15px 0 rgba(59, 130, 246, 0.2)',
-      }}
+      className={`fixed top-4 right-4 sm:right-6 z-50 max-w-sm w-[calc(100%-2rem)] glass p-4 rounded-2xl border ${config.border} bg-[var(--color-surface)] shadow-xl animate-in slide-in-from-top-4 duration-300`}
     >
       {/* Top Header */}
       <div className="flex items-start justify-between gap-2 mb-2">
@@ -148,7 +141,7 @@ export const NotificationPopup: React.FC = () => {
           type="button"
           onClick={dismissPopup}
           aria-label="Dismiss notification popup"
-          className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+          className="p-1 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface-hover)] transition-colors"
         >
           <X size={15} />
         </button>
@@ -156,10 +149,10 @@ export const NotificationPopup: React.FC = () => {
 
       {/* Title & Body */}
       <div className="mb-3">
-        <h4 className="text-fluid-sm font-bold text-white mb-0.5 leading-snug">
+        <h4 className="text-fluid-sm font-bold mb-0.5 leading-snug" style={{ color: 'var(--color-text)' }}>
           {currentPopup.title}
         </h4>
-        <p className="text-fluid-xs text-zinc-300 leading-relaxed">
+        <p className="text-fluid-xs leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
           {currentPopup.body}
         </p>
       </div>
@@ -169,7 +162,7 @@ export const NotificationPopup: React.FC = () => {
         <button
           type="button"
           onClick={handleMarkRead}
-          className="flex-1 py-1.5 px-3 rounded-xl bg-blue-600/80 hover:bg-blue-600 text-white font-semibold text-fluid-xs flex items-center justify-center gap-1.5 transition-all shadow-md active:scale-95"
+          className="flex-1 py-1.5 px-3 rounded-xl bg-[var(--color-primary)] hover:opacity-90 text-white font-semibold text-fluid-xs flex items-center justify-center gap-1.5 transition-all shadow-sm active:scale-95"
         >
           <Check size={14} />
           <span>Got it</span>
@@ -180,7 +173,7 @@ export const NotificationPopup: React.FC = () => {
             type="button"
             onClick={handleEnablePush}
             title="Enable browser system notifications"
-            className="py-1.5 px-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-zinc-300 hover:text-white text-fluid-xs flex items-center gap-1 transition-all"
+            className="py-1.5 px-2.5 rounded-xl bg-[var(--color-surface-hover)] hover:bg-[var(--color-border)] text-[var(--color-text)] text-fluid-xs flex items-center gap-1 transition-all border border-[var(--color-border)]"
           >
             <Volume2 size={13} />
             <span>Enable Push</span>
@@ -190,14 +183,14 @@ export const NotificationPopup: React.FC = () => {
         <button
           type="button"
           onClick={dismissPopup}
-          className="px-2.5 py-1.5 rounded-xl text-fluid-xs text-zinc-400 hover:text-white hover:bg-white/5 transition-colors"
+          className="px-2.5 py-1.5 rounded-xl text-fluid-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
         >
           Close
         </button>
       </div>
 
       {/* Auto-dismiss progress timer */}
-      <div className="w-full bg-white/10 h-0.5 rounded-full mt-3 overflow-hidden">
+      <div className="w-full bg-[var(--color-surface-hover)] h-1 rounded-full mt-3 overflow-hidden border border-[var(--color-border)]">
         <div
           className={`h-full transition-all duration-100 ease-linear ${config.barColor}`}
           style={{ width: `${progress}%` }}

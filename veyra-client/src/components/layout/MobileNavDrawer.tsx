@@ -178,45 +178,57 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
     <div className="fixed inset-0 z-50 flex justify-start lg:hidden">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300"
+        className="fixed inset-0 bg-black/40 transition-opacity duration-300"
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Slide-out Left Drawer Panel */}
       <aside
-        className="relative z-10 w-[84%] max-w-[340px] h-full flex flex-col bg-zinc-950/95 border-r border-white/10 shadow-2xl backdrop-blur-xl animate-in slide-in-from-left duration-300 overflow-hidden"
+        className="relative z-10 w-[84%] max-w-[340px] h-full flex flex-col border-r shadow-2xl animate-in slide-in-from-left duration-300 overflow-hidden"
+        style={{
+          background: 'var(--color-surface)',
+          borderColor: 'var(--color-border)',
+        }}
         onClick={(e) => e.stopPropagation()}
         aria-label="Mobile Navigation"
       >
-        {/* Decorative ambient ambient glow */}
-        <div className="absolute -top-20 -left-20 w-44 h-44 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 -right-24 w-44 h-44 bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
-
         {/* Header Section */}
-        <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between relative z-10">
+        <div className="p-4 sm:p-5 border-b flex items-center justify-between relative z-10" style={{ borderColor: 'var(--color-border)' }}>
           <div className="flex items-center gap-3">
             <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base text-white shadow-lg ring-1 ring-white/20"
-              style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}
+              className="w-9 h-9 rounded-xl flex items-center justify-center font-bold text-base shadow-lg"
+              style={{ background: 'var(--color-text)', color: 'var(--color-text-on-dark)' }}
             >
               V
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-bold text-fluid-base tracking-tight text-white">Veyra</span>
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                <span className="font-bold text-fluid-base tracking-tight" style={{ color: 'var(--color-text)' }}>Veyra</span>
+                <span
+                  className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+                  style={{
+                    background: 'var(--color-primary-soft)',
+                    color: 'var(--color-primary)',
+                    border: '1px solid var(--color-border)',
+                  }}
+                >
                   MOBILE
                 </span>
               </div>
-              <span className="text-[11px] block font-medium text-zinc-400">Navigation Menu</span>
+              <span className="text-[11px] block font-medium" style={{ color: 'var(--color-text-muted)' }}>Navigation Menu</span>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-zinc-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 active:scale-95 transition-all"
+            className="p-2 rounded-xl transition-all active:scale-95"
             aria-label="Close menu"
+            style={{
+              color: 'var(--color-text-muted)',
+              border: '1px solid var(--color-border)',
+              background: 'var(--color-surface-hover)',
+            }}
           >
             <X size={18} />
           </button>
@@ -224,7 +236,13 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
 
         {/* User Card Profile Widget */}
         {user && (
-          <div className="p-3.5 mx-3.5 mt-3.5 rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/10 shadow-sm relative z-10">
+          <div
+            className="p-3.5 mx-3.5 mt-3.5 rounded-2xl border shadow-sm relative z-10"
+            style={{
+              background: 'var(--color-surface-hover)',
+              borderColor: 'var(--color-border)',
+            }}
+          >
             <div className="flex items-center justify-between gap-3">
               <NavLink
                 to="/profile"
@@ -232,19 +250,19 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
                 className="flex items-center gap-2.5 min-w-0 hover:opacity-85 transition-opacity"
               >
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold text-white shrink-0 shadow-md ring-1 ring-white/15"
-                  style={{ background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))' }}
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0 shadow-md"
+                  style={{ background: 'var(--color-text)', color: 'var(--color-text-on-dark)' }}
                 >
                   {(user.name || user.email || 'U').charAt(0).toUpperCase()}
                 </div>
                 <div className="min-w-0">
-                  <div className="text-fluid-xs font-semibold truncate text-white">
+                  <div className="text-fluid-xs font-semibold truncate" style={{ color: 'var(--color-text)' }}>
                     {user.name || user.username || 'Adventurer'}
                   </div>
-                  <div className="flex items-center gap-1.5 text-[11px] text-zinc-400">
-                    <span className="font-medium text-blue-400">Lvl {level || user.level || 1}</span>
+                  <div className="flex items-center gap-1.5 text-[11px]" style={{ color: 'var(--color-text-muted)' }}>
+                    <span className="font-medium" style={{ color: 'var(--color-primary)' }}>Lvl {level || user.level || 1}</span>
                     <span>•</span>
-                    <span className="flex items-center gap-0.5 text-orange-400 font-semibold">
+                    <span className="flex items-center gap-0.5 font-semibold" style={{ color: 'var(--color-primary)' }}>
                       <Flame size={11} /> {dailyStreak}d
                     </span>
                   </div>
@@ -254,23 +272,27 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
               <NavLink
                 to="/profile"
                 onClick={onClose}
-                className="p-1.5 rounded-lg text-zinc-400 hover:text-white bg-white/5 transition-colors"
+                className="p-1.5 rounded-lg transition-colors"
                 title="View Profile"
+                style={{ color: 'var(--color-text-muted)', background: 'var(--color-surface)' }}
               >
                 <ChevronRight size={16} />
               </NavLink>
             </div>
 
             {/* Level XP mini progress bar */}
-            <div className="mt-2.5 pt-2 border-t border-white/5">
-              <div className="flex items-center justify-between text-[10px] text-zinc-400 mb-1">
+            <div className="mt-2.5 pt-2 border-t" style={{ borderColor: 'var(--color-border)' }}>
+              <div className="flex items-center justify-between text-[10px] mb-1" style={{ color: 'var(--color-text-muted)' }}>
                 <span>Level Progress</span>
-                <span className="font-semibold text-blue-400">{progressPercentage}%</span>
+                <span className="font-semibold" style={{ color: 'var(--color-primary)' }}>{progressPercentage}%</span>
               </div>
-              <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+              <div className="h-1.5 w-full rounded-full overflow-hidden" style={{ background: 'var(--color-border)' }}>
                 <div
-                  className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-500"
-                  style={{ width: `${Math.min(100, Math.max(0, progressPercentage))}%` }}
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{
+                    width: `${Math.min(100, Math.max(0, progressPercentage))}%`,
+                    background: 'var(--color-primary)',
+                  }}
                 />
               </div>
             </div>
@@ -281,7 +303,7 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
         <div className="flex-1 overflow-y-auto px-3.5 py-4 space-y-5 relative z-10">
           {navSections.map((section) => (
             <div key={section.title} className="space-y-1.5">
-              <div className="px-2.5 text-[10px] font-bold tracking-wider uppercase text-zinc-400">
+              <div className="px-2.5 text-[10px] font-bold tracking-wider uppercase" style={{ color: 'var(--color-text-muted)' }}>
                 {section.title}
               </div>
 
@@ -293,23 +315,28 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
                       key={item.to}
                       to={item.to}
                       onClick={onClose}
-                      className={({ isActive }) =>
-                        `flex items-center justify-between px-3 py-2.5 rounded-xl text-fluid-xs font-medium transition-all group ${
-                          isActive
-                            ? 'bg-blue-600/20 text-blue-300 border border-blue-500/40 shadow-sm shadow-blue-500/10'
-                            : 'text-zinc-300 hover:text-white hover:bg-white/5 border border-transparent active:bg-white/10'
-                        }`
-                      }
+                      className="flex items-center justify-between px-3 py-2.5 rounded-xl text-fluid-xs font-medium transition-all group border"
+                      style={({ isActive }) => ({
+                        background: isActive ? 'var(--color-primary-soft)' : 'transparent',
+                        color: isActive ? 'var(--color-primary)' : 'var(--color-text-secondary)',
+                        borderColor: isActive ? 'var(--color-border-strong)' : 'transparent',
+                      })}
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <div className="p-1.5 rounded-lg bg-white/5 group-hover:bg-white/10 text-zinc-300 group-hover:text-white transition-colors shrink-0">
+                        <div
+                          className="p-1.5 rounded-lg transition-colors shrink-0"
+                          style={{
+                            background: 'var(--color-surface-hover)',
+                            color: 'var(--color-text-muted)',
+                          }}
+                        >
                           <Icon size={16} />
                         </div>
                         <div className="min-w-0">
-                          <div className="font-semibold truncate text-white leading-tight">
+                          <div className="font-semibold truncate leading-tight" style={{ color: 'var(--color-text)' }}>
                             {item.label}
                           </div>
-                          <div className="text-[10px] text-zinc-400 truncate leading-tight mt-0.5">
+                          <div className="text-[10px] truncate leading-tight mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
                             {item.description}
                           </div>
                         </div>
@@ -317,7 +344,10 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
 
                       {/* Badge if any */}
                       {item.badge != null && (
-                        <span className="ml-2 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-500 text-white shrink-0 shadow-sm">
+                        <span
+                          className="ml-2 px-1.5 py-0.5 rounded-full text-[10px] font-bold shrink-0 shadow-sm"
+                          style={{ background: 'var(--color-primary)', color: 'var(--color-text-on-primary)' }}
+                        >
                           {item.badge}
                         </span>
                       )}
@@ -330,19 +360,24 @@ export const MobileNavDrawer: React.FC<MobileNavDrawerProps> = ({ isOpen, onClos
         </div>
 
         {/* Footer Area with Sign Out & Version Info */}
-        <div className="p-3.5 border-t border-white/10 bg-zinc-950/80 mt-auto relative z-10 space-y-2">
+        <div className="p-3.5 border-t mt-auto relative z-10 space-y-2" style={{ borderColor: 'var(--color-border)', background: 'var(--color-surface)' }}>
           {user && (
             <button
               onClick={handleLogout}
-              className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-white/5 hover:bg-red-500/15 text-zinc-300 hover:text-red-400 border border-white/5 hover:border-red-500/30 text-fluid-xs font-medium transition-all"
+              className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-fluid-xs font-medium transition-all"
+              style={{
+                color: 'var(--color-danger)',
+                border: '1px solid var(--color-border)',
+                background: 'var(--color-surface-hover)',
+              }}
             >
               <LogOut size={15} />
               <span>Sign Out</span>
             </button>
           )}
 
-          <div className="text-center text-[10px] text-zinc-400 flex items-center justify-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
+          <div className="text-center text-[10px] flex items-center justify-center gap-1.5" style={{ color: 'var(--color-text-muted)' }}>
+            <span className="w-1.5 h-1.5 rounded-full inline-block animate-pulse" style={{ background: 'var(--color-success)' }} />
             <span>Veyra Cloud Synced</span>
           </div>
         </div>

@@ -1,7 +1,7 @@
-/** Zustand theme store — dark/light/ambient/system management with localStorage persistence. */
+/** Zustand theme store — light/dark management with localStorage persistence. */
 import { create } from 'zustand';
 
-export type Theme = 'light' | 'dark' | 'ambient' | 'system';
+export type Theme = 'light' | 'dark';
 
 interface ThemeState {
   theme: Theme;
@@ -10,17 +10,17 @@ interface ThemeState {
 
 const STORAGE_KEY = 'veyra-theme';
 
-/** Read the saved theme from localStorage, fall back to 'dark'. */
+/** Read the saved theme from localStorage, fall back to 'light'. */
 function getSavedTheme(): Theme {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === 'light' || saved === 'dark' || saved === 'ambient' || saved === 'system') {
+    if (saved === 'light' || saved === 'dark') {
       return saved;
     }
   } catch {
     /* localStorage unavailable */
   }
-  return 'dark';
+  return 'light';
 }
 
 /** Apply the theme classes to <html>. */
@@ -32,15 +32,8 @@ function applyTheme(theme: Theme) {
 
   if (theme === 'dark') {
     root.classList.add('dark');
-  } else if (theme === 'ambient') {
-    root.classList.add('dark', 'ambient');
-  } else if (theme === 'light') {
-    // No class needed — light is the base
-  } else {
-    // system: follow OS preference
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (prefersDark) root.classList.add('dark');
   }
+  // light is the base — no class needed
 
   // Persist
   try {

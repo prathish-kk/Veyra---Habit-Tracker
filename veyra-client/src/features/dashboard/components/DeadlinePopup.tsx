@@ -1,5 +1,5 @@
 /**
- * DeadlinePopup — Floating glass alert toast warning users of impending habit deadlines (<3h, <30min, overdue).
+ * DeadlinePopup — Floating alert toast warning users of impending habit deadlines (Corbel theme).
  */
 import React, { useState, useEffect } from 'react';
 import { useDailyTasks } from '@/features/daily-tasks';
@@ -93,25 +93,22 @@ export const DeadlinePopup: React.FC = () => {
 
   const badgeConfig = {
     urgent: {
-      border: 'border-orange-500/30',
-      bg: 'bg-orange-500/10',
-      badgeBg: 'bg-orange-500/20 text-orange-300',
+      border: 'border-[var(--color-warning)]/40',
+      badgeBg: 'bg-[var(--color-warning)]/15 text-[var(--color-warning)]',
       label: 'Urgent Deadline (<30m)',
-      icon: <Clock size={16} className="text-orange-400 animate-pulse" />,
+      icon: <Clock size={16} className="text-[var(--color-warning)] animate-pulse" />,
     },
     approaching: {
-      border: 'border-amber-500/30',
-      bg: 'bg-amber-500/10',
-      badgeBg: 'bg-amber-500/20 text-amber-300',
+      border: 'border-[var(--color-warning)]/30',
+      badgeBg: 'bg-[var(--color-warning)]/10 text-[var(--color-warning)]',
       label: 'Approaching Deadline',
-      icon: <Clock size={16} className="text-amber-400" />,
+      icon: <Clock size={16} className="text-[var(--color-warning)]" />,
     },
     overdue: {
-      border: 'border-rose-500/30',
-      bg: 'bg-rose-500/10',
-      badgeBg: 'bg-rose-500/20 text-rose-300',
+      border: 'border-red-500/30',
+      badgeBg: 'bg-red-500/15 text-red-500 dark:text-red-400',
       label: 'Past Due',
-      icon: <AlertTriangle size={16} className="text-rose-400" />,
+      icon: <AlertTriangle size={16} className="text-red-500 dark:text-red-400" />,
     },
   }[urgentItem.status];
 
@@ -120,7 +117,7 @@ export const DeadlinePopup: React.FC = () => {
       role="alert"
       aria-live="polite"
       data-testid="dashboard-deadlinepopup"
-      className={`fixed bottom-[calc(var(--bottom-nav-height,64px)+env(safe-area-inset-bottom,0px)+0.75rem)] lg:bottom-6 right-4 sm:right-6 z-40 max-w-sm w-[calc(100%-2rem)] glass p-4 rounded-2xl border ${badgeConfig.border} ${badgeConfig.bg} shadow-2xl backdrop-blur-xl animate-slideUp`}
+      className={`fixed bottom-[calc(var(--bottom-nav-height,64px)+env(safe-area-inset-bottom,0px)+0.75rem)] lg:bottom-6 right-4 sm:right-6 z-40 max-w-sm w-[calc(100%-2rem)] glass p-4 rounded-2xl border ${badgeConfig.border} bg-[var(--color-surface)] shadow-xl animate-slideUp`}
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="flex items-center gap-2">
@@ -133,15 +130,15 @@ export const DeadlinePopup: React.FC = () => {
           type="button"
           onClick={handleDismiss}
           aria-label="Dismiss deadline alert"
-          className="p-1 rounded-lg text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/10 transition-colors"
+          className="p-1 rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface-hover)] transition-colors"
         >
           <X size={15} />
         </button>
       </div>
 
       <div className="mb-3">
-        <h4 className="text-fluid-sm font-semibold text-white truncate">{urgentItem.title}</h4>
-        <p className="text-fluid-xs text-zinc-400">
+        <h4 className="text-fluid-sm font-semibold truncate" style={{ color: 'var(--color-text)' }}>{urgentItem.title}</h4>
+        <p className="text-fluid-xs" style={{ color: 'var(--color-text-muted)' }}>
           Due by {urgentItem.dueTime} —{' '}
           {urgentItem.minutesLeft < 0
             ? `${Math.abs(urgentItem.minutesLeft)}m overdue`
@@ -164,7 +161,7 @@ export const DeadlinePopup: React.FC = () => {
         <button
           type="button"
           onClick={handleDismiss}
-          className="px-3 py-1.5 rounded-xl text-fluid-xs text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/5 transition-colors"
+          className="px-3 py-1.5 rounded-xl text-fluid-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface-hover)] transition-colors"
         >
           Snooze
         </button>
